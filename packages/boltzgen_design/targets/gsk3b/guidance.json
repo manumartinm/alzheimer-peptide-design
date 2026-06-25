@@ -1,0 +1,46 @@
+{
+  "hotspots_primary": [
+    96,
+    180,
+    205
+  ],
+  "hotspots_secondary": [
+    67,
+    89,
+    95
+  ],
+  "atp_cleft": [
+    50,
+    85,
+    133,
+    134,
+    135,
+    200,
+    201,
+    202,
+    203,
+    204,
+    205,
+    206
+  ],
+  "guidance": {
+    "cutoff_angstrom": 5.0,
+    "bounding_shell_angstrom": {
+      "min": 8.0,
+      "max": 12.0
+    },
+    "hotspot_weight": 1.0,
+    "atp_weight": 0.7,
+    "alpha": 8.0,
+    "lj_sigma": 3.0,
+    "max_force": 1.0,
+    "bbb": {
+      "weight": 0.3,
+      "membrane_weight": 0.7,
+      "ckpt": "../../bbb_models/artifacts/models/exp09_struct_egnn_noise/checkpoints/best.ckpt",
+      "sigma_gate": 4.0,
+      "hidden": 64,
+      "layers": 3
+    }
+  }
+}

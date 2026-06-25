@@ -1,0 +1,14 @@
+{
+  "guidance_hotspot_weight": 1.0,
+  "guidance_atp_weight": 0.7,
+  "guidance_alpha": 8.0,
+  "guidance_cutoff_angstrom": 5.0,
+  "guidance_lj_sigma": 3.0,
+  "guidance_max_force": 1.0,
+  "guidance_bbb_weight": 0.3,
+  "guidance_membrane_weight": 0.7,
+  "guidance_bbb_ckpt": "/Users/manumartinm/Documents/ProteinDesign/TFG/bbb_models/artifacts/models/exp09_struct_egnn_noise/checkpoints/best.ckpt",
+  "guidance_bbb_sigma_gate": 4.0,
+  "guidance_bbb_hidden": 64,
+  "guidance_bbb_layers": 3
+}
