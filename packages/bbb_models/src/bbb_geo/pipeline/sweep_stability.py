@@ -60,7 +60,12 @@ def run(args: argparse.Namespace) -> None:
                     cmd.extend(["--dataset-path", args.dataset_path])
                 subprocess.run(cmd, check=True)
 
-                cv_summary_path = Path(args.cv_output_root) / variant["name"] / args.calibration / "cv_summary.json"
+                cv_summary_path = (
+                    Path(args.cv_output_root)
+                    / variant["name"]
+                    / args.calibration
+                    / "cv_summary.json"
+                )
                 summary = json.loads(cv_summary_path.read_text(encoding="utf-8"))
                 row = {
                     "experiment": str(variant["name"]),
@@ -91,7 +96,9 @@ def run(args: argparse.Namespace) -> None:
 
 
 def main(argv: list[str] | None = None) -> None:
-    parser = argparse.ArgumentParser(description="Sweep exp09 stability hyperparameters with CV selection.")
+    parser = argparse.ArgumentParser(
+        description="Sweep exp09 stability hyperparameters with CV selection."
+    )
     parser.add_argument("--exp", default="configs/experiments/exp09_struct_egnn_noise.yaml")
     parser.add_argument("--data-config", default="configs/data.yaml")
     parser.add_argument("--train-config", default="configs/train_cv.yaml")

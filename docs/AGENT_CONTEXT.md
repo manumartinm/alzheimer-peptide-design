@@ -3,13 +3,13 @@
 **Last Updated:** June 2026
 **Project:** Bachelor's Thesis (TFG) - *In silico* design of BBB-compatible cyclic peptide modulators of GSK3β for Tau hyperphosphorylation.
 
-> **⚠️ AGENT INSTRUCTION:** 
+> **⚠️ AGENT INSTRUCTION:**
 > If you are an AI agent reading this file, treat it as the **Source of Truth** for the project's architecture, methodology, and planned tasks. Use this context to understand *why* certain architectural decisions were made (especially regarding differentiability and diffusion guidance) and *how* to execute the next steps.
 
 ---
 
 ## 1. High-Level Project Goal
-The objective is to computationally design cyclic phosphomimetic peptides that modulate the **GSK3β kinase** (implicated in Alzheimer's disease via Tau hyperphosphorylation). 
+The objective is to computationally design cyclic phosphomimetic peptides that modulate the **GSK3β kinase** (implicated in Alzheimer's disease via Tau hyperphosphorylation).
 Unlike traditional inhibitors that target the highly conserved ATP cleft (causing Wnt-pathway off-target toxicity), this project aims for **substrate-selective modulation**. The peptides must:
 1. Engage the substrate-recognition groove (hotspots: R96, R180, K205).
 2. Avoid the ATP-binding cleft.
@@ -35,7 +35,7 @@ This phase acts as the "delivery oracle" for the generative pipeline. It predict
 
 *   **Data Pipeline:** Curated from B3Pred D1 with optional B3Pdb/Brainpeps expansion. Filtered for canonical amino acids, length 6-30 by default (configurable), and deduplicated at 90% sequence identity with cluster-aware folds to reduce leakage.
 *   **HF release:** `TFG/dataset/data/hf_release/` — 825 peptides with Boltz structures (`tfg-bbb-export-hf --variant full`). Used for geo training and Vast upload.
-*   **Features:** 
+*   **Features:**
     *   ESM-2 language model embeddings ($d=128$).
     *   24 tabular physicochemical descriptors (charge, pI, GRAVY, instability, etc.).
 *   **Architecture (oracle):** `exp03_esm_tab_mlp` — MLP fusing ESM-2 and tabular branches. Heavily regularized (dropout $p=0.3$, weight decay $\lambda=10^{-3}$).
@@ -68,9 +68,9 @@ During inference, the reverse diffusion SDE is guided by differentiable spatial 
 
 > **🧪 STRUCTURAL BBB GUIDANCE (implemented, wiring in progress):** A geometry-only classifier `p_geo(BBB | x, sigma)` over coordinates makes the BBB energy differentiable wrt coordinates and can be injected into the reverse SDE alongside geometric potentials. The global tabular/ESM oracle (`exp03`) stays in reward/G3, out of the guidance gradient. Training: `exp09_struct_egnn_noise` + post-hoc `guidance_gate.json`. See [STRUCTURAL_BBB_GUIDANCE.md](STRUCTURAL_BBB_GUIDANCE.md), [STRUCTURAL_CLASSIFIER.md](STRUCTURAL_CLASSIFIER.md), [BOLTZ_FOLDING.md](BOLTZ_FOLDING.md), [VAST_TRAINING.md](VAST_TRAINING.md).
 
-*   **Solution (current):** We use the **TD3B framework** (Transition-Directed Discrete Diffusion). 
+*   **Solution (current):** We use the **TD3B framework** (Transition-Directed Discrete Diffusion).
 *   **Mechanism:** BBB permeability is injected as a **gated reward signal** during an amortized fine-tuning phase.
-*   **Implementation:** 
+*   **Implementation:**
     1. Generate a batch of trajectories.
     2. Decode the sequences and score them with the trained BBB classifier.
     3. Use the continuous calibrated probability $p_{\text{BBB}}^{\text{cal}}$ as a reward.

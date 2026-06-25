@@ -44,8 +44,12 @@ def dataset_overview_table(df: pd.DataFrame, *, name: str = "dataset") -> pd.Dat
                 "length_median": float(df["length"].median()) if len(df) else float("nan"),
                 "length_min": int(df["length"].min()) if len(df) else 0,
                 "length_max": int(df["length"].max()) if len(df) else 0,
-                "unique_sequences": int(df["sequence"].nunique()) if "sequence" in df.columns else len(df),
-                "unique_clusters": int(df["cluster_id"].nunique()) if "cluster_id" in df.columns else float("nan"),
+                "unique_sequences": int(df["sequence"].nunique())
+                if "sequence" in df.columns
+                else len(df),
+                "unique_clusters": int(df["cluster_id"].nunique())
+                if "cluster_id" in df.columns
+                else float("nan"),
             }
         ]
     )
@@ -62,7 +66,9 @@ def fold_overview_table(df: pd.DataFrame) -> pd.DataFrame:
                 "bbb_negative": int((group["bbb_label"] == 0).sum()),
                 "positive_ratio": round(float(group["bbb_label"].mean()), 4),
                 "unique_clusters": int(group["cluster_id"].nunique()),
-                "external_test_rows": int(group.get("external_test", pd.Series([0] * len(group))).sum()),
+                "external_test_rows": int(
+                    group.get("external_test", pd.Series([0] * len(group))).sum()
+                ),
             }
         )
     return pd.DataFrame(rows).sort_values("fold_id").reset_index(drop=True)
@@ -143,9 +149,15 @@ def run_gold_eda(df: pd.DataFrame, out_dir: Path) -> dict[str, object]:
     """EDA for the curated gold dataset, including CV fold diagnostics."""
     out_dir.mkdir(parents=True, exist_ok=True)
     figures = [
-        _plot_class_balance(df, out_dir, title="BBB class balance by split", filename="class_balance.png"),
-        _plot_length_distribution(df, out_dir, title="Length distribution", filename="length_distribution.png"),
-        _plot_correlation_heatmap(df, out_dir, title="Spearman correlation (features)", filename="correlation_heatmap.png"),
+        _plot_class_balance(
+            df, out_dir, title="BBB class balance by split", filename="class_balance.png"
+        ),
+        _plot_length_distribution(
+            df, out_dir, title="Length distribution", filename="length_distribution.png"
+        ),
+        _plot_correlation_heatmap(
+            df, out_dir, title="Spearman correlation (features)", filename="correlation_heatmap.png"
+        ),
         _plot_fold_class_balance(df, out_dir),
         _plot_fold_sizes(df, out_dir),
         _plot_holdout_overview(df, out_dir),
@@ -188,7 +200,9 @@ def run_augmentation_eda(
     )
 
     train_gold = gold_df[(gold_df.get("external_test", 0) == 0) & (gold_df["fold_id"] != 0)]
-    train_combined = combined_df[(combined_df.get("external_test", 0) == 0) & (combined_df["fold_id"] != 0)]
+    train_combined = combined_df[
+        (combined_df.get("external_test", 0) == 0) & (combined_df["fold_id"] != 0)
+    ]
     train_overview = pd.concat(
         [
             dataset_overview_table(train_gold, name="gold_train_eligible"),
@@ -197,14 +211,18 @@ def run_augmentation_eda(
         ignore_index=True,
     )
 
-    fold_compare = fold_overview_table(gold_df)[["fold_id", "rows", "bbb_positive", "positive_ratio"]].rename(
+    fold_compare = fold_overview_table(gold_df)[
+        ["fold_id", "rows", "bbb_positive", "positive_ratio"]
+    ].rename(
         columns={
             "rows": "gold_rows",
             "bbb_positive": "gold_pos",
             "positive_ratio": "gold_pos_ratio",
         }
     )
-    combined_folds = fold_overview_table(combined_df)[["fold_id", "rows", "bbb_positive", "positive_ratio"]].rename(
+    combined_folds = fold_overview_table(combined_df)[
+        ["fold_id", "rows", "bbb_positive", "positive_ratio"]
+    ].rename(
         columns={
             "rows": "combined_rows",
             "bbb_positive": "combined_pos",
@@ -267,7 +285,9 @@ def run_augmentation_eda(
         parent_lengths = gold_df.set_index("peptide_id")["length"]
         aug_with_parent = aug_df.copy()
         aug_with_parent["parent_length"] = aug_with_parent["parent_peptide_id"].map(parent_lengths)
-        aug_with_parent["length_delta"] = (aug_with_parent["length"] - aug_with_parent["parent_length"]).abs()
+        aug_with_parent["length_delta"] = (
+            aug_with_parent["length"] - aug_with_parent["parent_length"]
+        ).abs()
         fig, ax = plt.subplots(figsize=(6, 4))
         sns.histplot(aug_with_parent["length_delta"], bins=range(0, 6), ax=ax)
         ax.set_title("Absolute length change vs parent")

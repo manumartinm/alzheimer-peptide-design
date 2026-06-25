@@ -54,10 +54,26 @@ def _load_fasta(path: Path, label: int, split: str, source_db: str, label_tier: 
 def load_b3pred_d1(raw_dir: Path) -> pd.DataFrame:
     files = ensure_b3pred_files(raw_dir)
     rows: list[dict] = []
-    rows += _load_fasta(files["b3pred_pos_train.fa"], label=1, split="train", source_db="B3Pred_D1", label_tier="gold")
-    rows += _load_fasta(files["b3pred_pos_val.fa"], label=1, split="val", source_db="B3Pred_D1", label_tier="gold")
-    rows += _load_fasta(files["b3pred_neg_train.fa"], label=0, split="train", source_db="B3Pred_D1", label_tier="gold")
-    rows += _load_fasta(files["b3pred_neg_val.fa"], label=0, split="val", source_db="B3Pred_D1", label_tier="gold")
+    rows += _load_fasta(
+        files["b3pred_pos_train.fa"],
+        label=1,
+        split="train",
+        source_db="B3Pred_D1",
+        label_tier="gold",
+    )
+    rows += _load_fasta(
+        files["b3pred_pos_val.fa"], label=1, split="val", source_db="B3Pred_D1", label_tier="gold"
+    )
+    rows += _load_fasta(
+        files["b3pred_neg_train.fa"],
+        label=0,
+        split="train",
+        source_db="B3Pred_D1",
+        label_tier="gold",
+    )
+    rows += _load_fasta(
+        files["b3pred_neg_val.fa"], label=0, split="val", source_db="B3Pred_D1", label_tier="gold"
+    )
     return pd.DataFrame(rows)
 
 

@@ -5,7 +5,12 @@ import os
 
 import mlflow
 
-from bbb_classifier.pipeline._common import add_train_args, finalize_run, prepare_dataframes, sample_weights
+from bbb_classifier.pipeline._common import (
+    add_train_args,
+    finalize_run,
+    prepare_dataframes,
+    sample_weights,
+)
 from bbb_geo.pipeline._common import setup_run
 from bbb_geo.pipeline.features import apply_plddt_weights, build_features
 from bbb_geo.pipeline.models import fit_and_predict
@@ -28,7 +33,9 @@ def run(args: argparse.Namespace) -> None:
     weights = sample_weights(train_df)
 
     if train_cfg.get("tracking", {}).get("mlflow", False):
-        mlflow.set_experiment(train_cfg.get("tracking", {}).get("mlflow_experiment", "bbb_classifier"))
+        mlflow.set_experiment(
+            train_cfg.get("tracking", {}).get("mlflow_experiment", "bbb_classifier")
+        )
 
     val_prob = fit_and_predict(
         exp_cfg["model_type"],

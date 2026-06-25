@@ -5,7 +5,9 @@ import torch
 from .struct_graph import CHARGE_PH7, KD_HYDRO
 
 
-def per_residue_hydrophobicity(sequence: str, device: torch.device, dtype: torch.dtype) -> torch.Tensor:
+def per_residue_hydrophobicity(
+    sequence: str, device: torch.device, dtype: torch.dtype
+) -> torch.Tensor:
     values = [KD_HYDRO.get(aa, 0.0) for aa in sequence.upper()]
     return torch.tensor(values, dtype=dtype, device=device)
 

@@ -10,8 +10,6 @@ import torch
 from torch.optim import AdamW
 from torch.utils.tensorboard import SummaryWriter
 
-from bbb_geo.features.struct_graph import apply_coord_noise
-from bbb_geo.models.struct_egnn import sample_edm_sigma
 from bbb_classifier.train.calibration import sanitize_probabilities
 from bbb_classifier.train.checkpoints import load_checkpoint, save_checkpoint
 from bbb_classifier.train.early_stop import EarlyStopper
@@ -19,6 +17,8 @@ from bbb_classifier.train.losses import bce_loss
 from bbb_classifier.train.metrics import classification_metrics
 from bbb_classifier.train.mixup import apply_mixup
 from bbb_classifier.utils.io import ensure_dir
+from bbb_geo.features.struct_graph import apply_coord_noise
+from bbb_geo.models.struct_egnn import sample_edm_sigma
 
 
 @dataclass
@@ -32,7 +32,9 @@ class TorchData:
     struct_samples: list[dict[str, torch.Tensor | str | float]] | None = None
 
 
-def _sample_to_device(sample: dict[str, torch.Tensor | str | float], device: torch.device) -> dict[str, torch.Tensor | str | float]:
+def _sample_to_device(
+    sample: dict[str, torch.Tensor | str | float], device: torch.device
+) -> dict[str, torch.Tensor | str | float]:
     out: dict[str, torch.Tensor | str | float] = {}
     for key, value in sample.items():
         if isinstance(value, torch.Tensor):
@@ -55,7 +57,9 @@ def _select(data: TorchData, ids: np.ndarray, device: torch.device) -> dict[str,
         "y": torch.tensor(data.y[ids], dtype=torch.float32, device=device).unsqueeze(1),
     }
     if data.sample_weight is not None:
-        out["sample_weight"] = torch.tensor(data.sample_weight[ids], dtype=torch.float32, device=device).unsqueeze(1)
+        out["sample_weight"] = torch.tensor(
+            data.sample_weight[ids], dtype=torch.float32, device=device
+        ).unsqueeze(1)
     if data.tab is not None:
         out["tab"] = torch.tensor(data.tab[ids], dtype=torch.float32, device=device)
     if data.esm is not None:
@@ -65,7 +69,9 @@ def _select(data: TorchData, ids: np.ndarray, device: torch.device) -> dict[str,
     if data.graphs is not None:
         out["graphs"] = [data.graphs[i] for i in ids]
     if data.struct_samples is not None:
-        out["struct_samples"] = [_sample_to_device(data.struct_samples[i], device=device) for i in ids]
+        out["struct_samples"] = [
+            _sample_to_device(data.struct_samples[i], device=device) for i in ids
+        ]
     return out
 
 
@@ -83,7 +89,7 @@ def _apply_struct_noise(
     if struct_samples is None:
         return None
     out: list[dict[str, torch.Tensor | str | float]] = []
-    for sample, sigma in zip(struct_samples, sigma_values):
+    for sample, sigma in zip(struct_samples, sigma_values, strict=False):
         noisy = dict(sample)
         coords = sample["coords"]
         noisy["coords"] = apply_coord_noise(coords, float(sigma.item()))
@@ -120,7 +126,9 @@ def _struct_multitask_loss(
     return cls_loss + aux_weight * aux_loss
 
 
-def predict_torch(model: torch.nn.Module, data: TorchData, batch_size: int, device: torch.device) -> np.ndarray:
+def predict_torch(
+    model: torch.nn.Module, data: TorchData, batch_size: int, device: torch.device
+) -> np.ndarray:
     model.eval()
     probs = []
     with torch.no_grad():
@@ -259,7 +267,7 @@ def train_torch_model(
         periodic_every = int(train_cfg.get("save_periodic_every", 0))
         if periodic_every > 0 and (epoch + 1) % periodic_every == 0:
             save_checkpoint(
-                ckpt_dir / f"epoch_{epoch+1}.ckpt",
+                ckpt_dir / f"epoch_{epoch + 1}.ckpt",
                 {
                     "epoch": epoch,
                     "model": model.state_dict(),

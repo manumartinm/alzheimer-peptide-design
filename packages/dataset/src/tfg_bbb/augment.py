@@ -48,7 +48,9 @@ class AugmentConfig:
     only_non_holdout: bool = True
 
 
-def load_augment_config(path: Path, *, min_length: int, max_length: int, random_seed: int) -> AugmentConfig:
+def load_augment_config(
+    path: Path, *, min_length: int, max_length: int, random_seed: int
+) -> AugmentConfig:
     payload = yaml.safe_load(path.read_text(encoding="utf-8")) if path.exists() else {}
     payload = payload or {}
     payload.setdefault("min_length", min_length)
@@ -77,7 +79,9 @@ def mutate_conservative(seq: str, n_changes: int = 1, rng: random.Random | None 
     return "".join(seq_list)
 
 
-def truncate_terminal(seq: str, max_cut: int = 2, min_len: int = 5, rng: random.Random | None = None) -> str:
+def truncate_terminal(
+    seq: str, max_cut: int = 2, min_len: int = 5, rng: random.Random | None = None
+) -> str:
     rng = rng or random
     if len(seq) <= min_len:
         return seq
@@ -145,7 +149,7 @@ def augment_gold_dataframe(
     augmented_rows: list[dict] = []
     stats = {
         "augmentation_enabled": 1,
-        "n_candidates": int(len(candidates)),
+        "n_candidates": len(candidates),
         "n_requested": int(len(candidates) * max(1, cfg.n_augmented_per_sample)),
         "n_generated": 0,
         "n_skipped_duplicate": 0,

@@ -157,7 +157,7 @@ def build_hf_release(cfg: HFExportConfig) -> dict[str, object]:
 
     stats = {
         "variant": cfg.variant,
-        "rows": int(len(export_df)),
+        "rows": len(export_df),
         "with_structure": int(export_df["has_structure"].sum()),
         "bbb_positive": int((export_df["bbb_label"] == 1).sum()),
         "bbb_negative": int((export_df["bbb_label"] == 0).sum()),
@@ -222,11 +222,11 @@ Curated blood–brain barrier (BBB) permeability dataset for peptide sequences w
 
 | Field | Value |
 |-------|-------|
-| Rows | {stats['rows']} |
-| With structure | {stats['with_structure']} |
-| BBB+ | {stats['bbb_positive']} |
-| BBB− | {stats['bbb_negative']} |
-| Variant | `{stats['variant']}` |
+| Rows | {stats["rows"]} |
+| With structure | {stats["with_structure"]} |
+| BBB+ | {stats["bbb_positive"]} |
+| BBB− | {stats["bbb_negative"]} |
+| Variant | `{stats["variant"]}` |
 
 ## Files
 

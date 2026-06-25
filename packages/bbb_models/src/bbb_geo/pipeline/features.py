@@ -13,7 +13,9 @@ from bbb_geo.features.struct_loader import (
 )
 
 
-def build_features(df: pd.DataFrame, data_cfg: dict[str, Any], exp_cfg: dict[str, Any]) -> dict[str, Any]:
+def build_features(
+    df: pd.DataFrame, data_cfg: dict[str, Any], exp_cfg: dict[str, Any]
+) -> dict[str, Any]:
     if exp_cfg.get("model_type") != "struct_egnn_geo":
         raise ValueError(f"Unsupported geo model_type: {exp_cfg.get('model_type')}")
 
@@ -29,7 +31,9 @@ def build_features(df: pd.DataFrame, data_cfg: dict[str, Any], exp_cfg: dict[str
             )
         else:
             if not manifest_path:
-                raise ValueError("struct manifest_path required when dataset lacks coords_path columns")
+                raise ValueError(
+                    "struct manifest_path required when dataset lacks coords_path columns"
+                )
             manifest = load_struct_manifest(manifest_path)
             merged = merge_dataset_with_manifest(df, manifest, sequence_col=seq_col)
 
@@ -59,12 +63,6 @@ def apply_plddt_weights(train_df: pd.DataFrame, exp_cfg: dict[str, Any]) -> pd.D
         return train_df
     floor = float(exp_cfg.get("struct", {}).get("plddt_weight_floor", 0.1))
     out = train_df.copy()
-    base = (
-        out["sample_weight"].astype(float)
-        if "sample_weight" in out.columns
-        else 1.0
-    )
-    out["sample_weight"] = base * out["plddt"].map(
-        lambda v: plddt_sample_weight(v, floor=floor)
-    )
+    base = out["sample_weight"].astype(float) if "sample_weight" in out.columns else 1.0
+    out["sample_weight"] = base * out["plddt"].map(lambda v: plddt_sample_weight(v, floor=floor))
     return out

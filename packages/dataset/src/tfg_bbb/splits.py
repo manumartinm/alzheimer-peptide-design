@@ -5,7 +5,9 @@ import pandas as pd
 from sklearn.model_selection import StratifiedGroupKFold
 
 
-def mark_external_holdout(df: pd.DataFrame, split_col: str = "split", holdout_value: str = "val") -> pd.DataFrame:
+def mark_external_holdout(
+    df: pd.DataFrame, split_col: str = "split", holdout_value: str = "val"
+) -> pd.DataFrame:
     out = df.copy()
     out["external_test"] = out[split_col].astype(str).str.lower().eq(holdout_value).astype(int)
     return out

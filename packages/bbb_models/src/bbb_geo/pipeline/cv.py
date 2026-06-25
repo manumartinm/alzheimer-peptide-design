@@ -83,7 +83,9 @@ def run(args: argparse.Namespace) -> None:
             if sigma_path.exists():
                 sigma_metrics = json.loads(sigma_path.read_text(encoding="utf-8"))
                 metrics["multisigma"] = sigma_metrics
-                metrics["low_sigma_mean_pr_auc"] = sigma_metrics.get("summary", {}).get("low_sigma_mean_pr_auc")
+                metrics["low_sigma_mean_pr_auc"] = sigma_metrics.get("summary", {}).get(
+                    "low_sigma_mean_pr_auc"
+                )
             gate_path = run_dir / "guidance_gate.json"
             if gate_path.exists():
                 gate = json.loads(gate_path.read_text(encoding="utf-8"))
@@ -101,11 +103,17 @@ def run(args: argparse.Namespace) -> None:
             vals = [m[split][key] for m in all_metrics if key in m.get(split, {})]
             summary[f"{split}_{key}_mean"] = float(np.mean(vals))
             summary[f"{split}_{key}_std"] = float(np.std(vals))
-    low_sigma_vals = [m.get("low_sigma_mean_pr_auc") for m in all_metrics if m.get("low_sigma_mean_pr_auc") is not None]
+    low_sigma_vals = [
+        m.get("low_sigma_mean_pr_auc")
+        for m in all_metrics
+        if m.get("low_sigma_mean_pr_auc") is not None
+    ]
     if low_sigma_vals:
         summary["low_sigma_mean_pr_auc_mean"] = float(np.mean(low_sigma_vals))
         summary["low_sigma_mean_pr_auc_std"] = float(np.std(low_sigma_vals))
-    gate_vals = [float(bool(m.get("guidance_gate_pass"))) for m in all_metrics if "guidance_gate_pass" in m]
+    gate_vals = [
+        float(bool(m.get("guidance_gate_pass"))) for m in all_metrics if "guidance_gate_pass" in m
+    ]
     if gate_vals:
         summary["guidance_gate_pass_rate"] = float(np.mean(gate_vals))
 
@@ -114,7 +122,11 @@ def run(args: argparse.Namespace) -> None:
     preds.to_parquet(cv_root / "cv_predictions.parquet", index=False)
 
     y_true = preds[data_cfg["label_col"]].to_numpy(dtype=int)
-    y_prob = preds["p_bbb_calibrated"].to_numpy(dtype=float) if "p_bbb_calibrated" in preds.columns else preds["p_bbb_raw"].to_numpy(dtype=float)
+    y_prob = (
+        preds["p_bbb_calibrated"].to_numpy(dtype=float)
+        if "p_bbb_calibrated" in preds.columns
+        else preds["p_bbb_raw"].to_numpy(dtype=float)
+    )
     x, y = _reliability_curve(y_true, y_prob)
     plt.figure(figsize=(5, 5))
     plt.plot([0, 1], [0, 1], "--", label="ideal")

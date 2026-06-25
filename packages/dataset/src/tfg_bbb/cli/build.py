@@ -18,7 +18,6 @@ from tfg_bbb.pipeline import (
 )
 
 
-
 def _print_eda_summary(result: dict[str, object], title: str) -> None:
     print(f"\n=== {title} ===")
     for key in ("overview", "fold_table", "cluster_leakage", "train_overview", "fold_compare"):

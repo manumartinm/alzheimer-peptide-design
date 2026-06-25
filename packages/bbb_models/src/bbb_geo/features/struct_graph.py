@@ -108,7 +108,9 @@ def build_struct_graph(
     }
 
 
-def apply_coord_noise(coords: torch.Tensor, sigma: float, generator: torch.Generator | None = None) -> torch.Tensor:
+def apply_coord_noise(
+    coords: torch.Tensor, sigma: float, generator: torch.Generator | None = None
+) -> torch.Tensor:
     if sigma <= 0:
         return coords
     noise = torch.randn(coords.shape, generator=generator, dtype=coords.dtype, device=coords.device)

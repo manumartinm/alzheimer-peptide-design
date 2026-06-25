@@ -20,4 +20,3 @@ def pareto_front(candidates: list[dict], keys: list[str]) -> list[dict]:
         if not dominated:
             front.append(c)
     return front
-

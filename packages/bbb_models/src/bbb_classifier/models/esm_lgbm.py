@@ -37,7 +37,7 @@ class ESMLGBMModel:
         joblib.dump(self.model, path)
 
     @staticmethod
-    def load(path: str | Path) -> "ESMLGBMModel":
+    def load(path: str | Path) -> ESMLGBMModel:
         wrapper = ESMLGBMModel()
         wrapper.model = joblib.load(path)
         return wrapper

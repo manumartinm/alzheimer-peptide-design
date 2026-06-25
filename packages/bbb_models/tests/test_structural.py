@@ -10,7 +10,7 @@ from bbb_geo.features.membrane_potential import (
     per_residue_hydrophobicity,
     radius_of_gyration,
 )
-from bbb_geo.features.struct_graph import apply_coord_noise, build_struct_graph, radius_graph
+from bbb_geo.features.struct_graph import apply_coord_noise, build_struct_graph
 from bbb_geo.features.struct_loader import plddt_sample_weight
 from bbb_geo.models.struct_egnn import StructEGNNGeo, sample_edm_sigma
 

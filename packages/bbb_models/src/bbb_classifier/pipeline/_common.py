@@ -31,10 +31,14 @@ def add_train_args(parser: argparse.ArgumentParser) -> None:
     parser.add_argument("--train-config", default="configs/train.yaml")
     parser.add_argument("--output-root", default="artifacts")
     parser.add_argument("--dataset-path", default=None)
-    parser.add_argument("--no-resume", action="store_true", help="Start from scratch even if checkpoints exist")
+    parser.add_argument(
+        "--no-resume", action="store_true", help="Start from scratch even if checkpoints exist"
+    )
 
 
-def load_context(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], Path]:
+def load_context(
+    args: argparse.Namespace,
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], Path]:
     exp_cfg = read_yaml(args.exp)
     data_cfg = read_yaml(args.data_config)
     train_cfg = read_yaml(args.train_config)
@@ -93,7 +97,10 @@ def finalize_run(
 
     metrics = classification_metrics(y_val, val_prob)
     cal_metrics = classification_metrics(y_val, p_cal)
-    write_json(run_dir / "metrics.json", {"raw": metrics, "calibrated": cal_metrics, "run_name": run_name, "model_type": model_type})
+    write_json(
+        run_dir / "metrics.json",
+        {"raw": metrics, "calibrated": cal_metrics, "run_name": run_name, "model_type": model_type},
+    )
 
     pred_df = val_df[[data_cfg["sequence_col"], label_col]].copy()
     pred_df["p_bbb_raw"] = val_prob

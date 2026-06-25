@@ -37,14 +37,25 @@ class ESMTabGNNModel(nn.Module):
         dropout: float = 0.2,
     ):
         super().__init__()
-        self.esm_proj = nn.Sequential(nn.LayerNorm(d_esm), nn.Linear(d_esm, hidden_dim // 3), nn.GELU())
-        self.tab_proj = nn.Sequential(nn.LayerNorm(d_tab), nn.Linear(d_tab, hidden_dim // 3), nn.ReLU())
-        gnn_stack = [SimpleGraphConv(gnn_in_dim if i == 0 else gnn_hidden_dim, gnn_hidden_dim) for i in range(gnn_layers)]
+        self.esm_proj = nn.Sequential(
+            nn.LayerNorm(d_esm), nn.Linear(d_esm, hidden_dim // 3), nn.GELU()
+        )
+        self.tab_proj = nn.Sequential(
+            nn.LayerNorm(d_tab), nn.Linear(d_tab, hidden_dim // 3), nn.ReLU()
+        )
+        gnn_stack = [
+            SimpleGraphConv(gnn_in_dim if i == 0 else gnn_hidden_dim, gnn_hidden_dim)
+            for i in range(gnn_layers)
+        ]
         self.gnn_layers = nn.ModuleList(gnn_stack)
-        self.gnn_proj = nn.Sequential(nn.LayerNorm(gnn_hidden_dim), nn.Linear(gnn_hidden_dim, hidden_dim // 3), nn.ReLU())
+        self.gnn_proj = nn.Sequential(
+            nn.LayerNorm(gnn_hidden_dim), nn.Linear(gnn_hidden_dim, hidden_dim // 3), nn.ReLU()
+        )
         self.head = mlp(hidden_dim, hidden_dim, 1, dropout=dropout)
 
-    def _graph_batch_embedding(self, graphs: list[dict[str, torch.Tensor]], device: torch.device) -> torch.Tensor:
+    def _graph_batch_embedding(
+        self, graphs: list[dict[str, torch.Tensor]], device: torch.device
+    ) -> torch.Tensor:
         graph_embs = []
         for g in graphs:
             x = g["x"].to(device)
@@ -62,7 +73,11 @@ class ESMTabGNNModel(nn.Module):
         **kwargs,
     ) -> torch.Tensor:
         if not graphs:
-            g_emb = torch.zeros((esm.shape[0], self.gnn_proj[0].normalized_shape[0]), device=esm.device, dtype=esm.dtype)
+            g_emb = torch.zeros(
+                (esm.shape[0], self.gnn_proj[0].normalized_shape[0]),
+                device=esm.device,
+                dtype=esm.dtype,
+            )
         else:
             g_emb = self._graph_batch_embedding(graphs, esm.device)
         z = torch.cat([self.esm_proj(esm), self.tab_proj(tab), self.gnn_proj(g_emb)], dim=-1)

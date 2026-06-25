@@ -11,7 +11,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from .io import write_parquet
 from .struct_io import parse_cif_backbone, write_coords_npz
 
 SAMPLE_METRIC_KEYS = (
@@ -91,7 +90,11 @@ def manifest_fields(metrics: dict[str, float]) -> dict[str, float]:
 
 
 def find_structure_cif(run_dir: Path) -> Path:
-    for pattern in ("outputs/files/**/*.cif", "**/sample_*predicted_structure.cif", "**/sample_*.cif"):
+    for pattern in (
+        "outputs/files/**/*.cif",
+        "**/sample_*predicted_structure.cif",
+        "**/sample_*.cif",
+    ):
         matches = sorted(run_dir.glob(pattern))
         if matches:
             return matches[0]
@@ -226,8 +229,8 @@ def rebuild_manifest_from_experiments(
 
     manifest = pd.DataFrame(rows)
     stats = {
-        "n_unique_sequences": int(len(unique)),
-        "n_folded": int(len(manifest)),
+        "n_unique_sequences": len(unique),
+        "n_folded": len(manifest),
         "n_missing": int(missing),
         "limit": 0,
     }
@@ -302,8 +305,8 @@ def build_struct_manifest(
 
     manifest = pd.DataFrame(rows)
     stats = {
-        "n_unique_sequences": int(len(unique)),
-        "n_folded": int(len(manifest)),
+        "n_unique_sequences": len(unique),
+        "n_folded": len(manifest),
         "n_imported": int(n_imported),
         "n_api_folded": int(n_folded),
         "n_errors": int(n_errors),

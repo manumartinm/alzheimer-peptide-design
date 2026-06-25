@@ -5,13 +5,13 @@ from pathlib import Path
 from typing import Any
 
 import torch
-import torch.nn.functional as F
 
 from bbb_classifier.constants import BOLTZ_CANONICAL, THREE_TO_ONE
 from bbb_geo.features.membrane_potential import membrane_potential_energy
 from bbb_geo.features.struct_graph import build_struct_graph, radius_graph, rbf_edge_features
 from bbb_geo.models.struct_egnn import StructEGNNGeo
 from bbb_geo.train.checkpoints import load_checkpoint
+
 
 @dataclass
 class BBBGuidanceConfig:
@@ -27,7 +27,9 @@ class BBBGuidanceConfig:
 _MODEL_CACHE: dict[str, StructEGNNGeo] = {}
 
 
-def _load_geo_model(ckpt_path: str, hidden: int, layers: int, device: torch.device) -> StructEGNNGeo:
+def _load_geo_model(
+    ckpt_path: str, hidden: int, layers: int, device: torch.device
+) -> StructEGNNGeo:
     if ckpt_path in _MODEL_CACHE:
         return _MODEL_CACHE[ckpt_path]
     model = StructEGNNGeo(hidden_dim=hidden, num_layers=layers).to(device)
@@ -100,7 +102,9 @@ def compute_bbb_guidance_force(
                 atom_coords[b],
                 {
                     **feats,
-                    "atom_to_token": atom_to_token[b] if atom_to_token.dim() == 3 else atom_to_token,
+                    "atom_to_token": atom_to_token[b]
+                    if atom_to_token.dim() == 3
+                    else atom_to_token,
                     "design_mask": design_mask[b] if design_mask.dim() == 2 else design_mask,
                     "res_type": res_type[b] if res_type.dim() == 3 else res_type,
                 },
@@ -146,7 +150,9 @@ def compute_bbb_guidance_force(
 
     energy = res_coords.new_zeros(())
     if cfg.bbb_weight > 0:
-        model = _load_geo_model(cfg.ckpt_path, cfg.model_hidden, cfg.model_layers, res_coords.device)
+        model = _load_geo_model(
+            cfg.ckpt_path, cfg.model_hidden, cfg.model_layers, res_coords.device
+        )
         energy = energy - cfg.bbb_weight * model.log_prob([graph]).sum()
     if cfg.membrane_weight > 0:
         energy = energy - cfg.membrane_weight * membrane_potential_energy(res_coords, sequence)

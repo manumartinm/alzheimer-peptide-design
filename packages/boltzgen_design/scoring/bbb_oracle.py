@@ -3,8 +3,8 @@ from __future__ import annotations
 import csv
 import json
 import subprocess
+from collections.abc import Iterable
 from pathlib import Path
-from typing import Iterable
 
 
 class BBBOracle:
@@ -68,4 +68,3 @@ class BBBOracle:
                 writer.writerow(payload)
         self._run_predict(input_csv, output_csv)
         return output_csv
-

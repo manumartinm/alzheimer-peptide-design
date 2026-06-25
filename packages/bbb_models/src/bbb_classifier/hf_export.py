@@ -117,12 +117,12 @@ Sequence/tabular BBB permeability classifier for peptide candidates. Fuses ESM-2
 | Field | Value |
 |-------|-------|
 | Experiment | `{run_name}` |
-| Architecture | `{exp_cfg['model_type']}` |
-| ESM dim | `{exp_cfg.get('model', {}).get('esm_dim', 'n/a')}` |
-| Hidden dim | `{exp_cfg.get('model', {}).get('hidden_dim', 'n/a')}` |
-| PR-AUC (calibrated) | `{cal.get('pr_auc', 'n/a')}` |
-| ROC-AUC (calibrated) | `{cal.get('roc_auc', 'n/a')}` |
-| MCC (calibrated) | `{cal.get('mcc', 'n/a')}` |
+| Architecture | `{exp_cfg["model_type"]}` |
+| ESM dim | `{exp_cfg.get("model", {}).get("esm_dim", "n/a")}` |
+| Hidden dim | `{exp_cfg.get("model", {}).get("hidden_dim", "n/a")}` |
+| PR-AUC (calibrated) | `{cal.get("pr_auc", "n/a")}` |
+| ROC-AUC (calibrated) | `{cal.get("roc_auc", "n/a")}` |
+| MCC (calibrated) | `{cal.get("mcc", "n/a")}` |
 
 ## Files
 
@@ -163,7 +163,11 @@ If you use this model, cite the TFG BBB peptide modeling pipeline.
 def _render_geo_readme(run_dir: Path, repo_id: str | None) -> str:
     meta = _load_json(run_dir / "train_metadata.json")
     metrics = _load_json(run_dir / "metrics.json")
-    gate = _load_json(run_dir / "guidance_gate.json") if (run_dir / "guidance_gate.json").exists() else {}
+    gate = (
+        _load_json(run_dir / "guidance_gate.json")
+        if (run_dir / "guidance_gate.json").exists()
+        else {}
+    )
     exp_cfg = meta["exp_cfg"]
     run_name = exp_cfg.get("name", exp_cfg["model_type"])
     cal = metrics.get("calibrated", {})
@@ -190,11 +194,11 @@ Geometry-only EGNN that predicts BBB permeability from 3D coordinates (`p_geo`).
 | Field | Value |
 |-------|-------|
 | Experiment | `{run_name}` |
-| Architecture | `{exp_cfg['model_type']}` |
-| EGNN hidden | `{exp_cfg.get('model', {}).get('egnn_hidden', 'n/a')}` |
-| EGNN layers | `{exp_cfg.get('model', {}).get('egnn_layers', 'n/a')}` |
-| PR-AUC (calibrated) | `{cal.get('pr_auc', 'n/a')}` |
-| Guidance gate | `{gate.get('recommendation', 'n/a')}` (`gate_pass={gate.get('gate_pass', 'n/a')}`) |
+| Architecture | `{exp_cfg["model_type"]}` |
+| EGNN hidden | `{exp_cfg.get("model", {}).get("egnn_hidden", "n/a")}` |
+| EGNN layers | `{exp_cfg.get("model", {}).get("egnn_layers", "n/a")}` |
+| PR-AUC (calibrated) | `{cal.get("pr_auc", "n/a")}` |
+| Guidance gate | `{gate.get("recommendation", "n/a")}` (`gate_pass={gate.get("gate_pass", "n/a")}`) |
 
 ## Files
 
@@ -263,7 +267,7 @@ def export_model_bundle(cfg: HFModelExportConfig) -> dict[str, Any]:
         "output_dir": str(output_dir),
         "run_name": meta["exp_cfg"].get("name", meta["exp_cfg"]["model_type"]),
         "model_type": meta["exp_cfg"]["model_type"],
-        "files": copied + ["README.md"],
+        "files": [*copied, "README.md"],
         "repo_id": cfg.repo_id,
     }
     (output_dir / "export_stats.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
@@ -281,7 +285,9 @@ def export_classifier_hf(
     run_dir = resolve_classifier_run_dir(base, run_name)
     out = output_dir or base / "artifacts" / "hf_release" / "bbb-classifier"
     return export_model_bundle(
-        HFModelExportConfig(run_dir=run_dir, output_dir=Path(out), kind="classifier", repo_id=repo_id)
+        HFModelExportConfig(
+            run_dir=run_dir, output_dir=Path(out), kind="classifier", repo_id=repo_id
+        )
     )
 
 

@@ -35,4 +35,3 @@ def gate_g4(candidate: dict, cfg: GateThresholds) -> bool:
 
 def gate_g5(candidate: dict) -> bool:
     return bool(candidate.get("passes_sequence_liability", False))
-

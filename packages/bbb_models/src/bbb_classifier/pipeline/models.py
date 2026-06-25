@@ -75,7 +75,9 @@ def fit_and_predict(
         raise ValueError(f"Unknown classifier model_type: {model_type}")
 
     torch_train_cfg = dict(train_cfg.get("training", {}))
-    torch_train_cfg["save_periodic_every"] = int(train_cfg.get("output", {}).get("save_periodic_every", 0))
+    torch_train_cfg["save_periodic_every"] = int(
+        train_cfg.get("output", {}).get("save_periodic_every", 0)
+    )
     torch_train_cfg["mixup"] = exp_cfg.get("mixup", {})
     tr_data = TorchData(
         y=y_train,
@@ -105,4 +107,6 @@ def fit_and_predict(
         resume=True,
     )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    return predict_torch(model, va_data, batch_size=int(torch_train_cfg.get("batch_size", 128)), device=device)
+    return predict_torch(
+        model, va_data, batch_size=int(torch_train_cfg.get("batch_size", 128)), device=device
+    )

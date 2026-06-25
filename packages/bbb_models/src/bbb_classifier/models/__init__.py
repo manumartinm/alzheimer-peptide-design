@@ -6,10 +6,10 @@ from .esm_tab_mlp import ESMTabMLP
 from .tabular_lgbm import TabularLGBMModel
 
 __all__ = [
-    "TabularLGBMModel",
+    "CommonLatentFusion",
     "ESMLGBMModel",
-    "ESMTabMLP",
     "ESMTab3DFeatModel",
     "ESMTabGNNModel",
-    "CommonLatentFusion",
+    "ESMTabMLP",
+    "TabularLGBMModel",
 ]

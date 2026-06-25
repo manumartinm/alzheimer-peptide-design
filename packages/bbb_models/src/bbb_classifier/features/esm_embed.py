@@ -81,7 +81,9 @@ def _esm_embedding_raw(seq: str) -> np.ndarray | None:
     return emb
 
 
-def esm_embedding_from_sequence(seq: str, dim: int = 128, cache_dir: str | None = None) -> np.ndarray:
+def esm_embedding_from_sequence(
+    seq: str, dim: int = 128, cache_dir: str | None = None
+) -> np.ndarray:
     cache_root = Path(cache_dir or os.environ.get("BBB_ESM_CACHE_DIR", "artifacts/cache/esm2"))
     cache_root.mkdir(parents=True, exist_ok=True)
     h = hashlib.sha256(seq.encode("utf-8")).hexdigest()
@@ -99,7 +101,9 @@ def esm_embedding_from_sequence(seq: str, dim: int = 128, cache_dir: str | None 
     return (raw @ proj).astype(np.float32)
 
 
-def batch_esm_embeddings(sequences: list[str], dim: int = 128, cache_dir: str | None = None) -> np.ndarray:
-    return np.stack([esm_embedding_from_sequence(s, dim=dim, cache_dir=cache_dir) for s in sequences]).astype(
-        np.float32
-    )
+def batch_esm_embeddings(
+    sequences: list[str], dim: int = 128, cache_dir: str | None = None
+) -> np.ndarray:
+    return np.stack(
+        [esm_embedding_from_sequence(s, dim=dim, cache_dir=cache_dir) for s in sequences]
+    ).astype(np.float32)

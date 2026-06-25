@@ -1,8 +1,9 @@
+import sys
+from pathlib import Path
+
 import pandas as pd
 
 from bbb_classifier.data.splits import train_val_split
-from pathlib import Path
-import sys
 
 _dataset_src = Path(__file__).resolve().parents[2] / "dataset" / "src"
 if str(_dataset_src) not in sys.path:
@@ -29,7 +30,9 @@ def test_deduplicate_by_identity_prefers_positive():
             "bbb_label": [0, 1, 0, 0],
         }
     )
-    out, _ = deduplicate_by_identity(df, sequence_col="sequence", label_col="bbb_label", threshold=0.8)
+    out, _ = deduplicate_by_identity(
+        df, sequence_col="sequence", label_col="bbb_label", threshold=0.8
+    )
     # two clusters should remain
     assert len(out) == 2
     # in the ACDEF* cluster, BBB+ is kept

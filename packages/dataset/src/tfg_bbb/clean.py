@@ -9,6 +9,7 @@ import pandas as pd
 
 from tfg_bbb.aa import CANONICAL_AA
 
+
 def filter_sequences(
     df: pd.DataFrame,
     sequence_col: str = "sequence",
@@ -24,7 +25,7 @@ def filter_sequences(
     keep = keep_len & keep_alpha
 
     stats = {
-        "rows_before_filter": int(len(df)),
+        "rows_before_filter": len(df),
         "rows_drop_length": int((~keep_len).sum()),
         "rows_drop_noncanonical": int((keep_len & ~keep_alpha).sum()),
         "rows_after_filter": int(keep.sum()),
@@ -48,8 +49,8 @@ def resolve_label_conflicts(
     conflict_set = set(conflict_mask.tolist())
     out = df[~df[sequence_col].isin(conflict_set)].copy().reset_index(drop=True)
     stats = {
-        "conflict_sequences_removed": int(len(conflict_set)),
-        "rows_after_conflict_resolution": int(len(out)),
+        "conflict_sequences_removed": len(conflict_set),
+        "rows_after_conflict_resolution": len(out),
     }
     return out, stats
 
@@ -59,7 +60,7 @@ def _sequence_identity(a: str, b: str) -> float:
         return 0.0
     max_len = max(len(a), len(b))
     min_len = min(len(a), len(b))
-    matches = sum(1 for x, y in zip(a[:min_len], b[:min_len]) if x == y)
+    matches = sum(1 for x, y in zip(a[:min_len], b[:min_len], strict=False) if x == y)
     return matches / max_len
 
 
@@ -139,7 +140,19 @@ def _run_cdhit_or_mmseqs(seqs: list[str], threshold: float) -> list[int] | None:
         cdhit = shutil.which("cd-hit")
         if cdhit:
             out_fa = tmp_path / "out.fa"
-            cmd = [cdhit, "-i", str(fasta), "-o", str(out_fa), "-c", str(threshold), "-n", "3", "-d", "0"]
+            cmd = [
+                cdhit,
+                "-i",
+                str(fasta),
+                "-o",
+                str(out_fa),
+                "-c",
+                str(threshold),
+                "-n",
+                "3",
+                "-d",
+                "0",
+            ]
             try:
                 subprocess.run(cmd, check=True, capture_output=True, text=True)
                 clstr = Path(f"{out_fa}.clstr")
@@ -154,9 +167,22 @@ def _run_cdhit_or_mmseqs(seqs: list[str], threshold: float) -> list[int] | None:
             clu = tmp_path / "clu"
             out_tsv = tmp_path / "clu.tsv"
             try:
-                subprocess.run([mmseqs, "createdb", str(fasta), str(db)], check=True, capture_output=True, text=True)
                 subprocess.run(
-                    [mmseqs, "cluster", str(db), str(clu), str(tmp_path / "tmp"), "--min-seq-id", str(threshold)],
+                    [mmseqs, "createdb", str(fasta), str(db)],
+                    check=True,
+                    capture_output=True,
+                    text=True,
+                )
+                subprocess.run(
+                    [
+                        mmseqs,
+                        "cluster",
+                        str(db),
+                        str(clu),
+                        str(tmp_path / "tmp"),
+                        "--min-seq-id",
+                        str(threshold),
+                    ],
                     check=True,
                     capture_output=True,
                     text=True,
@@ -187,7 +213,7 @@ def deduplicate_by_identity(
     out = out.drop_duplicates(subset=[sequence_col, label_col]).reset_index(drop=True)
     stats = {
         "rows_before_identity_dedup": int(before),
-        "rows_after_exact_dedup": int(len(out)),
+        "rows_after_exact_dedup": len(out),
     }
 
     seqs = out[sequence_col].astype(str).tolist()
@@ -203,5 +229,5 @@ def deduplicate_by_identity(
     )
     if not keep_cluster_id:
         out = out.drop(columns=["cluster_id"])
-    stats["rows_after_identity_dedup"] = int(len(out))
+    stats["rows_after_identity_dedup"] = len(out)
     return out, stats

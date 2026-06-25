@@ -1,9 +1,9 @@
 # Proteína-Complexa: Scaling Atomistic Protein Binder Design with Generative Pretraining and Test-Time Compute
 
-**PDF:** `12999_Scaling_Atomistic_Protei.pdf`  
-**Venue:** ICLR 2026 (OpenReview submission #12999)  
-**Authors:** Kieran Didi, Zuobai Zhang, Guoqing Zhou, Danny Reidenbach, Zhonglin Cao, Sooyoung Cha, et al. (NVIDIA, Oxford, Mila, SNU)  
-**Project page:** https://research.nvidia.com/labs/genair/proteina-complexa/  
+**PDF:** `12999_Scaling_Atomistic_Protei.pdf`
+**Venue:** ICLR 2026 (OpenReview submission #12999)
+**Authors:** Kieran Didi, Zuobai Zhang, Guoqing Zhou, Danny Reidenbach, Zhonglin Cao, Sooyoung Cha, et al. (NVIDIA, Oxford, Mila, SNU)
+**Project page:** https://research.nvidia.com/labs/genair/proteina-complexa/
 **Code:** https://github.com/NVIDIA-BioNeMo/Proteina-Complexa
 
 ---

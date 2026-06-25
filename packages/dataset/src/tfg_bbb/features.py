@@ -1,7 +1,6 @@
 from __future__ import annotations
 
-from math import cos, sin, sqrt, radians
-from typing import Dict
+from math import cos, radians, sin, sqrt
 
 import pandas as pd
 from Bio.SeqUtils.ProtParam import ProteinAnalysis
@@ -59,7 +58,7 @@ def _hydrophobic_moment(seq: str, angle_deg: float = 100.0) -> float:
     return sqrt(x_sum**2 + y_sum**2) / len(seq)
 
 
-def compute_features(seq: str) -> Dict[str, float]:
+def compute_features(seq: str) -> dict[str, float]:
     g = GlobalDescriptor([seq])
     g.calculate_MW(amide=True)
     mw = float(g.descriptor[0, 0])

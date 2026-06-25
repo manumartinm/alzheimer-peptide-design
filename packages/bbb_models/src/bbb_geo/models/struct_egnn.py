@@ -9,7 +9,6 @@ import torch.nn.functional as F
 from bbb_geo.features.membrane_potential import (
     amphipathicity_score,
     helical_fraction_proxy,
-    hydrophobic_moment,
     per_residue_hydrophobicity,
     radius_of_gyration,
 )
@@ -91,8 +90,12 @@ class StructEGNNBackbone(nn.Module):
         super().__init__()
         self.node_in = nn.Linear(node_dim, hidden_dim)
         self.sigma_emb = SigmaEmbedding(hidden_dim, sigma_data=sigma_data)
-        self.layers = nn.ModuleList([EGNLayer(hidden_dim, edge_dim, hidden_dim) for _ in range(num_layers)])
-        self.pool = nn.Sequential(nn.LayerNorm(hidden_dim), nn.Linear(hidden_dim, hidden_dim), nn.GELU())
+        self.layers = nn.ModuleList(
+            [EGNLayer(hidden_dim, edge_dim, hidden_dim) for _ in range(num_layers)]
+        )
+        self.pool = nn.Sequential(
+            nn.LayerNorm(hidden_dim), nn.Linear(hidden_dim, hidden_dim), nn.GELU()
+        )
 
     def forward_graph(
         self,
@@ -105,7 +108,9 @@ class StructEGNNBackbone(nn.Module):
     ) -> torch.Tensor:
         h = self.node_in(node_feats)
         if chem_dropout > 0 and self.training:
-            mask = (torch.rand(node_feats.shape[0], 1, device=node_feats.device) > chem_dropout).float()
+            mask = (
+                torch.rand(node_feats.shape[0], 1, device=node_feats.device) > chem_dropout
+            ).float()
             h = h * mask + self.node_in(torch.zeros_like(node_feats)) * (1.0 - mask)
         x = coords
         if sigma is not None:

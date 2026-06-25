@@ -97,7 +97,11 @@ def run(args: argparse.Namespace) -> None:
     preds.to_parquet(cv_root / "cv_predictions.parquet", index=False)
 
     y_true = preds[data_cfg["label_col"]].to_numpy(dtype=int)
-    y_prob = preds["p_bbb_calibrated"].to_numpy(dtype=float) if "p_bbb_calibrated" in preds.columns else preds["p_bbb_raw"].to_numpy(dtype=float)
+    y_prob = (
+        preds["p_bbb_calibrated"].to_numpy(dtype=float)
+        if "p_bbb_calibrated" in preds.columns
+        else preds["p_bbb_raw"].to_numpy(dtype=float)
+    )
     x, y = _reliability_curve(y_true, y_prob)
     plt.figure(figsize=(5, 5))
     plt.plot([0, 1], [0, 1], "--", label="ideal")

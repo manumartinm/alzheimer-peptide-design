@@ -38,7 +38,7 @@ class TabularLGBMModel:
         joblib.dump(self.model, path)
 
     @staticmethod
-    def load(path: str | Path) -> "TabularLGBMModel":
+    def load(path: str | Path) -> TabularLGBMModel:
         wrapper = TabularLGBMModel()
         wrapper.model = joblib.load(path)
         return wrapper

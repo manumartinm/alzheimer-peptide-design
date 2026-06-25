@@ -25,7 +25,15 @@ boltzgen-design = { workspace = true }
 boltzgen = { workspace = true }
 
 [dependency-groups]
-dev = ["pytest>=8.2", "ruff>=0.4"]
+dev = [
+    "mypy>=2.1.0",
+    "pandas-stubs>=3.0.3.260530",
+    "pre-commit>=4.6.0",
+    "pytest>=8.2",
+    "ruff>=0.4",
+    "types-pyyaml>=6.0.12.20260518",
+    "types-requests>=2.32.4.20260324",
+]
 notebook = ["jupyterlab>=4.0", "ipykernel>=6.29"]
 
 [build-system]
@@ -34,3 +42,65 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = []
+
+[tool.pytest.ini_options]
+testpaths = [
+    "packages/bbb_models/tests",
+    "packages/dataset/tests",
+    "packages/boltzgen_design/tests",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = [
+    "packages/boltzgen",
+    "**/notebooks/**",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "W",
+    "F",
+    "I",
+    "UP",
+    "B",
+    "SIM",
+    "RUF",
+]
+ignore = [
+    "E501",
+    "RUF001", # ambiguous unicode in scientific strings
+    "RUF002", # ambiguous unicode in docstrings
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/scripts/**" = ["E402"]
+"**/tests/**" = ["E402", "S101"]
+"**/__init__.py" = ["F401"]
+"packages/bbb_models/src/bbb_classifier/hf_export.py" = ["SIM212"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["bbb_classifier", "bbb_geo", "boltzgen_design", "tfg_bbb"]
+
+[tool.mypy]
+python_version = "3.11"
+pretty = true
+show_error_codes = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+no_implicit_optional = true
+ignore_missing_imports = true
+exclude = [
+    "packages/boltzgen/",
+    "tests/",
+    "scripts/",
+    "notebooks/",
+]
+
+# Incremental adoption: tighten these overrides as type coverage improves.
+[[tool.mypy.overrides]]
+module = ["bbb_classifier.*", "bbb_geo.*", "tfg_bbb.*"]
+ignore_errors = true

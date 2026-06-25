@@ -9,7 +9,11 @@ import pandas as pd
 import torch
 
 from bbb_geo.features.membrane_potential import amphipathicity_score, per_residue_hydrophobicity
-from bbb_geo.features.struct_loader import build_struct_batch, load_struct_manifest, merge_dataset_with_manifest
+from bbb_geo.features.struct_loader import (
+    build_struct_batch,
+    load_struct_manifest,
+    merge_dataset_with_manifest,
+)
 from bbb_geo.models import StructEGNNGeo
 from bbb_geo.train.checkpoints import load_checkpoint
 
@@ -29,7 +33,9 @@ def run(args: argparse.Namespace) -> None:
     run_dir = Path(args.run_dir)
     df = pd.read_parquet(args.dataset)
     manifest = load_struct_manifest(args.manifest)
-    merged = merge_dataset_with_manifest(df, manifest, sequence_col="sequence").head(args.max_samples)
+    merged = merge_dataset_with_manifest(df, manifest, sequence_col="sequence").head(
+        args.max_samples
+    )
     _, samples = build_struct_batch(merged, "sequence")
 
     state = load_checkpoint(run_dir / "checkpoints" / "best.ckpt")
@@ -40,7 +46,9 @@ def run(args: argparse.Namespace) -> None:
     grad_norms = [_grad_norm(model, s) for s in samples]
     amp_scores = []
     for sample in samples:
-        hydro = per_residue_hydrophobicity(str(sample["sequence"]), device=sample["coords"].device, dtype=sample["coords"].dtype)
+        hydro = per_residue_hydrophobicity(
+            str(sample["sequence"]), device=sample["coords"].device, dtype=sample["coords"].dtype
+        )
         amp_scores.append(float(amphipathicity_score(sample["coords"], hydro).item()))
 
     with torch.no_grad():

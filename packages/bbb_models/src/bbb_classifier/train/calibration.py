@@ -41,7 +41,7 @@ class ProbabilityCalibrator:
         joblib.dump({"method": self.method, "model": self.model}, path)
 
     @staticmethod
-    def load(path: str) -> "ProbabilityCalibrator":
+    def load(path: str) -> ProbabilityCalibrator:
         data = joblib.load(path)
         obj = ProbabilityCalibrator(method=data["method"])
         obj.model = data["model"]

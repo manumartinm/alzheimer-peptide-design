@@ -2,8 +2,8 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 import pandas as pd
 
@@ -78,8 +78,12 @@ def main() -> None:
         else:
             raise ValueError("Could not infer structure paths from metrics CSV")
 
-    df["structure_path"] = df["structure_path"].map(lambda p: str((input_dir / p).resolve()) if not Path(p).is_absolute() else p)
-    df["sequence"] = df["structure_path"].map(lambda p: extract_sequence_from_cif(Path(p)) if Path(p).exists() else "")
+    df["structure_path"] = df["structure_path"].map(
+        lambda p: str((input_dir / p).resolve()) if not Path(p).is_absolute() else p
+    )
+    df["sequence"] = df["structure_path"].map(
+        lambda p: extract_sequence_from_cif(Path(p)) if Path(p).exists() else ""
+    )
 
     bbb_oracle = BBBOracle(
         bbb_repo_root=Path(args.bbb_repo),
@@ -89,19 +93,25 @@ def main() -> None:
     bbb_oracle.score_sequences(df["sequence"].tolist(), bbb_scores_file)
     bbb_df = pd.read_csv(bbb_scores_file)
 
-    prob_col = "p_bbb_calibrated" if "p_bbb_calibrated" in bbb_df.columns else (
-        "p_bbb_raw" if "p_bbb_raw" in bbb_df.columns else "probability"
+    prob_col = (
+        "p_bbb_calibrated"
+        if "p_bbb_calibrated" in bbb_df.columns
+        else ("p_bbb_raw" if "p_bbb_raw" in bbb_df.columns else "probability")
     )
     df["bbb_probability"] = pd.to_numeric(bbb_df[prob_col], errors="coerce").fillna(0.0)
 
-    df["hotspot_fraction"] = first_existing(df, ["hotspot_fraction", "g1_hotspot_fraction"], default=0.0)
+    df["hotspot_fraction"] = first_existing(
+        df, ["hotspot_fraction", "g1_hotspot_fraction"], default=0.0
+    )
     df["atp_repulsion"] = first_existing(df, ["atp_repulsion", "g2_atp_repulsion"], default=1e9)
     df["iptm"] = first_existing(df, ["iptm", "design_iptm"], default=0.0)
     df["plddt"] = first_existing(df, ["plddt", "design_plddt"], default=0.0)
     df["closure_rmsd"] = first_existing(df, ["closure_rmsd", "cyclic_closure_rmsd"], default=1e9)
 
     # Placeholder liability gate: can be replaced with TANGO and motif checks.
-    df["passes_sequence_liability"] = df["sequence"].map(lambda s: len(s) > 0 and "KKKK" not in s and "RRRR" not in s)
+    df["passes_sequence_liability"] = df["sequence"].map(
+        lambda s: len(s) > 0 and "KKKK" not in s and "RRRR" not in s
+    )
 
     thresholds = GateThresholds()
     rows = df.to_dict(orient="records")
@@ -137,4 +147,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

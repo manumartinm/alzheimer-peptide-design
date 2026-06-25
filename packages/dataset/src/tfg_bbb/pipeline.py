@@ -10,7 +10,6 @@ import yaml
 
 from .augment import AugmentConfig, augment_gold_dataframe, load_augment_config
 from .clean import deduplicate_by_identity, filter_sequences, resolve_label_conflicts
-from .eda import run_eda, run_augmentation_eda, run_gold_eda
 from .features import add_feature_columns
 from .folding import FoldConfig, build_struct_manifest
 from .io import ensure_dirs, write_parquet
@@ -50,8 +49,12 @@ def _attach_peptide_id(df: pd.DataFrame) -> pd.DataFrame:
     return out
 
 
-def _clean_and_featurize(df: pd.DataFrame, cfg: BuildConfig, is_gold: int) -> tuple[pd.DataFrame, dict[str, int]]:
-    cleaned, stats_filter = filter_sequences(df, min_length=cfg.min_length, max_length=cfg.max_length)
+def _clean_and_featurize(
+    df: pd.DataFrame, cfg: BuildConfig, is_gold: int
+) -> tuple[pd.DataFrame, dict[str, int]]:
+    cleaned, stats_filter = filter_sequences(
+        df, min_length=cfg.min_length, max_length=cfg.max_length
+    )
     cleaned, stats_conflicts = resolve_label_conflicts(cleaned)
     cleaned, stats_dedup = deduplicate_by_identity(
         cleaned,
@@ -130,13 +133,17 @@ def build_augmented_gold_dataset(
     stats_path = cfg.processed_dir / "augmentation_stats.json"
 
     if not augmented_df.empty:
-        validate_dataset_schema(augmented_df.drop(columns=["is_augmented", "parent_peptide_id"], errors="ignore"))
-    validate_dataset_schema(combined_df.drop(columns=["is_augmented", "parent_peptide_id"], errors="ignore"))
+        validate_dataset_schema(
+            augmented_df.drop(columns=["is_augmented", "parent_peptide_id"], errors="ignore")
+        )
+    validate_dataset_schema(
+        combined_df.drop(columns=["is_augmented", "parent_peptide_id"], errors="ignore")
+    )
 
     write_parquet(augmented_df, extra_path)
     write_parquet(combined_df, combined_path)
-    stats["gold_rows"] = int(len(gold_df))
-    stats["combined_rows"] = int(len(combined_df))
+    stats["gold_rows"] = len(gold_df)
+    stats["combined_rows"] = len(combined_df)
     stats_path.write_text(json.dumps(stats, indent=2), encoding="utf-8")
     return augmented_df, combined_df, stats
 

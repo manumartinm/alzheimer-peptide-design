@@ -169,13 +169,13 @@ Una iteración RL+MD se considera válida si:
 
 ## Plan de adopción en 3 pasos
 
-1. **Baseline TD3B sin MD en el loop**  
+1. **Baseline TD3B sin MD en el loop**
    Confirmar estabilidad y métricas base.
 
-2. **MD offline de top-K + análisis retrospectivo**  
+2. **MD offline de top-K + análisis retrospectivo**
    Medir correlación entre `R_fast` y `R_MD`.
 
-3. **Cierre de loop RL+MD**  
+3. **Cierre de loop RL+MD**
    Recalibrar reward por iteración y repetir campañas.
 
 ---

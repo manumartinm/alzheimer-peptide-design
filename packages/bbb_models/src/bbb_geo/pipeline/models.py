@@ -6,11 +6,11 @@ from typing import Any
 import numpy as np
 import torch
 
+from bbb_classifier.train.engine import TorchData, predict_torch, train_torch_model
 from bbb_classifier.train.metrics import classification_metrics
 from bbb_classifier.utils.io import write_json
 from bbb_geo.features.membrane_potential import amphipathicity_score, per_residue_hydrophobicity
 from bbb_geo.features.struct_graph import apply_coord_noise
-from bbb_classifier.train.engine import TorchData, predict_torch, train_torch_model
 from bbb_geo.models import StructEGNNGeo
 
 
@@ -39,7 +39,9 @@ def fit_and_predict(
     )
 
     torch_train_cfg = dict(train_cfg.get("training", {}))
-    torch_train_cfg["save_periodic_every"] = int(train_cfg.get("output", {}).get("save_periodic_every", 0))
+    torch_train_cfg["save_periodic_every"] = int(
+        train_cfg.get("output", {}).get("save_periodic_every", 0)
+    )
     torch_train_cfg["mixup"] = exp_cfg.get("mixup", {})
     torch_train_cfg["struct"] = exp_cfg.get("struct", {})
     tr_data = TorchData(
@@ -69,7 +71,9 @@ def fit_and_predict(
         resume=resume,
     )
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    val_prob = predict_torch(model, va_data, batch_size=int(torch_train_cfg.get("batch_size", 128)), device=device)
+    val_prob = predict_torch(
+        model, va_data, batch_size=int(torch_train_cfg.get("batch_size", 128)), device=device
+    )
     sigma_metrics = evaluate_multi_sigma(
         model=model,
         val_data=va_data,
@@ -82,7 +86,9 @@ def fit_and_predict(
         model=model,
         struct_samples=va_feat["struct_samples"],
         max_samples=int(exp_cfg.get("validation", {}).get("gate_max_samples", 50)),
-        grad_norm_threshold=float(exp_cfg.get("validation", {}).get("gate_grad_norm_threshold", 1e-3)),
+        grad_norm_threshold=float(
+            exp_cfg.get("validation", {}).get("gate_grad_norm_threshold", 1e-3)
+        ),
         corr_threshold=float(exp_cfg.get("validation", {}).get("gate_corr_threshold", 0.1)),
         device=device,
     )
@@ -157,7 +163,9 @@ def evaluate_guidance_gate(
         base = _sample_to_device(sample, device=device)
         grad_norms.append(_grad_norm(model, base))
         coords = base["coords"]
-        hydro = per_residue_hydrophobicity(str(base["sequence"]), device=coords.device, dtype=coords.dtype)
+        hydro = per_residue_hydrophobicity(
+            str(base["sequence"]), device=coords.device, dtype=coords.dtype
+        )
         amp_scores.append(float(amphipathicity_score(coords, hydro).item()))
         with torch.no_grad():
             probs.append(float(torch.sigmoid(model.forward(graphs=[base])).item()))

@@ -10,7 +10,11 @@ import torch
 from bbb_classifier.infer.rank import rank_candidates
 from bbb_classifier.train.calibration import ProbabilityCalibrator
 from bbb_classifier.train.engine import TorchData, predict_torch
-from bbb_geo.features.struct_loader import build_struct_sample, load_struct_manifest, merge_dataset_with_manifest
+from bbb_geo.features.struct_loader import (
+    build_struct_sample,
+    load_struct_manifest,
+    merge_dataset_with_manifest,
+)
 from bbb_geo.models import StructEGNNGeo
 from bbb_geo.pipeline._common import GEO_MODEL_TYPES
 from bbb_geo.train.checkpoints import load_checkpoint
@@ -38,11 +42,17 @@ def run(args: argparse.Namespace) -> None:
     sequence_col = data_cfg["sequence_col"]
     df = _read_table(Path(args.input))
     struct_cfg = exp_cfg.get("struct", {})
-    manifest_path = args.manifest or exp_cfg.get("struct", {}).get("manifest_path") or data_cfg.get("struct_manifest_path")
+    manifest_path = (
+        args.manifest
+        or exp_cfg.get("struct", {}).get("manifest_path")
+        or data_cfg.get("struct_manifest_path")
+    )
 
     work_df = df
     if manifest_path and "coords_path" not in df.columns:
-        work_df = merge_dataset_with_manifest(df, load_struct_manifest(manifest_path), sequence_col=sequence_col)
+        work_df = merge_dataset_with_manifest(
+            df, load_struct_manifest(manifest_path), sequence_col=sequence_col
+        )
 
     struct_samples = []
     valid_rows: list[pd.Series] = []
@@ -76,7 +86,12 @@ def run(args: argparse.Namespace) -> None:
         feat3d=None,
         struct_samples=struct_samples,
     )
-    prob = predict_torch(model, td, batch_size=128, device=torch.device("cuda" if torch.cuda.is_available() else "cpu"))
+    prob = predict_torch(
+        model,
+        td,
+        batch_size=128,
+        device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+    )
 
     p_cal = prob
     calib_path = run_dir / "calibrators" / "calibrator.pkl"

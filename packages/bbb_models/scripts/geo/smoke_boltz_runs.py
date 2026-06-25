@@ -19,17 +19,20 @@ _BOLTZ_DEFAULT = _DATASET / "boltz-experiments"
 
 sys.path.insert(0, str(_DATASET / "src"))
 
-from tfg_bbb.struct_io import parse_cif_backbone, write_coords_npz  # noqa: E402
-
 from bbb_geo.features.membrane_potential import amphipathicity_score, per_residue_hydrophobicity
 from bbb_geo.features.struct_graph import build_struct_graph
 from bbb_geo.infer.struct_guidance import BBBGuidanceConfig, compute_bbb_guidance_force
 from bbb_geo.models import StructEGNNGeo
 from bbb_geo.pipeline.train import run as run_geo_train
+from tfg_bbb.struct_io import parse_cif_backbone, write_coords_npz
 
 
 def _find_structure_cif(run_dir: Path) -> Path:
-    for pattern in ("**/sample_*predicted_structure.cif", "**/sample_*.cif", "outputs/files/**/*.cif"):
+    for pattern in (
+        "**/sample_*predicted_structure.cif",
+        "**/sample_*.cif",
+        "outputs/files/**/*.cif",
+    ):
         matches = sorted(run_dir.glob(pattern))
         if matches:
             return matches[0]
@@ -67,7 +70,9 @@ def build_manifest_from_boltz_runs(boltz_dir: Path, out_dir: Path) -> pd.DataFra
         parsed = parse_cif_backbone(cif_path)
         seq_from_cif = "".join(parsed["sequence"])
         if seq_from_cif != meta["sequence"]:
-            raise ValueError(f"Sequence mismatch for {run_json.parent.name}: {meta['sequence']} vs {seq_from_cif}")
+            raise ValueError(
+                f"Sequence mismatch for {run_json.parent.name}: {meta['sequence']} vs {seq_from_cif}"
+            )
 
         from hashlib import sha256
 
@@ -130,7 +135,9 @@ def check_model_forward(manifest: pd.DataFrame) -> dict[str, float]:
         sigma=2.0,
         cfg=BBBGuidanceConfig(bbb_weight=0.0, membrane_weight=1.0, ckpt_path="", sigma_gate=8.0),
     )
-    membrane_norm = float(torch.linalg.norm(membrane_force).item()) if membrane_force is not None else 0.0
+    membrane_norm = (
+        float(torch.linalg.norm(membrane_force).item()) if membrane_force is not None else 0.0
+    )
 
     return {
         "prob": prob,
@@ -199,7 +206,9 @@ def micro_train(manifest: pd.DataFrame, preview_csv: Path, work_dir: Path) -> di
 def main() -> None:
     parser = argparse.ArgumentParser(description="Smoke-test bbb_geo on Boltz experiment folders.")
     parser.add_argument("--boltz-dir", default=str(_BOLTZ_DEFAULT))
-    parser.add_argument("--preview-csv", default=str(_DATASET / "data/processed/peptides_bbb_preview.csv"))
+    parser.add_argument(
+        "--preview-csv", default=str(_DATASET / "data/processed/peptides_bbb_preview.csv")
+    )
     parser.add_argument("--skip-train", action="store_true")
     args = parser.parse_args()
 
@@ -211,7 +220,11 @@ def main() -> None:
         work = Path(tmp)
         manifest = build_manifest_from_boltz_runs(boltz_dir, work)
         print(f"Loaded {len(manifest)} Boltz run(s):")
-        print(manifest[["sequence", "plddt", "structure_confidence", "coords_path"]].to_string(index=False))
+        print(
+            manifest[["sequence", "plddt", "structure_confidence", "coords_path"]].to_string(
+                index=False
+            )
+        )
 
         checks = check_model_forward(manifest)
         print("\nForward / guidance checks:")

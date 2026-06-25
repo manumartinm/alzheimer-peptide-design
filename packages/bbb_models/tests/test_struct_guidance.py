@@ -37,7 +37,9 @@ def test_membrane_guidance_without_ckpt() -> None:
         ckpt_path="",
         sigma_gate=8.0,
     )
-    force = compute_bbb_guidance_force(coords, feats, torch.ones(coords.shape[0]), sigma=2.0, cfg=cfg)
+    force = compute_bbb_guidance_force(
+        coords, feats, torch.ones(coords.shape[0]), sigma=2.0, cfg=cfg
+    )
     assert force is not None
     assert force.shape == coords.shape
     assert float(torch.linalg.norm(force)) > 0.0
@@ -47,5 +49,7 @@ def test_bbb_guidance_requires_ckpt() -> None:
     coords = torch.tensor([[0.0, 0.0, 0.0], [3.8, 0.0, 0.0]], dtype=torch.float32)
     feats = _minimal_feats(coords, "AL")
     cfg = BBBGuidanceConfig(bbb_weight=1.0, membrane_weight=0.0, ckpt_path="", sigma_gate=8.0)
-    force = compute_bbb_guidance_force(coords, feats, torch.ones(coords.shape[0]), sigma=2.0, cfg=cfg)
+    force = compute_bbb_guidance_force(
+        coords, feats, torch.ones(coords.shape[0]), sigma=2.0, cfg=cfg
+    )
     assert force is None

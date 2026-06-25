@@ -12,7 +12,13 @@ from bbb_classifier.features.graph3d import sequence_graph
 from bbb_classifier.features.struct3d import feature_matrix_3d
 from bbb_classifier.features.tabular import tabular_matrix
 from bbb_classifier.infer.rank import rank_candidates
-from bbb_classifier.models import ESMLGBMModel, ESMTab3DFeatModel, ESMTabGNNModel, ESMTabMLP, TabularLGBMModel
+from bbb_classifier.models import (
+    ESMLGBMModel,
+    ESMTab3DFeatModel,
+    ESMTabGNNModel,
+    ESMTabMLP,
+    TabularLGBMModel,
+)
 from bbb_classifier.pipeline._common import CLASSIFIER_MODEL_TYPES
 from bbb_classifier.train.calibration import ProbabilityCalibrator
 from bbb_classifier.train.checkpoints import load_checkpoint
@@ -43,12 +49,23 @@ def run(args: argparse.Namespace) -> None:
     tab_cols = [c for c in meta.get("tab_cols", []) if c in df.columns]
     tab = tabular_matrix(df, tab_cols) if exp_cfg["features"].get("use_tabular", False) else None
     esm = (
-        batch_esm_embeddings(df[sequence_col].astype(str).tolist(), dim=int(exp_cfg.get("model", {}).get("esm_dim", 128)))
+        batch_esm_embeddings(
+            df[sequence_col].astype(str).tolist(),
+            dim=int(exp_cfg.get("model", {}).get("esm_dim", 128)),
+        )
         if exp_cfg["features"].get("use_esm", False)
         else None
     )
-    feat3d = feature_matrix_3d(df, data_cfg.get("three_d_columns", [])) if exp_cfg["features"].get("use_3d", False) else None
-    graphs = [sequence_graph(s) for s in df[sequence_col].astype(str).tolist()] if exp_cfg["features"].get("use_gnn", False) else None
+    feat3d = (
+        feature_matrix_3d(df, data_cfg.get("three_d_columns", []))
+        if exp_cfg["features"].get("use_3d", False)
+        else None
+    )
+    graphs = (
+        [sequence_graph(s) for s in df[sequence_col].astype(str).tolist()]
+        if exp_cfg["features"].get("use_gnn", False)
+        else None
+    )
 
     if model_type == "tabular_lgbm":
         prob = TabularLGBMModel.load(run_dir / "checkpoints" / "best.pkl").predict_proba(tab)
@@ -58,7 +75,11 @@ def run(args: argparse.Namespace) -> None:
         if model_type == "esm_tab_mlp":
             model = ESMTabMLP(d_esm=esm.shape[1], d_tab=tab.shape[1])
         elif model_type == "esm_tab_3dfeat":
-            model = ESMTab3DFeatModel(d_esm=esm.shape[1], d_tab=tab.shape[1], d_3d=feat3d.shape[1] if feat3d is not None else 0)
+            model = ESMTab3DFeatModel(
+                d_esm=esm.shape[1],
+                d_tab=tab.shape[1],
+                d_3d=feat3d.shape[1] if feat3d is not None else 0,
+            )
         elif model_type == "esm_tab_gnn":
             model = ESMTabGNNModel(d_esm=esm.shape[1], d_tab=tab.shape[1])
         else:
@@ -72,7 +93,12 @@ def run(args: argparse.Namespace) -> None:
             feat3d=feat3d,
             graphs=graphs,
         )
-        prob = predict_torch(model, td, batch_size=128, device=torch.device("cuda" if torch.cuda.is_available() else "cpu"))
+        prob = predict_torch(
+            model,
+            td,
+            batch_size=128,
+            device=torch.device("cuda" if torch.cuda.is_available() else "cpu"),
+        )
 
     p_cal = prob
     calib_path = run_dir / "calibrators" / "calibrator.pkl"

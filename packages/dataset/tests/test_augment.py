@@ -1,9 +1,13 @@
 from __future__ import annotations
 
 import pandas as pd
-import pytest
 
-from tfg_bbb.augment import AugmentConfig, augment_gold_dataframe, augment_sequence, mutate_conservative
+from tfg_bbb.augment import (
+    AugmentConfig,
+    augment_gold_dataframe,
+    augment_sequence,
+    mutate_conservative,
+)
 from tfg_bbb.schema import validate_dataset_schema
 
 
@@ -81,8 +85,16 @@ def test_augment_gold_dataframe_generates_labeled_rows() -> None:
 
 
 def test_augment_gold_dataframe_skips_duplicates() -> None:
-    gold = pd.DataFrame([_gold_row(), _gold_row(peptide_id="dup", source_id="P_T3", sequence="GGGGGG", bbb_label=0)])
-    cfg = AugmentConfig(enabled=True, n_augmented_per_sample=1, random_state=0, seq_substitution_prob=0.0, seq_truncation_prob=0.0)
+    gold = pd.DataFrame(
+        [_gold_row(), _gold_row(peptide_id="dup", source_id="P_T3", sequence="GGGGGG", bbb_label=0)]
+    )
+    cfg = AugmentConfig(
+        enabled=True,
+        n_augmented_per_sample=1,
+        random_state=0,
+        seq_substitution_prob=0.0,
+        seq_truncation_prob=0.0,
+    )
     _, _, stats = augment_gold_dataframe(gold, cfg)
     assert stats["n_generated"] >= 0
 
