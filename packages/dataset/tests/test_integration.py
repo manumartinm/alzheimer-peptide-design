@@ -57,7 +57,7 @@ def test_build_augmented_with_in_memory_gold(tmp_path: Path) -> None:
         seq_substitution_prob=1.0,
         seq_truncation_prob=0.0,
     )
-    _, combined, stats = builder.build_augmented(gold_df=gold, aug_cfg=aug_cfg)
+    _, _combined, stats = builder.build_augmented(gold_df=gold, aug_cfg=aug_cfg)
     assert stats["gold_rows"] == 1
     assert cfg.layout.artifact(ProcessedArtifact.COMBINED).exists()
 
