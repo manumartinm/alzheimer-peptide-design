@@ -33,6 +33,8 @@ notebook = [
   "umap-learn",
   "jupyterlab>=4.0",
   "ipykernel>=6.29",
+  "datasets>=2.19",
+  "py3dmol",
 ]
 dev = [
   "pytest>=8.2",
