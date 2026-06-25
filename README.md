@@ -1,0 +1,40 @@
+# alzheimer-peptide-design
+
+Monorepo for *in silico* design of BBB-compatible cyclic phosphomimetic peptides that modulate GSK3β (Alzheimer's disease target).
+
+## Quick start
+
+```bash
+git clone --recurse-submodules https://github.com/YOUR_ORG/alzheimer-peptide-design.git
+cd alzheimer-peptide-design
+uv sync
+```
+
+## Packages
+
+| Package | Path | Role |
+|---------|------|------|
+| `tfg-bbb-dataset` | `packages/dataset/` | BBB peptide dataset curation (`tfg-bbb-build`) |
+| `bbb-models` | `packages/bbb_models/` | Sequence + structural BBB classifiers |
+| `boltzgen-design` | `packages/boltzgen_design/` | GSK3β design orchestration (guidance, filters) |
+| `boltzgen` | `packages/boltzgen/` | Diffusion engine (git submodule fork) |
+
+## Data
+
+Large datasets are **not** committed. Download from Hugging Face or regenerate locally:
+
+```bash
+cd packages/dataset
+uv run tfg-bbb-build
+uv run tfg-bbb-export-hf --variant full
+```
+
+See [`packages/dataset/data/README.md`](packages/dataset/data/README.md) and the HF dataset [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides).
+
+## Documentation
+
+Full architecture and pipelines: [`docs/architecture.md`](docs/architecture.md).
+
+## Remote GPU (Vast.ai)
+
+Shared helpers live in `infra/vast/_common.sh`. See [`docs/VAST_TRAINING.md`](docs/VAST_TRAINING.md).

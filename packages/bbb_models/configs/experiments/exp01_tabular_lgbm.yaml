@@ -1,0 +1,7 @@
+name: exp01_tabular_lgbm
+model_type: tabular_lgbm
+features:
+  use_tabular: true
+  use_esm: false
+  use_3d: false
+  use_gnn: false

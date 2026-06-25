@@ -1,0 +1,43 @@
+# Cyclic disulfide-stapled peptide vs GSK3β kinase domain (1Q4L chain A).
+# Therapeutic intent: competitive ATP-site inhibition → reduce tau hyperphosphorylation (AD).
+#
+# Binding site = ATP cleft + hinge + catalytic Asp + activation loop (label_seq_id).
+# Peptide: 15 aa beta-hairpin scaffold (2C9C2), disulfide between Cys3–Cys13.
+entities:
+  - protein:
+      id: P
+      sequence: 2C9C2
+      secondary_structure:
+        sheet: 1,4..10
+      residue_constraints:
+        - position: 1..2
+          disallowed: CM
+        - position: 4..12
+          disallowed: M
+        - position: 14..15
+          disallowed: CM
+
+  - file:
+      path: gsk3b.cif
+      include:
+        - chain:
+            id: A
+            res_index: 46..220
+      binding_types:
+        - chain:
+            id: A
+            binding: 67,85,89,95,96,133,134,135,180,200,201,202,203,204,205,206
+      include_proximity:
+        - chain:
+            id: A
+            res_index: 85,133,134,135,180,200,201,202,203,204,205
+            radius: 22
+      structure_groups:
+        - group:
+            id: A
+            visibility: 1
+
+constraints:
+  - bond:
+      atom1: [P, 3, SG]
+      atom2: [P, 13, SG]

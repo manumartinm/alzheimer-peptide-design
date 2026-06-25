@@ -1,0 +1,11 @@
+{
+  "augmentation_enabled": 1,
+  "n_candidates": 288,
+  "n_requested": 576,
+  "n_generated": 373,
+  "n_skipped_duplicate": 1,
+  "n_skipped_invalid": 0,
+  "n_skipped_unchanged": 202,
+  "gold_rows": 452,
+  "combined_rows": 825
+}

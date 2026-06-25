@@ -1,0 +1,3 @@
+data_input: /workspace/data/peptides_bbb.parquet
+experiment: configs/experiments/exp03_esm_tab_mlp.yaml
+run_dir: artifacts/models/exp03_esm_tab_mlp

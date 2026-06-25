@@ -1,0 +1,4 @@
+dataset,rows,bbb_positive,bbb_negative,positive_ratio,length_median,length_min,length_max,unique_sequences,unique_clusters
+gold,452,223,229,0.4934,14.0,6,30,452,452
+augmented_extra,373,187,186,0.5013,14.0,6,30,373,248
+gold_plus_augmented,825,410,415,0.497,14.0,6,30,825,452

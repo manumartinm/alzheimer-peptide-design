@@ -1,0 +1,33 @@
+# BoltzGen campaign: cyclic GSK3β peptide → tau hyperphosphorylation (AD)
+campaign:
+  protocol: peptide-anything
+  num_designs: 300
+  design_checkpoints:
+    - huggingface:boltzgen/boltzgen-1:boltzgen1_adherence.ckpt
+  inverse_fold_num_sequences: 4
+  steps:
+    - design
+    - inverse_folding
+    - folding
+    - analysis
+    - filtering
+  boltzgen_config:
+    - "filtering filter_bindingsite=true peptide_type=cyclic filter_cysteine=true"
+    - "analysis liability_modality=peptide liability_peptide_type=cyclic"
+    - "filtering refolding_rmsd_threshold=2.5"
+
+inputs:
+  target_config: "./gsk3b_target.yaml"
+  design_spec: "../targets/gsk3b/gsk3b_peptide_design.yaml"
+
+runtime:
+  boltzgen_bin: "boltzgen"
+  output_root: "../boltzgen/workbench/gsk3b"
+
+thresholds:
+  gate_g1_hotspot_min_fraction: 0.75
+  gate_g2_atp_repulsion_max: 0.15
+  gate_g3_bbb_min: 0.60
+  gate_g4_iptm_min: 0.78
+  gate_g4_plddt_min: 85.0
+  gate_g4_closure_rmsd_max: 1.5

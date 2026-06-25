@@ -1,0 +1,11 @@
+name: exp03_esm_tab_mlp
+model_type: esm_tab_mlp
+features:
+  use_tabular: true
+  use_esm: true
+  use_3d: false
+  use_gnn: false
+model:
+  esm_dim: 128
+  hidden_dim: 256
+  dropout: 0.2

@@ -1,0 +1,30 @@
+name: exp09_struct_egnn_noise
+model_type: struct_egnn_geo
+features:
+  use_tabular: false
+  use_esm: false
+  use_3d: false
+  use_gnn: false
+  use_struct: true
+model:
+  egnn_hidden: 64
+  egnn_layers: 3
+  dropout: 0.2
+  chem_dropout: 0.2
+  sigma_data: 16.0
+struct:
+  manifest_path: ../dataset/data/processed/peptides_struct_manifest.parquet
+  radius: 10.0
+  num_rbf: 16
+  sigma_data: 16.0
+  sigma_min: 0.0004
+  sigma_max: 160.0
+  low_mid_bias: 0.7
+  coord_sigma_cap: 8.0
+  aux_weight: 0.1
+  plddt_weight_floor: 0.1
+validation:
+  sigma_values: [0.0, 2.0, 4.0, 8.0]
+  gate_max_samples: 50
+  gate_grad_norm_threshold: 0.001
+  gate_corr_threshold: 0.1

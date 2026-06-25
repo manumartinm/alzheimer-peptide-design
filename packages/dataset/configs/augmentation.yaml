@@ -1,0 +1,10 @@
+# Default sequence augmentation settings for the gold BBB dataset.
+# Mirrors exp06 in TFG/bbb_models (conservative perturbation).
+enabled: true
+seq_substitution_prob: 0.5
+seq_truncation_prob: 0.3
+n_augmented_per_sample: 2
+random_state: 42
+min_length: 6
+max_length: 30
+only_non_holdout: true

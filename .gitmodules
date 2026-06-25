@@ -1,0 +1,4 @@
+[submodule "packages/boltzgen"]
+	path = packages/boltzgen
+	url = https://github.com/manumartinm/boltzgen.git
+	branch = bbb-guidance-diffusion

@@ -1,0 +1,9 @@
+name: exp02_esm_lgbm
+model_type: esm_lgbm
+features:
+  use_tabular: false
+  use_esm: true
+  use_3d: false
+  use_gnn: false
+model:
+  esm_dim: 128

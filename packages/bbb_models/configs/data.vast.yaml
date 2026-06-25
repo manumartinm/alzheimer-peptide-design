@@ -1,0 +1,29 @@
+dataset_path: /workspace/alzheimer-peptide-design/packages/dataset/data/hf_release/peptides.parquet
+dataset_root: /workspace/alzheimer-peptide-design/packages/dataset/data/hf_release
+id_col: peptide_id
+label_col: bbb_label
+sequence_col: sequence
+fold_col: fold_id
+test_size: 0.2
+random_state: 42
+tabular_exclude:
+  - peptide_id
+  - sequence
+  - bbb_label
+  - split
+  - source_split
+  - source_db
+  - label_tier
+  - is_gold
+  - cluster_id
+  - external_test
+  - source_id
+  - assay_method
+  - reference
+  - organism
+  - fold_id
+  - is_augmented
+  - parent_peptide_id
+  - sample_weight
+three_d_columns: []
+struct_manifest_path: ""

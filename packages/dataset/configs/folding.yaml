@@ -1,0 +1,8 @@
+# Boltz structure folding defaults for the dataset CLI.
+model: boltz-2.1
+max_workers: 4
+limit: 0
+structures_dir: data/structures
+experiments_dir: boltz-experiments
+output_name: peptides_struct_manifest.parquet
+resume: true

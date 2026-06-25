@@ -1,0 +1,57 @@
+# GSK3β — target for cyclic peptide inhibitor (tau hyperphosphorylation in AD).
+# Residue numbers are label_seq_id in gsk3b.cif (1Q4L chain A).
+target:
+  name: gsk3b
+  pdb_id: "1Q4L"
+  chain_id: "A"
+  cif_path: "../targets/gsk3b/gsk3b.cif"
+  rationale: >
+    GSK3β is a major kinase phosphorylating tau (Ser396/404 and related sites).
+    ATP-competitive peptide binding at the catalytic cleft aims to block kinase
+    activity and slow pathological tau accumulation.
+
+regions:
+  # Catalytic core + hinge contacts (prioritize in filtering/guidance)
+  hotspots_primary:
+    - 85   # Lys — ATP phosphate anchor
+    - 133  # Asp — hinge
+    - 134  # Tyr — hinge / gatekeeper vicinity
+    - 135  # Val — hinge
+    - 180  # catalytic Asp
+    - 205  # activation loop
+  hotspots_secondary:
+    - 67
+    - 89
+    - 95
+    - 96
+  atp_cleft:
+    - 50
+    - 85
+    - 133
+    - 134
+    - 135
+    - 200
+    - 201
+    - 202
+    - 203
+    - 204
+    - 205
+    - 206
+
+guidance:
+  cutoff_angstrom: 5.0
+  bounding_shell_angstrom:
+    min: 8.0
+    max: 12.0
+  hotspot_weight: 1.0
+  atp_weight: 0.85
+  alpha: 8.0
+  lj_sigma: 3.0
+  max_force: 1.0
+  bbb:
+    weight: 0.3
+    membrane_weight: 0.7
+    ckpt: ../../bbb_models/artifacts/models/exp09_struct_egnn_noise/checkpoints/best.ckpt
+    sigma_gate: 4.0
+    hidden: 64
+    layers: 3

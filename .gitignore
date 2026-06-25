@@ -1,0 +1,81 @@
+# Local deliverables
+entregas/
+
+# Virtual environments
+.venv/
+**/.venv/
+**/uv.lock
+!/uv.lock
+*.egg-info/
+**/*.egg-info/
+
+# Python caches and tooling
+__pycache__/
+**/__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+**/.ipynb_checkpoints/
+
+# Logs and local tracking
+logs/
+**/logs/
+mlflow.db
+**/mlruns/
+wandb/
+
+# ML artifacts and model files
+artifacts/
+**/artifacts/
+checkpoints/
+**/checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+
+# Design outputs and caches
+packages/boltzgen/workbench/
+packages/boltzgen/cache/
+**/workbench/
+
+# Data blobs and archives
+packages/dataset/data/raw/
+packages/dataset/data/interim/
+packages/dataset/data/structures/
+packages/dataset/data/hf_release/
+**/data/raw/
+**/data/interim/
+*.h5
+*.npy
+*.tar.gz
+*.zip
+*.pdf
+
+# Environment and OS files
+.env
+.DS_Store
+
+# Dataset caches (regenerable via tfg-bbb-fold)
+packages/dataset/boltz-experiments/
+packages/dataset/.env.local
+
+# Vast local state
+**/.last_instance_id
+**/.last_output_basename
+
+# Local SSH helpers (may contain host credentials)
+a.sh
+
+# Test coverage
+.coverage
+
+# Local env overrides
+.env.local
+
+# Migration helper (not part of repo)
+.rsync-exclude
+
+# Submodule upstream bulk examples (optional)
+packages/boltzgen/example/

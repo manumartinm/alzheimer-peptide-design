@@ -1,0 +1,30 @@
+run_name: default
+seed: 42
+primary_metric: pr_auc
+secondary_metric: mcc
+maximize_metric: true
+
+training:
+  epochs: 50
+  batch_size: 128
+  lr: 0.001
+  weight_decay: 0.0001
+  grad_clip: 1.0
+  patience: 8
+  log_every: 5
+  eval_every: 1
+  num_workers: 4
+
+calibration:
+  enabled: true
+  method: isotonic
+
+output:
+  root: artifacts
+  save_periodic_every: 5
+  keep_top_k: 1
+
+tracking:
+  tensorboard: true
+  mlflow: true
+  mlflow_experiment: bbb_classifier
