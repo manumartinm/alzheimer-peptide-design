@@ -1,17 +1,17 @@
 stages:
   download:
-    cmd: python scripts/data/download.py
+    cmd: python -m bbb_classifier download-data
     deps:
-      - scripts/data/download.py
+      - src/bbb_classifier/run.py
+      - src/bbb_classifier/dataset.py
       - configs/data.yaml
-      - src/bbb_classifier/data/hf_peptides.py
     outs:
       - data/bbb-peptides/peptides.parquet
 
   train:
-    cmd: python scripts/classifier/train.py --exp ${experiment} --data-config configs/data.yaml --train-config configs/train.yaml --output-root artifacts
+    cmd: python -m bbb_classifier train --exp ${experiment} --data-config configs/data.yaml --train-config configs/train.yaml --output-root artifacts
     deps:
-      - scripts/classifier/train.py
+      - src/bbb_classifier/run.py
       - configs/data.yaml
       - configs/train.yaml
       - ${experiment}
@@ -20,9 +20,9 @@ stages:
       - artifacts/models
 
   evaluate:
-    cmd: python scripts/classifier/evaluate.py --run-dir ${run_dir} --dataset-path data/bbb-peptides/peptides.parquet
+    cmd: python -m bbb_classifier evaluate --run-dir ${run_dir} --dataset-path data/bbb-peptides/peptides.parquet
     deps:
-      - scripts/classifier/evaluate.py
+      - src/bbb_classifier/run.py
       - ${run_dir}
       - data/bbb-peptides/peptides.parquet
     metrics:

@@ -95,7 +95,7 @@ From `configs/experiments`:
    - features: ESM + tabular + graph branch
    - model type: `esm_tab_gnn`
 
-## Core Training Flow (`scripts/classifier/train.py`)
+## Core Training Flow (`bbb-classifier train`)
 
 The training script performs:
 
@@ -121,14 +121,14 @@ The training script performs:
 
 ## Evaluation and Inference
 
-### Evaluation (`scripts/classifier/evaluate.py`)
+### Evaluation (`bbb-classifier evaluate`)
 
 - reloads model and metadata from run directory;
 - computes probabilities on provided dataset;
 - optionally applies calibrator;
 - writes `evaluation_metrics.json` and `evaluation_predictions.parquet`.
 
-### Inference (`scripts/classifier/predict.py`)
+### Inference (`bbb-classifier predict`)
 
 - reads input candidates CSV/parquet;
 - rebuilds features consistent with training metadata;
@@ -177,11 +177,11 @@ Implemented and operational:
 
 ## Augmentation and Calibration Notes (2026-06)
 
-- CV runs via `scripts/classifier/cv.py` and stores:
+- CV runs via `bbb-classifier cv` and stores:
   - `cv_summary.json`
   - `cv_predictions.parquet`
   - `reliability.png`
-- Geo CV: `scripts/geo/cv.py` (adds `metrics_multisigma.json`, `guidance_gate.json` per fold).
+- Geo CV: `bbb-geo cv` (adds `metrics_multisigma.json`, `guidance_gate.json` per fold).
 - Augmentation experiment:
   - `configs/experiments/exp06_esm_tab_mlp_aug.yaml`
   - pre-built sequence augmentation in `packages/dataset` + feature-space mixup.

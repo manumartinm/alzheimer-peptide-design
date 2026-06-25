@@ -54,7 +54,7 @@ Two artifacts with separate jobs, so the steering signal stays purely conformati
 
 | Source | Used by | Coordinate gradient? |
 | --- | --- | --- |
-| Global per-peptide tabular (`mw`, `pi`, `net_charge_ph7`, `gravy`, ... from [`tfg_bbb/features.py`](../dataset/src/tfg_bbb/features.py)) | `exp03` oracle/reward only | No (constant wrt coords) |
+| Global per-peptide tabular (`mw`, `pi`, `net_charge_ph7`, `gravy`, ... from [`bbb_dataset/features.py`](../dataset/src/bbb_dataset/features.py)) | `exp03` oracle/reward only | No (constant wrt coords) |
 | Per-residue chemistry (Kyte-Doolittle, charge) | `p_geo` node features + amphipathicity potential | Yes (coupled with 3D positions) |
 | Coordinates | EGNN messages | Yes |
 
@@ -89,7 +89,7 @@ Training labels are sequence-level (every folded conformation of a BBB+ peptide 
 1. **Geometry-only guidance model** `p_geo` with no tabular/ESM branch (nothing global to shortcut to).
 2. **Hybrid energy**: add an analytic amphipathicity / 3D hydrophobic-moment potential that is guaranteed to depend on coordinates (see [structural-classifier.md](structural-classifier.md)).
 3. **Multi-task + node-chemistry dropout** during training to force the latent to encode geometry.
-4. **Geometry-sensitivity validation gate** (automatic in training): `guidance_gate.json` measures `||grad_x log p_geo||` and correlation with amphipathicity under perturbations. Manual probe: `scripts/geo/probe.py`. If gate fails, ship amphipathicity-only gradient and keep `p_geo` as reward-side signal.
+4. **Geometry-sensitivity validation gate** (automatic in training): `guidance_gate.json` measures `||grad_x log p_geo||` and correlation with amphipathicity under perturbations. Manual probe: `bbb-geo probe`. If gate fails, ship amphipathicity-only gradient and keep `p_geo` as reward-side signal.
 
 ## 6. Why a conformational BBB signal is real
 
@@ -101,12 +101,12 @@ BBB guidance is applied only at **low sigma** (second half of the schedule), whe
 
 ## 8. Implementation phases
 
-1. Fold the dataset via the Boltz API -> structural manifest. See [boltz-folding.md](../data/boltz-folding.md). HF export: `tfg-bbb-export-hf`.
+1. Fold the dataset via the Boltz API -> structural manifest. See [boltz-folding.md](../data/boltz-folding.md). HF export: `bbb-dataset-export-hf`.
 2. Structural graph featurizer (`bbb_geo/features/struct_graph.py`). **Done.**
 3. EGNN model `struct_egnn_geo` (`bbb_geo/models/struct_egnn.py`). **Done.** (`struct_egnn_full` removed.)
 4. Differentiable amphipathicity potential (`features/membrane_potential.py`). **Done.**
-5. Noise-aware training (`exp09` + `scripts/geo/train.py`, `train_geo.yaml`). **Done.**
-6. Geometry-sensitivity gate (`metrics_multisigma.json`, `guidance_gate.json`, `scripts/geo/probe.py`). **Done.**
+5. Noise-aware training (`exp09` + `bbb-geo train`, `train_geo.yaml`). **Done.**
+6. Geometry-sensitivity gate (`metrics_multisigma.json`, `guidance_gate.json`, `bbb-geo probe`). **Done.**
 7. Differentiable guidance hook in [`diffusion.py`](../boltzgen/src/boltzgen/model/modules/diffusion.py) (`_compute_bbb_guidance`, low-sigma gate, hybrid energy). **In progress.**
 8. Reward/filter reuse with `exp03` oracle + fix the `p_bbb_calibrated` column bug in [`run_filter_cascade.py`](../boltzgen_design/scripts/run_filter_cascade.py).
 9. Validation, tests, docs. **Ongoing** — see [vast-training.md](../infrastructure/vast-training.md) for remote training.

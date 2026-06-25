@@ -13,7 +13,7 @@ Sibling workspace `../TFG/` uses a flat layout with the same packages — see `t
 
 | Package | Path | Role |
 |---------|------|------|
-| `tfg-bbb-dataset` | `packages/dataset/` | BBB dataset curation (`tfg-bbb-build`) |
+| `bbb-dataset` | `packages/dataset/` | BBB dataset curation (`bbb-dataset-build`) |
 | `bbb-models` | `packages/bbb_models/` | Sequence + structural BBB classifiers |
 | `boltzgen-design` | `packages/boltzgen_design/` | GSK3β design orchestration |
 | `boltzgen` | `packages/boltzgen/` | Diffusion engine (git submodule fork) |

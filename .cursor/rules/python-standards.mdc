@@ -8,8 +8,8 @@ alwaysApply: false
 
 ## Layout
 
-- Business logic in `src/` (`bbb_classifier`, `bbb_geo`, `tfg_bbb`, `boltzgen_design`).
-- Scripts under `scripts/` are thin entry points that delegate to `src/*/pipeline/`.
+- Business logic in `src/` (`bbb_classifier`, `bbb_geo`, `bbb_dataset`, `boltzgen_design`).
+- CLIs: `bbb-classifier` and `bbb-geo` entry points (`python -m bbb_classifier`, `python -m bbb_geo`).
 - Configs live in `configs/` (YAML). Do not hardcode experiment hyperparameters in Python.
 
 ## Style (enforced by CI)
@@ -17,7 +17,7 @@ alwaysApply: false
 - Ruff: line length 100, target py311. Run `make lint` / `make format`.
 - Use `from __future__ import annotations` in new modules.
 - Prefer `@dataclass` for config/threshold structs; type hints on public APIs.
-- First-party imports: `bbb_classifier`, `bbb_geo`, `boltzgen_design`, `tfg_bbb`.
+- First-party imports: `bbb_classifier`, `bbb_geo`, `boltzgen_design`, `bbb_dataset`.
 
 ## Type checking
 
@@ -29,12 +29,9 @@ alwaysApply: false
 - Pytest paths: `packages/bbb_models/tests`, `packages/dataset/tests`, `packages/boltzgen_design/tests`.
 - Dataset package requires ≥85% coverage. Run `make test` or `uv run pytest -q`.
 
-## Example script pattern
+## Example CLI usage
 
-```python
-#!/usr/bin/env python3
-from bbb_classifier.pipeline.train import main
-
-if __name__ == "__main__":
-    main()
+```bash
+uv run bbb-classifier train --exp configs/experiments/exp03_esm_tab_mlp.yaml
+uv run bbb-geo train --exp configs/experiments/exp09_struct_egnn_noise.yaml
 ```

@@ -13,7 +13,7 @@ LOCAL_DATA="${BBB_MODELS}/data/bbb-peptides"
 [[ -f "${LOCAL_DATA}/peptides.parquet" ]] || {
   echo "Missing HF dataset cache: ${LOCAL_DATA}/peptides.parquet" >&2
   echo "Download locally first:" >&2
-  echo "  cd ${LOCAL_BBB} && uv run python scripts/data/download.py" >&2
+  echo "  cd ${LOCAL_BBB} && uv run bbb-classifier download-data" >&2
   exit 1
 }
 

@@ -19,7 +19,7 @@ Project documentation for *in silico* design of BBB-compatible cyclic phosphomim
 
 | Document | Contents |
 |----------|----------|
-| [data/dataset-pipeline.md](data/dataset-pipeline.md) | `tfg-bbb-build` pipeline + Hugging Face export (`hf_release`) |
+| [data/dataset-pipeline.md](data/dataset-pipeline.md) | `bbb-dataset-build` pipeline + Hugging Face export (`hf_release`) |
 | [data/dataset-cleaning.md](data/dataset-cleaning.md) | Cleaning, deduplication, cluster-aware splits |
 | [data/data-augmentation.md](data/data-augmentation.md) | Sequence augmentation, mixup, weak labels |
 | [data/boltz-folding.md](data/boltz-folding.md) | Offline peptide folding via Boltz API |

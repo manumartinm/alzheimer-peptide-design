@@ -1,6 +1,6 @@
 import numpy as np
 
-from bbb_classifier.features.esm_embed import batch_esm_embeddings
+from bbb_classifier.features import batch_esm_embeddings
 
 
 def test_esm_embedding_shape():

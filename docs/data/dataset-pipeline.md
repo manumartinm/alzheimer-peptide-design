@@ -18,22 +18,22 @@ Dataset project root: `packages/dataset`
 - `data/raw`: original downloaded sources.
 - `data/interim`: temporary outputs per pipeline step.
 - `data/processed`: final parquet tables used by training.
-- `src/tfg_bbb/cli/build.py`: full pipeline entry point (`tfg-bbb-build`).
-- `src/tfg_bbb`: reusable Python helpers used by the CLI.
+- `src/bbb_dataset/cli/build.py`: full pipeline entry point (`bbb-dataset-build`).
+- `src/bbb_dataset`: reusable Python helpers used by the CLI.
 
 ## Running the pipeline
 
 From the dataset project root:
 
 ```bash
-uv run tfg-bbb-build
+uv run bbb-dataset-build
 ```
 
 Flags: `--skip-eda`, `--skip-augment`, `--skip-fold`, `--base-dir`, `--augment-config`, `--fold-config`.
 
 ## Python Package Utilities
 
-Core code in `src/tfg_bbb`:
+Core code in `src/bbb_dataset`:
 
 - `features.py`
   - `compute_features(seq)`: computes feature dictionary from sequence.
@@ -75,7 +75,7 @@ Recommended setup:
 ```bash
 cd packages/dataset
 uv sync --group dev
-uv run pytest --cov=tfg_bbb --cov-report=term-missing --cov-fail-under=85
+uv run pytest --cov=bbb_dataset --cov-report=term-missing --cov-fail-under=85
 ```
 
 ## Inputs, Outputs, and Handoff
@@ -91,12 +91,12 @@ These tables are consumed by `packages/bbb_models` through configs (`configs/dat
 
 ### Hugging Face release (`hf_release`)
 
-CLI: `uv run tfg-bbb-export-hf` (module `tfg_bbb.export_hf`, entry `tfg-bbb-export-hf`).
+CLI: `uv run bbb-dataset-export-hf` (module `bbb_dataset.export_hf`, entry `bbb-dataset-export-hf`).
 
 ```bash
 cd packages/dataset
-uv run tfg-bbb-export-hf --variant gold    # gold only
-uv run tfg-bbb-export-hf --variant full    # gold + augmented (825 rows, all with structure)
+uv run bbb-dataset-export-hf --variant gold    # gold only
+uv run bbb-dataset-export-hf --variant full    # gold + augmented (825 rows, all with structure)
 ```
 
 Output: `data/hf_release/`
@@ -125,7 +125,7 @@ huggingface-cli upload YOUR_USERNAME/bbb-peptides-tfg data/hf_release .
 
 If you are an agent working on this repository:
 
-1. Use `tfg-bbb-build` as the single pipeline entrypoint.
+1. Use `bbb-dataset-build` as the single pipeline entrypoint.
 2. Keep sequence cleaning constraints consistent with downstream training assumptions.
 3. Preserve column names used by classifier configs (`sequence`, label/fold identifiers, feature columns).
 4. If adding/removing features, update both:
@@ -137,6 +137,6 @@ If you are an agent working on this repository:
 
 Implemented and usable:
 - structured dataset package;
-- CLI build flow (`tfg-bbb-build`, `tfg-bbb-export-hf`);
+- CLI build flow (`bbb-dataset-build`, `bbb-dataset-export-hf`);
 - reusable feature, source, clean, split, schema, and data-card utilities;
 - parquet outputs + HF release compatible with classifier and geo training.

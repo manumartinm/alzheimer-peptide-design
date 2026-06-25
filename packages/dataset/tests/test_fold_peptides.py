@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from tfg_bbb.folding import manifest_fields, parse_run_json
+from bbb_dataset.folding import manifest_fields, parse_run_json
 
 
 def test_parse_run_json_best_sample(tmp_path: Path) -> None:

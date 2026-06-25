@@ -23,7 +23,7 @@ Unlike traditional inhibitors that target the highly conserved ATP cleft (causin
 *   `packages/bbb_models/`: BBB models workspace — `bbb_classifier` (tabular/ESM) + `bbb_geo` (EGNN guidance).
 *   `packages/boltzgen/`: Git submodule (`manumartinm/boltzgen`, branch `add-bbb-head-and-md`) with the diffusion engine and MD utilities.
 *   `packages/boltzgen_design/`: Orchestration layer for GSK3β design (target prep, geometric guidance, TD3B utilities, filtering scripts).
-*   `packages/dataset/`: Dataset curation package + `tfg-bbb-build` CLI pipeline.
+*   `packages/dataset/`: Dataset curation package + `bbb-dataset-build` CLI pipeline.
 *   `docs/`: Project documentation and agent guidelines (this folder).
 
 ---
@@ -34,14 +34,14 @@ Unlike traditional inhibitors that target the highly conserved ATP cleft (causin
 This phase acts as the "delivery oracle" for the generative pipeline. It predicts whether a given peptide sequence will cross the BBB.
 
 *   **Data Pipeline:** Curated from B3Pred D1 with optional B3Pdb/Brainpeps expansion. Filtered for canonical amino acids, length 6-30 by default (configurable), and deduplicated at 90% sequence identity with cluster-aware folds to reduce leakage.
-*   **HF release:** `packages/dataset/data/hf_release/` — 825 peptides with Boltz structures (`tfg-bbb-export-hf --variant full`). Used for geo training and Vast upload.
+*   **HF release:** `packages/dataset/data/hf_release/` — 825 peptides with Boltz structures (`bbb-dataset-export-hf --variant full`). Used for geo training and Vast upload.
 *   **Features:**
     *   ESM-2 language model embeddings ($d=128$).
     *   24 tabular physicochemical descriptors (charge, pI, GRAVY, instability, etc.).
 *   **Architecture (oracle):** `exp03_esm_tab_mlp` — MLP fusing ESM-2 and tabular branches. Heavily regularized (dropout $p=0.3$, weight decay $\lambda=10^{-3}$).
 *   **Architecture (guidance):** `exp09_struct_egnn_geo` — geometry-only EGNN with EDM noise conditioning. See [structural-classifier.md](../models/structural-classifier.md).
 *   **Calibration:** Isotonic regression on validation probs. Use `p_bbb_calibrated` for gating/reward.
-*   **Agent Execution:** Prefer `uv run python scripts/classifier/train.py` or `scripts/geo/train.py`. DVC stages exist but geo/Vast workflows are often run directly. Remote training: [vast-training.md](../infrastructure/vast-training.md).
+*   **Agent Execution:** Prefer `uv run python bbb-classifier train` or `bbb-geo train`. DVC stages exist but geo/Vast workflows are often run directly. Remote training: [vast-training.md](../infrastructure/vast-training.md).
 
 ---
 

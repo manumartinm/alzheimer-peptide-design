@@ -58,7 +58,7 @@ packages/bbb_models/data/bbb-peptides/
 .env
 .DS_Store
 
-# Dataset caches (regenerable via tfg-bbb-fold)
+# Dataset caches (regenerable via bbb-dataset-fold)
 packages/dataset/boltz-experiments/
 packages/dataset/.env.local
 

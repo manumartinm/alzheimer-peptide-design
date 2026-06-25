@@ -15,7 +15,7 @@ Design peptides computationally that:
 ```
 alzheimer-peptide-design/
 ├── packages/
-│   ├── dataset/           → BBB data curation (CLI: tfg-bbb-build)
+│   ├── dataset/           → BBB data curation (CLI: bbb-dataset-build)
 │   ├── bbb_models/        → classifier + geometric EGNN
 │   ├── boltzgen_design/   → GSK3β orchestration (guidance, filters)
 │   └── boltzgen/          → diffusion engine (submodule)
@@ -31,10 +31,10 @@ Unified environment: `uv sync` at the repo root installs all packages in editabl
 Permeability oracle that feeds ranking, filtering, and (indirectly) generation.
 
 - **Data:** B3Pred D1 + optional expansion. Length 6–30 aa, 90% deduplication, cluster-aware folds.
-- **HF release:** `packages/dataset/data/hf_release/` — 825 peptides with Boltz structures (`tfg-bbb-export-hf --variant full`).
+- **HF release:** `packages/dataset/data/hf_release/` — 825 peptides with Boltz structures (`bbb-dataset-export-hf --variant full`).
 - **Oracle (sequence):** `exp03_esm_tab_mlp` — ESM-2 + tabular, isotonic calibration.
 - **Guidance (geometry):** `exp09_struct_egnn_geo` — EGNN with EDM noise; see [structural-classifier.md](../models/structural-classifier.md).
-- **Execution:** `uv run python scripts/classifier/train.py` or `scripts/geo/train.py`; remote on [vast-training.md](../infrastructure/vast-training.md).
+- **Execution:** `uv run python bbb-classifier train` or `bbb-geo train`; remote on [vast-training.md](../infrastructure/vast-training.md).
 
 ## Phase 2: BoltzGen generation (in progress)
 

@@ -3,12 +3,12 @@ from pathlib import Path
 
 import pandas as pd
 
-from bbb_classifier.data.splits import train_val_split
+from bbb_classifier.dataset import train_val_split
 
 _dataset_src = Path(__file__).resolve().parents[2] / "dataset" / "src"
 if str(_dataset_src) not in sys.path:
     sys.path.append(str(_dataset_src))
-from tfg_bbb.clean import deduplicate_by_identity
+from bbb_dataset.cleaning import deduplicate_by_identity
 
 
 def test_split_non_empty():

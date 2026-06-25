@@ -17,7 +17,7 @@ log_file="/workspace/output/$(basename "${EXP%.yaml}")_cv.log"
 remote_cmd="set -euo pipefail
 cd ${REMOTE_ROOT}/packages/bbb_models
 if [[ \"${FORCE_CPU}\" == \"1\" ]]; then export CUDA_VISIBLE_DEVICES=\"\"; fi
-cmd=(python3 scripts/geo/cv.py --exp ${EXP} --data-config ${DATA_CONFIG} --train-config ${TRAIN_CONFIG} --output-root ${OUTPUT_ROOT} --calibration ${CALIBRATION})
+cmd=(python3 -m bbb_geo cv --exp ${EXP} --data-config ${DATA_CONFIG} --train-config ${TRAIN_CONFIG} --output-root ${OUTPUT_ROOT} --calibration ${CALIBRATION})
 if [[ -n \"${DATASET_PATH}\" ]]; then cmd+=(--dataset-path ${DATASET_PATH}); fi
 nohup \"\${cmd[@]}\" > ${log_file} 2>&1 &
 echo \$! > /workspace/output/last_cv.pid

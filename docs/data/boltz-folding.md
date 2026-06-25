@@ -1,6 +1,6 @@
 # Peptide Folding via the Boltz API
 
-> Status: IMPLEMENTED (`tfg_bbb.cli.fold` / `uv run tfg-bbb-fold`). Requires Boltz API credentials.
+> Status: IMPLEMENTED (`bbb_dataset.cli.fold` / `uv run bbb-dataset-fold`). Requires Boltz API credentials.
 
 ## 1. Goal
 
@@ -51,15 +51,15 @@ boltz-experiments/<name>/
 
 Metrics are read from `run.json` → `output.best_sample.metrics` (or the first entry in `all_sample_results`).
 
-## 5. CLI: `tfg-bbb-fold`
+## 5. CLI: `bbb-dataset-fold`
 
-Location: `packages/dataset/src/tfg_bbb/cli/fold.py` (folding belongs to dataset construction).
+Location: `packages/dataset/src/bbb_dataset/cli/fold.py` (folding belongs to dataset construction).
 
 Run from the dataset root:
 
 ```bash
 cd packages/dataset
-uv run tfg-bbb-fold
+uv run bbb-dataset-fold
 ```
 
 Responsibilities:

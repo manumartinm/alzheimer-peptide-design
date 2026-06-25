@@ -14,7 +14,7 @@ uv sync
 
 | Package | Path | Role |
 |---------|------|------|
-| `tfg-bbb-dataset` | `packages/dataset/` | BBB peptide dataset curation (`tfg-bbb-build`) |
+| `bbb-dataset` | `packages/dataset/` | BBB peptide dataset curation (`bbb-dataset-build`) |
 | `bbb-models` | `packages/bbb_models/` | Sequence + structural BBB classifiers |
 | `boltzgen-design` | `packages/boltzgen_design/` | GSK3β design orchestration (guidance, filters) |
 | `boltzgen` | `packages/boltzgen/` | Diffusion engine (git submodule fork) |
@@ -25,8 +25,8 @@ Large datasets are **not** committed. Download from Hugging Face or regenerate l
 
 ```bash
 cd packages/dataset
-uv run tfg-bbb-build
-uv run tfg-bbb-export-hf --variant full
+uv run bbb-dataset-build
+uv run bbb-dataset-export-hf --variant full
 ```
 
 See [`packages/dataset/data/README.md`](packages/dataset/data/README.md) and the HF dataset [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides).

@@ -144,7 +144,7 @@ hf download {"REPO_ID" if not repo_id else repo_id} --local-dir ./bbb-classifier
 Score candidates (input must include sequence + tabular descriptor columns used at training time):
 
 ```bash
-uv run python scripts/classifier/predict.py \\
+uv run bbb-classifier predict \\
   --run-dir ./bbb-classifier \\
   --input candidates.parquet \\
   --output scored.parquet
@@ -217,7 +217,7 @@ hf download {"REPO_ID" if not repo_id else repo_id} --local-dir ./bbb-geo
 Structural prediction (requires coords manifest or `coords_path` column):
 
 ```bash
-uv run python scripts/geo/predict.py \\
+uv run bbb-geo predict \\
   --run-dir ./bbb-geo \\
   --input candidates.parquet \\
   --manifest ../dataset/data/processed/peptides_struct_manifest.parquet \\

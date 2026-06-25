@@ -5,7 +5,7 @@ description = "BBB peptide models: tabular/ESM classifiers and geometry EGNN gui
 readme = "README.md"
 requires-python = ">=3.11,<3.13"
 dependencies = [
-  "tfg-bbb-dataset",
+  "bbb-dataset",
   "numpy>=1.26",
   "pandas>=2.2",
   "pyarrow>=15.0",
@@ -26,6 +26,10 @@ dependencies = [
   "matplotlib>=3.8",
   "huggingface_hub>=0.23",
 ]
+
+[project.scripts]
+bbb-classifier = "bbb_classifier.run:main"
+bbb-geo = "bbb_geo.run:main"
 
 [project.optional-dependencies]
 dev = [

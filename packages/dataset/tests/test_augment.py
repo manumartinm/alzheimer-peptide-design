@@ -2,13 +2,13 @@ from __future__ import annotations
 
 import pandas as pd
 
-from tfg_bbb.augment import (
+from bbb_dataset.augmentation import (
     AugmentConfig,
     augment_gold_dataframe,
     augment_sequence,
     mutate_conservative,
 )
-from tfg_bbb.schema import validate_dataset_schema
+from bbb_dataset.schema import validate_dataset_schema
 
 
 def _gold_row(**overrides) -> dict:

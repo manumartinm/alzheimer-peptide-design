@@ -15,7 +15,7 @@ Geo training needs the HF cache: `peptides.parquet` + `structures/<hash>/coords.
 
 ```bash
 cd packages/bbb_models
-uv run python scripts/data/download.py
+uv run python bbb-classifier download-data
 ```
 
 Source: [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides).
@@ -35,13 +35,13 @@ Environment variables:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MODE` | `geo` | `geo` → `scripts/geo/train.py`; `classifier` → `scripts/classifier/train.py` |
+| `MODE` | `geo` | `geo` → `bbb-geo train`; `classifier` → `bbb-classifier train` |
 | `EXP` | `exp09_struct_egnn_noise.yaml` | Experiment config |
 | `TRAIN_CONFIG` | `train_geo.yaml` | Hyperparameters (geo uses conservative LR/grad_clip) |
 | `DATA_CONFIG` | `data.vast.yaml` | Remote paths to HF release |
 | `OUTPUT_ROOT` | `artifacts` | Remote output folder |
 | `SMOKE=1` | — | Uses `train_smoke.yaml`, 2 epochs, output in `artifacts/smoke_geo` |
-| `CV=1` | — | Runs `scripts/geo/cv.py` with `train_cv.yaml` |
+| `CV=1` | — | Runs `bbb-geo cv` with `train_cv.yaml` |
 | `NO_RESUME=1` | active | Clean training (`--no-resume`) |
 | `FORCE_CPU=1` | — | Force CPU if GPU is incompatible (e.g. RTX 5090 + old PyTorch) |
 
@@ -126,7 +126,7 @@ bash infra/vast/bbb_models/sync_artifacts.sh <INSTANCE_ID>
 
 ## Recommended workflow
 
-1. Export HF release locally (`tfg-bbb-export-hf --variant full`).
+1. Export HF release locally (`bbb-dataset-export-hf --variant full`).
 2. Create Vast instance (A100/H100 GPU, disk ≥ 30 GB).
 3. `SMOKE=1 bash infra/vast/bbb_models/run_train.sh <ID>` → verify SSH, data, and pip.
 4. `bash infra/vast/bbb_models/run_train.sh <ID>` → full training.

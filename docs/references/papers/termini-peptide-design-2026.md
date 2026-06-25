@@ -357,7 +357,7 @@ Combined:
 
 - Preprint: https://doi.org/10.64898/2026.04.09.717597
 - Your BBB classifier: `packages/bbb_models/src/bbb_classifier/`
-- Your feature pipeline: `packages/dataset/src/tfg_bbb/features.py`
+- Your feature pipeline: `packages/dataset/src/bbb_dataset/features.py`
 - Your poster: `entregas/oxml_bio/main.tex`
 - Related summaries:
   - `docs/references/papers/bbb-transport-meta-analysis-2024.md` (Cavaco — BBB determinants)

@@ -3,30 +3,34 @@ from __future__ import annotations
 import csv
 import json
 import subprocess
+import sys
 from collections.abc import Iterable
 from pathlib import Path
 
 
 class BBBOracle:
-    """Wrapper over TFG/bbb_models prediction script."""
+    """Wrapper over bbb_models CLIs for batch scoring."""
 
     def __init__(self, bbb_repo_root: Path, run_dir: Path, manifest_path: Path | None = None):
         self.bbb_repo_root = bbb_repo_root
         self.run_dir = run_dir
         self.manifest_path = manifest_path
 
-    def _predict_script(self) -> str:
+    def _predict_target(self) -> tuple[str, str]:
         meta_path = self.run_dir / "train_metadata.json"
         if meta_path.exists():
             model_type = json.loads(meta_path.read_text(encoding="utf-8"))["exp_cfg"]["model_type"]
             if model_type in {"struct_egnn_geo", "struct_egnn_full"}:
-                return "scripts/geo/predict.py"
-        return "scripts/classifier/predict.py"
+                return "bbb_geo", "predict"
+        return "bbb_classifier", "predict"
 
     def _run_predict(self, input_csv: Path, output_csv: Path) -> None:
-        command = [
-            "python",
-            self._predict_script(),
+        module, command = self._predict_target()
+        cmd = [
+            sys.executable,
+            "-m",
+            module,
+            command,
             "--run-dir",
             str(self.run_dir),
             "--input",
@@ -35,8 +39,8 @@ class BBBOracle:
             str(output_csv),
         ]
         if self.manifest_path is not None:
-            command.extend(["--manifest", str(self.manifest_path)])
-        subprocess.run(command, cwd=self.bbb_repo_root, check=True)
+            cmd.extend(["--manifest", str(self.manifest_path)])
+        subprocess.run(cmd, cwd=self.bbb_repo_root, check=True)
 
     def score_sequences(self, sequences: Iterable[str], output_csv: Path) -> Path:
         output_csv.parent.mkdir(parents=True, exist_ok=True)

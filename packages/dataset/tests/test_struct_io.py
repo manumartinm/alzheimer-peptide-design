@@ -4,7 +4,7 @@ from pathlib import Path
 
 import numpy as np
 
-from tfg_bbb.struct_io import parse_cif_backbone, write_coords_npz
+from bbb_dataset.struct_io import parse_cif_backbone, write_coords_npz
 
 
 def test_parse_minimal_pdb_style_cif(tmp_path: Path) -> None:

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from bbb_classifier.data.hf_peptides import (
+from bbb_classifier.dataset import (
     DEFAULT_CACHE_DIR,
     HF_DATASET_REPO,
     cache_dir_from_config,

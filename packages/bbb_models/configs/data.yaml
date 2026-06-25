@@ -41,4 +41,4 @@ tabular_exclude:
 three_d_columns: []
 struct_manifest_path: ""
 # Geo models resolve coords from structure_coords_path relative to dataset_root.
-# Download once: uv run python scripts/data/download.py
+# Download once: uv run bbb-classifier download-data

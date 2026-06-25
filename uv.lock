@@ -9,10 +9,10 @@ resolution-markers = [
 [manifest]
 members = [
     "alzheimer-peptide-design",
+    "bbb-dataset",
     "bbb-models",
     "boltzgen",
     "boltzgen-design",
-    "tfg-bbb-dataset",
 ]
 
 [[package]]
@@ -119,10 +119,10 @@ name = "alzheimer-peptide-design"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
+    { name = "bbb-dataset" },
     { name = "bbb-models" },
     { name = "boltzgen" },
     { name = "boltzgen-design" },
-    { name = "tfg-bbb-dataset" },
 ]
 
 [package.dev-dependencies]
@@ -142,10 +142,10 @@ notebook = [
 
 [package.metadata]
 requires-dist = [
+    { name = "bbb-dataset", editable = "packages/dataset" },
     { name = "bbb-models", editable = "packages/bbb_models" },
     { name = "boltzgen", editable = "packages/boltzgen" },
     { name = "boltzgen-design", editable = "packages/boltzgen_design" },
-    { name = "tfg-bbb-dataset", editable = "packages/dataset" },
 ]
 
 [package.metadata.requires-dev]
@@ -325,10 +325,87 @@ wheels = [
 ]
 
 [[package]]
+name = "bbb-dataset"
+version = "0.1.0"
+source = { editable = "packages/dataset" }
+dependencies = [
+    { name = "biopython" },
+    { name = "boltz-api" },
+    { name = "modlamp" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "pyarrow" },
+    { name = "pyteomics" },
+    { name = "python-dotenv" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+    { name = "tqdm" },
+]
+
+[package.optional-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+]
+notebook = [
+    { name = "ipykernel" },
+    { name = "jupyterlab" },
+    { name = "matplotlib" },
+    { name = "plotly" },
+    { name = "seaborn" },
+    { name = "umap-learn" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+    { name = "pytest-cov" },
+    { name = "pytest-mock" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "biopython" },
+    { name = "boltz-api", specifier = ">=0.34" },
+    { name = "ipykernel", marker = "extra == 'notebook'", specifier = ">=6.29" },
+    { name = "jupyterlab", marker = "extra == 'notebook'", specifier = ">=4.0" },
+    { name = "matplotlib", marker = "extra == 'notebook'" },
+    { name = "modlamp" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "plotly", marker = "extra == 'notebook'" },
+    { name = "pyarrow" },
+    { name = "pyteomics" },
+    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.2" },
+    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0" },
+    { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.14" },
+    { name = "python-dotenv", specifier = ">=1.0" },
+    { name = "pyyaml" },
+    { name = "requests" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
+    { name = "seaborn", marker = "extra == 'notebook'" },
+    { name = "tqdm" },
+    { name = "umap-learn", marker = "extra == 'notebook'" },
+]
+provides-extras = ["notebook", "dev"]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=8.2" },
+    { name = "pytest-cov", specifier = ">=5.0" },
+    { name = "pytest-mock", specifier = ">=3.14" },
+]
+
+[[package]]
 name = "bbb-models"
 version = "0.1.0"
 source = { editable = "packages/bbb_models" }
 dependencies = [
+    { name = "bbb-dataset" },
     { name = "biopython" },
     { name = "fair-esm" },
     { name = "huggingface-hub" },
@@ -347,7 +424,6 @@ dependencies = [
     { name = "scipy" },
     { name = "tenacity" },
     { name = "tensorboard" },
-    { name = "tfg-bbb-dataset" },
     { name = "torch" },
 ]
 
@@ -359,6 +435,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
+    { name = "bbb-dataset", editable = "packages/dataset" },
     { name = "biopython", specifier = ">=1.84" },
     { name = "fair-esm", specifier = ">=2.0.0" },
     { name = "huggingface-hub", specifier = ">=0.23" },
@@ -379,7 +456,6 @@ requires-dist = [
     { name = "scipy", specifier = ">=1.12" },
     { name = "tenacity", specifier = ">=9.0" },
     { name = "tensorboard", specifier = ">=2.15" },
-    { name = "tfg-bbb-dataset", editable = "packages/dataset" },
     { name = "torch", specifier = ">=2.2" },
 ]
 provides-extras = ["dev"]
@@ -4144,82 +4220,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/8a/11/965c6fd8e5cc254f1fe142d547387da17a8ebfd75a3455f637c663fb38a0/terminado-0.18.1.tar.gz", hash = "sha256:de09f2c4b85de4765f7714688fff57d3e75bad1f909b589fde880460c753fd2e", size = 32701, upload-time = "2024-03-12T14:34:39.026Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6a/9e/2064975477fdc887e47ad42157e214526dcad8f317a948dee17e1659a62f/terminado-0.18.1-py3-none-any.whl", hash = "sha256:a4468e1b37bb318f8a86514f65814e1afc977cf29b3992a4500d9dd305dcceb0", size = 14154, upload-time = "2024-03-12T14:34:36.569Z" },
-]
-
-[[package]]
-name = "tfg-bbb-dataset"
-version = "0.1.0"
-source = { editable = "packages/dataset" }
-dependencies = [
-    { name = "biopython" },
-    { name = "boltz-api" },
-    { name = "matplotlib" },
-    { name = "modlamp" },
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "pyarrow" },
-    { name = "pyteomics" },
-    { name = "python-dotenv" },
-    { name = "pyyaml" },
-    { name = "requests" },
-    { name = "scikit-learn" },
-    { name = "scipy" },
-    { name = "seaborn" },
-    { name = "tqdm" },
-]
-
-[package.optional-dependencies]
-dev = [
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-]
-notebook = [
-    { name = "ipykernel" },
-    { name = "jupyterlab" },
-    { name = "plotly" },
-    { name = "umap-learn" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "pytest-mock" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "biopython" },
-    { name = "boltz-api", specifier = ">=0.34" },
-    { name = "ipykernel", marker = "extra == 'notebook'", specifier = ">=6.29" },
-    { name = "jupyterlab", marker = "extra == 'notebook'", specifier = ">=4.0" },
-    { name = "matplotlib" },
-    { name = "modlamp" },
-    { name = "numpy" },
-    { name = "pandas" },
-    { name = "plotly", marker = "extra == 'notebook'" },
-    { name = "pyarrow" },
-    { name = "pyteomics" },
-    { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.2" },
-    { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0" },
-    { name = "pytest-mock", marker = "extra == 'dev'", specifier = ">=3.14" },
-    { name = "python-dotenv", specifier = ">=1.0" },
-    { name = "pyyaml" },
-    { name = "requests" },
-    { name = "scikit-learn" },
-    { name = "scipy" },
-    { name = "seaborn" },
-    { name = "tqdm" },
-    { name = "umap-learn", marker = "extra == 'notebook'" },
-]
-provides-extras = ["notebook", "dev"]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "pytest", specifier = ">=8.2" },
-    { name = "pytest-cov", specifier = ">=5.0" },
-    { name = "pytest-mock", specifier = ">=3.14" },
 ]
 
 [[package]]

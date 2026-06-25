@@ -6,11 +6,11 @@
 
 | Component | Reproducibility |
 |-----------|-----------------|
-| Gold dataset | `tfg-bbb-build` + parquets in `packages/dataset/data/processed/` |
-| HF release | `tfg-bbb-export-hf --variant full` → `data/hf_release/` (825 rows) |
-| Classifier | `scripts/classifier/train.py` + configs + `train_metadata.json` |
-| Geo EGNN | `scripts/geo/train.py` + `exp09` + `train_geo.yaml` |
-| CV | `scripts/classifier/cv.py`, `scripts/geo/cv.py` |
+| Gold dataset | `bbb-dataset-build` + parquets in `packages/dataset/data/processed/` |
+| HF release | `bbb-dataset-export-hf --variant full` → `data/hf_release/` (825 rows) |
+| Classifier | `bbb-classifier train` + configs + `train_metadata.json` |
+| Geo EGNN | `bbb-geo train` + `exp09` + `train_geo.yaml` |
+| CV | `bbb-classifier cv`, `bbb-geo cv` |
 | Remote GPU | `infra/vast/bbb_models/` + `sync_artifacts.sh` |
 
 ### Minimal commands
@@ -20,16 +20,16 @@
 uv sync
 
 # Dataset
-cd packages/dataset && uv run tfg-bbb-build
-uv run tfg-bbb-export-hf --variant full
+cd packages/dataset && uv run bbb-dataset-build
+uv run bbb-dataset-export-hf --variant full
 
 # Classifier (local)
 cd ../bbb_models
-uv run python scripts/classifier/train.py \
+uv run python bbb-classifier train \
   --exp configs/experiments/exp03_esm_tab_mlp.yaml
 
 # Geo (local)
-uv run python scripts/geo/train.py \
+uv run python bbb-geo train \
   --exp configs/experiments/exp09_struct_egnn_noise.yaml \
   --train-config configs/train_geo.yaml
 
@@ -60,7 +60,7 @@ Policy: do not commit checkpoints; use `sync_artifacts.sh` from Vast or local ig
 | `dataset/dvc.yaml`: fetch_raw → build → augment → fold → export_hf | `packages/dataset/` |
 | Fix paths in `bbb_models/dvc.yaml` + geo/CV stages | `packages/bbb_models/` |
 | DVC remote (S3/GDrive) for raw, structures, checkpoints | root |
-| SHA256 checksums on B3Pred downloads | `packages/dataset/src/tfg_bbb/sources.py` |
+| SHA256 checksums on B3Pred downloads | `packages/dataset/src/bbb_dataset/sources.py` |
 | DATA_CARD with provenance (git SHA + dvc.lock) | `packages/dataset/` |
 | CI: `dvc repro --dry` | `.github/workflows/` |
 

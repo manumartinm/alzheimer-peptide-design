@@ -78,11 +78,11 @@ Mitigations applied (Jun 2026):
 2. `aux_weight`: 0.2 → **0.1**
 3. More conservative LR and grad_clip in `train_geo.yaml`
 
-Additional sweep: `scripts/geo/sweep_stability.py` over `coord_sigma_caps` and `aux_weights`.
+Additional sweep: `bbb-geo sweep-stability` over `coord_sigma_caps` and `aux_weights`.
 
 ## 6. Post-training outputs (automatic)
 
-At the end of `scripts/geo/train.py`:
+At the end of `bbb-geo train`:
 
 | File | Contents |
 |------|----------|
@@ -101,24 +101,24 @@ At the end of `scripts/geo/train.py`:
 cd packages/bbb_models
 
 # Train
-uv run python scripts/geo/train.py \
+uv run python bbb-geo train \
   --exp configs/experiments/exp09_struct_egnn_noise.yaml \
   --data-config configs/data.yaml \
   --train-config configs/train_geo.yaml \
   --output-root artifacts
 
 # 5-fold CV
-uv run python scripts/geo/cv.py \
+uv run python bbb-geo cv \
   --exp configs/experiments/exp09_struct_egnn_noise.yaml \
   --train-config configs/train_geo.yaml
 
 # Manual gate (probe)
-uv run python scripts/geo/probe.py \
+uv run python bbb-geo probe \
   --run-dir artifacts/models/exp09_struct_egnn_noise \
   --manifest ../dataset/data/processed/peptides_struct_manifest.parquet
 
 # Stability sweep
-uv run python scripts/geo/sweep_stability.py \
+uv run python bbb-geo sweep-stability \
   --coord-sigma-caps 4,8,12 \
   --aux-weights 0.05,0.1,0.2
 ```

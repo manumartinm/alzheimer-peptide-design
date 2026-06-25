@@ -19,7 +19,7 @@ The sequence BBB oracle (`exp03_esm_tab_mlp`) uses ESM-2 embeddings and tabular 
 | `exp03_esm_tab_mlp` | `bbb_classifier` | Oracle, gating, TD3B reward (`p_bbb_calibrated`) |
 | `exp09_struct_egnn_geo` | `bbb_geo` | Differentiable structural guidance in BoltzGen |
 
-Geo training writes `guidance_gate.json` — run `scripts/geo/probe.py` before enabling diffusion guidance.
+Geo training writes `guidance_gate.json` — run `bbb-geo probe` before enabling diffusion guidance.
 
 ## Filtering cascade (5 gates)
 

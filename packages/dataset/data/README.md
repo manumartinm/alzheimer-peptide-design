@@ -6,8 +6,8 @@ Large data files are not committed to git. Regenerate locally or download from H
 
 ```bash
 cd packages/dataset
-uv run tfg-bbb-build
-uv run tfg-bbb-export-hf --variant full   # writes data/hf_release/
+uv run bbb-dataset-build
+uv run bbb-dataset-export-hf --variant full   # writes data/hf_release/
 ```
 
 ## Hugging Face

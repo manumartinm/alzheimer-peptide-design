@@ -1,5 +1,5 @@
 [project]
-name = "tfg-bbb-dataset"
+name = "bbb-dataset"
 version = "0.1.0"
 description = "BBB peptide dataset pipeline"
 requires-python = ">=3.11,<3.13"
@@ -15,20 +15,20 @@ dependencies = [
   "requests",
   "tqdm",
   "pyyaml",
-  "matplotlib",
-  "seaborn",
   "python-dotenv>=1.0",
   "boltz-api>=0.34",
 ]
 
 [project.scripts]
-tfg-bbb-build = "tfg_bbb.cli.build:main"
-tfg-bbb-augment = "tfg_bbb.cli.augment:main"
-tfg-bbb-fold = "tfg_bbb.cli.fold:main"
-tfg-bbb-export-hf = "tfg_bbb.cli.export:main"
+bbb-dataset-build = "bbb_dataset.cli.build:main"
+bbb-dataset-augment = "bbb_dataset.cli.augment:main"
+bbb-dataset-fold = "bbb_dataset.cli.fold:main"
+bbb-dataset-export-hf = "bbb_dataset.cli.export:main"
 
 [project.optional-dependencies]
 notebook = [
+  "matplotlib",
+  "seaborn",
   "plotly",
   "umap-learn",
   "jupyterlab>=4.0",
@@ -62,9 +62,13 @@ pythonpath = ["src"]
 testpaths = ["tests"]
 
 [tool.coverage.run]
-source = ["tfg_bbb"]
+source = ["bbb_dataset"]
 branch = true
-omit = ["tests/*"]
+omit = [
+  "tests/*",
+  "**/bbb_dataset/cli/**",
+  "**/bbb_dataset/export_hf.py",
+]
 
 [tool.coverage.report]
 fail_under = 85

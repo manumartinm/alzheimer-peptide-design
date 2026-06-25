@@ -1,6 +1,6 @@
 import numpy as np
 
-from bbb_classifier.train.metrics import classification_metrics
+from bbb_classifier.training import classification_metrics
 
 
 def test_metrics_keys_present():

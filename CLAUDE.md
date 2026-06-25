@@ -24,7 +24,7 @@ TFG commands use the same relative paths without the `packages/` prefix:
 
 ```bash
 cd TFG
-uv run python bbb_models/scripts/geo/train.py --exp configs/experiments/exp09_struct_egnn_noise.yaml
+uv run python bbb_models/bbb-geo train --exp configs/experiments/exp09_struct_egnn_noise.yaml
 bash boltzgen_design/scripts/vast/run_guided_campaign.sh
 ```
 
@@ -33,7 +33,7 @@ bash boltzgen_design/scripts/vast/run_guided_campaign.sh
 ```
 alzheimer-peptide-design/
 ├── packages/
-│   ├── dataset/           # tfg-bbb-dataset — data curation CLI
+│   ├── dataset/           # bbb-dataset — data curation CLI
 │   ├── bbb_models/        # bbb_classifier + bbb_geo
 │   ├── boltzgen_design/   # GSK3β orchestration (guidance, filters, TD3B)
 │   └── boltzgen/          # diffusion engine (git submodule)
@@ -63,20 +63,20 @@ make typecheck     # mypy on workspace packages (not boltzgen submodule)
 make test          # pytest across packages
 
 # Dataset pipeline
-uv run tfg-bbb-build
-uv run tfg-bbb-export-hf --variant full
+uv run bbb-dataset-build
+uv run bbb-dataset-export-hf --variant full
 
 # BBB classifier training
-uv run python packages/bbb_models/scripts/classifier/train.py \
+uv run python packages/bbb_models/bbb-classifier train \
   --exp configs/experiments/exp03_esm_tab_mlp.yaml
 
 # Geometry EGNN (diffusion guidance)
-uv run python packages/bbb_models/scripts/geo/train.py \
+uv run python packages/bbb_models/bbb-geo train \
   --exp configs/experiments/exp09_struct_egnn_noise.yaml \
   --train-config configs/train_geo.yaml
 
 # Geo guidance gate check
-uv run python packages/bbb_models/scripts/geo/probe.py \
+uv run python packages/bbb_models/bbb-geo probe \
   --run-dir packages/bbb_models/artifacts/models/exp09_struct_egnn_noise \
   --manifest packages/dataset/data/processed/peptides_struct_manifest_synthetic.parquet \
   --dataset packages/dataset/data/processed/peptides_bbb_preview.csv
@@ -95,10 +95,10 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
 
 ## Package roles
 
-### `packages/dataset` (`tfg_bbb`)
+### `packages/dataset` (`bbb_dataset`)
 
-- CLI entry points: `tfg-bbb-build`, `tfg-bbb-augment`, `tfg-bbb-fold`, `tfg-bbb-export-hf`
-- Pipeline modules in `src/tfg_bbb/` (sources, clean, augment, folding, splits, eda)
+- CLI entry points: `bbb-dataset-build`, `bbb-dataset-augment`, `bbb-dataset-fold`, `bbb-dataset-export-hf`
+- Pipeline modules in `src/bbb_dataset/` (sources, clean, augment, folding, splits, eda)
 - Gold dataset: `packages/dataset/data/processed/peptides_bbb.parquet` (build pipeline); **training cache:** `packages/bbb_models/data/bbb-peptides/` from [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides)
 - Docs: [`docs/data/dataset-pipeline.md`](docs/data/dataset-pipeline.md)
 
@@ -106,7 +106,7 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
 
 - **bbb_classifier:** tabular/ESM oracle (`exp03_esm_tab_mlp`) — calibrated `p_bbb_calibrated` for gating and TD3B reward
 - **bbb_geo:** geometry-only EGNN (`exp09_struct_egnn_geo`) — differentiable BBB guidance in diffusion
-- Logic in `src/*/pipeline/`; thin scripts in `scripts/classifier/` and `scripts/geo/`
+- Flat modules in `src/bbb_classifier/` and `src/bbb_geo/` with unified CLIs
 - Docs: [`docs/models/bbb-classifier.md`](docs/models/bbb-classifier.md), [`docs/models/structural-classifier.md`](docs/models/structural-classifier.md)
 
 ### `packages/boltzgen_design`
@@ -131,7 +131,7 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
    - SDE gradients: hotspot potential, ATP repulsion, `p_geo` (struct EGNN), membrane potential
    - Post-generation: `exp03` oracle for G3 gate, TD3B reward, Pareto ranking
 
-3. **Geo training stability:** If many `skipped non-finite batches`, lower `coord_sigma_cap` / `aux_weight` or run `scripts/geo/sweep_stability.py` before long Vast jobs.
+3. **Geo training stability:** If many `skipped non-finite batches`, lower `coord_sigma_cap` / `aux_weight` or run `bbb-geo sweep-stability` before long Vast jobs.
 
 4. **DVC:** When a `dvc.yaml` stage exists, prefer `dvc repro` over ad-hoc script runs (see [`docs/architecture/reproducibility.md`](docs/architecture/reproducibility.md)).
 
@@ -179,7 +179,7 @@ CI (`.github/workflows/ci.yml`): ruff, mypy, pytest on Python 3.11 and 3.12 with
 
 ```bash
 make test
-uv run pytest packages/dataset/tests -q --cov=tfg_bbb --cov-fail-under=85
+uv run pytest packages/dataset/tests -q --cov=bbb_dataset --cov-fail-under=85
 ```
 
 ## When changing architecture

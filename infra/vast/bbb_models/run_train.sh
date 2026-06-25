@@ -15,16 +15,16 @@ NO_RESUME="${NO_RESUME:-0}"
 FORCE_CPU="${FORCE_CPU:-0}"
 
 if [[ "${MODE}" == "geo" ]]; then
-  SCRIPT="scripts/geo/train.py"
+  MODULE="bbb_geo"
 else
-  SCRIPT="scripts/classifier/train.py"
+  MODULE="bbb_classifier"
 fi
 
 log_file="/workspace/output/$(basename "${EXP%.yaml}")_train.log"
 remote_cmd="set -euo pipefail
 cd ${REMOTE_ROOT}/packages/bbb_models
 if [[ \"${FORCE_CPU}\" == \"1\" ]]; then export CUDA_VISIBLE_DEVICES=\"\"; fi
-cmd=(python3 ${SCRIPT} --exp ${EXP} --data-config ${DATA_CONFIG} --train-config ${TRAIN_CONFIG} --output-root ${OUTPUT_ROOT})
+cmd=(python3 -m ${MODULE} train --exp ${EXP} --data-config ${DATA_CONFIG} --train-config ${TRAIN_CONFIG} --output-root ${OUTPUT_ROOT})
 if [[ -n \"${DATASET_PATH}\" ]]; then cmd+=(--dataset-path ${DATASET_PATH}); fi
 if [[ \"${NO_RESUME}\" == \"1\" ]]; then cmd+=(--no-resume); fi
 nohup \"\${cmd[@]}\" > ${log_file} 2>&1 &

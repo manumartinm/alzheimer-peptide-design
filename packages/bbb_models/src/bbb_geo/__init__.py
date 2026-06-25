@@ -1,3 +1,5 @@
-"""Geometry-only BBB models (EGNN) for structural guidance and fusion oracles."""
+"""Geometry-only BBB EGNN models for diffusion guidance."""
 
-__all__ = ["features", "infer", "models", "train"]
+from bbb_geo.enums import GEO_MODEL_TYPES, GeoModelType
+
+__all__ = ["GEO_MODEL_TYPES", "GeoModelType"]

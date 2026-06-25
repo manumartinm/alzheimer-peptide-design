@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import torch
 
-from bbb_geo.infer.struct_guidance import BBBGuidanceConfig, compute_bbb_guidance_force
+from bbb_geo.guidance import BBBGuidanceConfig, compute_bbb_guidance_force
 
 
 def _minimal_feats(
