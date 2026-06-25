@@ -30,7 +30,7 @@
       "max": 12.0
     },
     "hotspot_weight": 1.0,
-    "atp_weight": 0.7,
+    "atp_weight": 0.85,
     "alpha": 8.0,
     "lj_sigma": 3.0,
     "max_force": 1.0,

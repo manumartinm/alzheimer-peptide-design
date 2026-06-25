@@ -1,6 +1,6 @@
 {
   "guidance_hotspot_weight": 1.0,
-  "guidance_atp_weight": 0.7,
+  "guidance_atp_weight": 0.85,
   "guidance_alpha": 8.0,
   "guidance_cutoff_angstrom": 5.0,
   "guidance_lj_sigma": 3.0,
