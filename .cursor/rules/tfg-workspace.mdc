@@ -38,15 +38,15 @@ When docs or scripts still say `TFG/`, translate to `packages/` (or repo root) i
 
 **TFG** — `boltzgen_design/scripts/vast/_common.sh` uses hardcoded `VAST_SSH_HOST`/`PORT`; remote root `/workspace/TFG`.
 
-**Canonical repo** — shared helpers in `infra/_common.sh`; dynamic SSH via `vastai show instance`; remote root `/workspace/alzheimer-peptide-design`.
+**Canonical repo** — shared helpers in `infra/vast/_common.sh`; dynamic SSH via `vastai show instance`; remote root `/workspace/alzheimer-peptide-design`.
 
-Guided campaign flow (both repos, paths adjusted):
+Guided campaign flow (canonical repo):
 
 ```bash
-bash boltzgen_design/scripts/vast/launch.sh              # upload gsk3b.cif + design yaml
-bash boltzgen_design/scripts/vast/setup_guided_env.sh    # upload boltzgen + bbb_models editable
-SMOKE=1 bash boltzgen_design/scripts/vast/run_guided_campaign.sh
-bash boltzgen_design/scripts/vast/sync_results.sh
+bash infra/vast/boltzgen_design/launch.sh <INSTANCE_ID>
+bash infra/vast/boltzgen_design/setup_guided_env.sh <INSTANCE_ID>
+SMOKE=1 bash infra/vast/boltzgen_design/run_guided_campaign.sh <INSTANCE_ID>
+bash infra/vast/boltzgen_design/sync_results.sh <INSTANCE_ID>
 ```
 
 GSK3β target files: `boltzgen_design/targets/gsk3b/` (`gsk3b.cif`, `gsk3b_peptide_design.yaml`, `guidance_feats.json`).

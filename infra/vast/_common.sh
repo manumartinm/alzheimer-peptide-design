@@ -18,14 +18,20 @@ _find_repo_root() {
   return 1
 }
 
+_vast_script_dir="$(cd "$(dirname "${BASH_SOURCE[1]:-${BASH_SOURCE[0]}}")" && pwd)"
+
 if [[ -z "${REPO_ROOT:-}" ]]; then
-  _VAST_CALLER_DIR="$(cd "$(dirname "${BASH_SOURCE[1]:-${BASH_SOURCE[0]}}")" && pwd)"
-  REPO_ROOT="$(_find_repo_root "${_VAST_CALLER_DIR}")" || {
+  REPO_ROOT="$(_find_repo_root "${_vast_script_dir}")" || {
     echo "Could not locate repo root (expected pyproject.toml with alzheimer-peptide-design)." >&2
     exit 1
   }
 fi
 
+if [[ -z "${VAST_DIR:-}" && "${_vast_script_dir}" == */infra/vast/* ]]; then
+  VAST_DIR="${_vast_script_dir}"
+fi
+
+INFRA_VAST="${REPO_ROOT}/infra/vast"
 PACKAGES_ROOT="${REPO_ROOT}/packages"
 BBB_MODELS="${PACKAGES_ROOT}/bbb_models"
 DATASET="${PACKAGES_ROOT}/dataset"
@@ -35,6 +41,7 @@ REMOTE_ROOT="${REMOTE_ROOT:-/workspace/alzheimer-peptide-design}"
 
 if [[ -n "${VAST_DIR:-}" ]]; then
   STATE_FILE="${VAST_DIR}/.last_instance_id"
+  OUTPUT_STATE_FILE="${VAST_DIR}/.last_output_basename"
 fi
 
 require_vast_cli() {
@@ -48,6 +55,11 @@ require_ssh_identity() {
     echo "Set VAST_SSH_IDENTITY or create: ssh-keygen -t ed25519" >&2
     exit 1
   }
+}
+
+require_vast_session() {
+  require_vast_cli
+  ensure_vast_ssh_key
 }
 
 ensure_vast_ssh_key() {
@@ -202,6 +214,64 @@ save_instance_id() {
   local instance_id="${1:?instance_id required}"
   [[ -n "${STATE_FILE:-}" ]] || { echo "STATE_FILE not set" >&2; return 1; }
   printf "%s\n" "${instance_id}" > "${STATE_FILE}"
+}
+
+resolve_output_basename() {
+  local default="${1:?default required}"
+  local explicit="${2:-}"
+  if [[ -n "${explicit}" ]]; then
+    printf '%s\n' "${explicit}"
+    return 0
+  fi
+  if [[ -n "${OUTPUT_STATE_FILE:-}" && -f "${OUTPUT_STATE_FILE}" ]]; then
+    tr -d '[:space:]' < "${OUTPUT_STATE_FILE}"
+    return 0
+  fi
+  printf '%s\n' "${default}"
+}
+
+save_output_basename() {
+  local name="${1:?basename required}"
+  [[ -n "${OUTPUT_STATE_FILE:-}" ]] || return 0
+  printf '%s\n' "${name}" > "${OUTPUT_STATE_FILE}"
+}
+
+show_instance_summary() {
+  local instance_id="${1:?instance_id required}"
+  echo "Instance:"
+  vastai show instance "${instance_id}" || true
+  echo
+}
+
+parse_create_instance_id() {
+  local raw="${1:?create output required}"
+  python3 - <<'PY' "${raw}"
+import json, re, sys
+raw = sys.argv[1]
+try:
+    d = json.loads(raw)
+    for k in ("new_contract", "instance_id", "id"):
+        if d.get(k):
+            print(d[k])
+            raise SystemExit
+except json.JSONDecodeError:
+    pass
+m = re.search(r"(?:new_contract|instance)[\"'\s:]*(\d+)", raw)
+print(m.group(1) if m else "")
+PY
+}
+
+wait_for_instance_running() {
+  local instance_id="${1:?instance_id required}"
+  local attempts="${2:-60}"
+  echo "Waiting for instance ${instance_id} to become running..."
+  for _ in $(seq 1 "${attempts}"); do
+    local status
+    status="$(vastai show instance "${instance_id}" --raw 2>/dev/null | python3 -c "import json,sys; print(json.load(sys.stdin).get('actual_status',''))" 2>/dev/null || true)"
+    [[ "${status}" == "running" ]] && return 0
+    sleep 10
+  done
+  echo "Warning: instance ${instance_id} may not be running yet." >&2
 }
 
 attach_instance_ssh_key() {

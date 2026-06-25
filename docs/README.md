@@ -37,6 +37,7 @@ Project documentation for *in silico* design of BBB-compatible cyclic phosphomim
 | Document | Contents |
 |----------|----------|
 | [infrastructure/vast-training.md](infrastructure/vast-training.md) | Remote `bbb_models` training on Vast.ai (upload, train, sync) |
+| [../infra/vast/README.md](../infra/vast/README.md) | Vast script index (`infra/vast/bbb_models/`, `boltzgen_design/`) |
 
 ## Writing
 

@@ -38,7 +38,7 @@ alzheimer-peptide-design/
 │   ├── boltzgen_design/   # GSK3β orchestration (guidance, filters, TD3B)
 │   └── boltzgen/          # diffusion engine (git submodule)
 ├── docs/                  # architecture, models, data, infrastructure
-├── infra/                 # shared Vast.ai helpers (_common.sh)
+├── infra/                 # shared Vast.ai helpers (infra/vast/_common.sh)
 ├── pyproject.toml         # uv workspace root
 └── Makefile               # lint, format, typecheck, test
 ```
@@ -113,7 +113,7 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
 
 - Target prep, geometric guidance helpers, BBB oracle wrapper, TD3B utilities, 5-gate filtering, Pareto selection
 - Filtering gates: `filtering/gates.py`
-- Vast campaign scripts: `scripts/vast/`
+- Vast campaign scripts: `infra/vast/boltzgen_design/`
 - Docs: [`docs/design/rl-md-strategy.md`](docs/design/rl-md-strategy.md)
 
 ### `packages/boltzgen` (submodule)
@@ -145,14 +145,14 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
 
 ## Remote GPU (Vast.ai)
 
-Shared helpers: `infra/_common.sh` (resolves SSH via `vastai show instance`, sets `REPO_ROOT`/`REMOTE_ROOT`).
+Shared helpers: `infra/vast/_common.sh` (resolves SSH via `vastai show instance`, sets `REPO_ROOT`/`REMOTE_ROOT`).
 
 ### BBB model training
 
 ```bash
-bash packages/bbb_models/scripts/vast/launch.sh
-SMOKE=1 bash packages/bbb_models/scripts/vast/run_train.sh <INSTANCE_ID>
-bash packages/bbb_models/scripts/vast/sync_artifacts.sh <INSTANCE_ID>
+bash infra/vast/bbb_models/launch.sh
+SMOKE=1 bash infra/vast/bbb_models/run_train.sh <INSTANCE_ID>
+bash infra/vast/bbb_models/sync_artifacts.sh <INSTANCE_ID>
 ```
 
 Upload: `bbb_models/` + `dataset/data/hf_release/` only. Docs: [`docs/infrastructure/vast-training.md`](docs/infrastructure/vast-training.md).
@@ -162,11 +162,11 @@ Upload: `bbb_models/` + `dataset/data/hf_release/` only. Docs: [`docs/infrastruc
 Target assets in `packages/boltzgen_design/targets/gsk3b/` (`gsk3b.cif`, `gsk3b_peptide_design.yaml`, `guidance_feats.json`).
 
 ```bash
-bash packages/boltzgen_design/scripts/vast/launch.sh
-bash packages/boltzgen_design/scripts/vast/setup_guided_env.sh <INSTANCE_ID>
+bash infra/vast/boltzgen_design/launch.sh <INSTANCE_ID>
+bash infra/vast/boltzgen_design/setup_guided_env.sh <INSTANCE_ID>
 # Optional: BBB_CKPT_LOCAL=/abs/path/best.ckpt setup_guided_env.sh ...
-SMOKE=1 bash packages/boltzgen_design/scripts/vast/run_guided_campaign.sh <INSTANCE_ID>
-bash packages/boltzgen_design/scripts/vast/sync_results.sh <INSTANCE_ID> gsk3b_guided_smoke
+SMOKE=1 bash infra/vast/boltzgen_design/run_guided_campaign.sh <INSTANCE_ID>
+bash infra/vast/boltzgen_design/sync_results.sh <INSTANCE_ID> gsk3b_guided_smoke
 ```
 
 Key env vars: `NUM_DESIGNS`, `BBB_CKPT`, `GUIDANCE_FEATS_JSON`, `USE_KERNELS` (auto; force `false` on Blackwell/B200), `REUSE=1`, `ATTACH=1` (tmux attach).

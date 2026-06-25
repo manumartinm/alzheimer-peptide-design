@@ -3,31 +3,19 @@
 # install both in editable mode for guidance runs.
 #
 # Usage:
-#   bash packages/boltzgen_design/scripts/vast/setup_guided_env.sh
-#   bash packages/boltzgen_design/scripts/vast/setup_guided_env.sh <INSTANCE_ID>
+#   bash infra/vast/boltzgen_design/setup_guided_env.sh [INSTANCE_ID]
 #
 # Optional env:
 #   BBB_CKPT_LOCAL=/abs/path/best.ckpt
 #   REMOTE_CAMPAIGN=/workspace/campaign
 set -euo pipefail
-# shellcheck source=_vast_env.sh
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_vast_env.sh"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/_common.sh"
 
-STATE_FILE="${VAST_DIR}/.last_instance_id"
-INSTANCE_ID="${1:-${INSTANCE_ID:-}}"
-if [[ -z "${INSTANCE_ID}" && -f "${STATE_FILE}" ]]; then
-  INSTANCE_ID="$(cat "${STATE_FILE}")"
-fi
-[[ -n "${INSTANCE_ID}" ]] || {
-  echo "Usage: $0 [instance_id]  (or run launch.sh first)" >&2
-  exit 1
-}
-
+INSTANCE_ID="$(resolve_instance_id "${1:-}")"
 REMOTE_CAMPAIGN="${REMOTE_CAMPAIGN:-/workspace/campaign}"
 REMOTE_BBB_CKPT="${REMOTE_CAMPAIGN}/bbb_geo_best.ckpt"
 
-command -v vastai >/dev/null 2>&1 || { echo "pip install vastai" >&2; exit 1; }
-ensure_vast_ssh_key
+require_vast_session
 
 [[ -d "${BOLTZGEN}" ]] || { echo "Missing ${BOLTZGEN}" >&2; exit 1; }
 [[ -d "${BBB_MODELS}" ]] || { echo "Missing ${BBB_MODELS}" >&2; exit 1; }
@@ -158,4 +146,4 @@ EOF
 echo ""
 echo "Setup complete."
 echo "If you uploaded a checkpoint, remote path is: ${REMOTE_BBB_CKPT}"
-echo "Next: bash boltzgen_design/scripts/vast/run_guided_campaign.sh ${INSTANCE_ID}"
+echo "Next: bash ${INFRA_VAST}/boltzgen_design/run_guided_campaign.sh ${INSTANCE_ID}"

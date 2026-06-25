@@ -18,7 +18,7 @@ scripts/
   classifier/     train, predict, evaluate, cv, sweep
   geo/            train, predict, probe, cv, sweep
   data/           prepare
-  vast/           GPU launch helpers
+  vast/           GPU launch helpers (wrappers → infra/vast/bbb_models/)
 ```
 
 ## Supported experiments
@@ -95,24 +95,24 @@ uv run python bbb_models/scripts/geo/sweep_stability.py \
   --selection-metric low_sigma_mean_pr_auc_mean
 ```
 
-## Vast.ai (subir y entrenar en instancia existente)
+## Vast.ai (upload and train on an existing instance)
+
+From the monorepo root:
 
 ```bash
-cd /Users/manumartinm/Documents/ProteinDesign/TFG
-
-# INSTANCE_ID = id de tu instancia Vast (creada manualmente en la web)
-bash bbb_models/scripts/vast_launch.sh <INSTANCE_ID>
-
-SMOKE=1 bash bbb_models/scripts/vast_launch.sh <INSTANCE_ID>
-CV=1 bash bbb_models/scripts/vast_launch.sh <INSTANCE_ID>
-FORCE_CPU=1 bash bbb_models/scripts/vast_launch.sh <INSTANCE_ID>   # si GPU incompatible
+# INSTANCE_ID = your Vast instance id (created manually on the web)
+bash infra/vast/bbb_models/upload_workspace.sh <INSTANCE_ID>
+bash infra/vast/bbb_models/setup_instance.sh <INSTANCE_ID>
+SMOKE=1 bash infra/vast/bbb_models/run_train.sh <INSTANCE_ID>
+CV=1 bash infra/vast/bbb_models/run_cv.sh <INSTANCE_ID>
+FORCE_CPU=1 bash infra/vast/bbb_models/run_train.sh <INSTANCE_ID>   # if GPU incompatible
 ```
 
-Monitorizar y descargar:
+Monitor and sync:
 
 ```bash
-bash bbb_models/scripts/vast/monitor.sh <INSTANCE_ID>
-bash bbb_models/scripts/vast/sync_artifacts.sh <INSTANCE_ID>
+bash infra/vast/bbb_models/monitor.sh <INSTANCE_ID>
+bash infra/vast/bbb_models/sync_artifacts.sh <INSTANCE_ID>
 ```
 
 ## BoltzGen integration (bbb_geo guidance)

@@ -26,7 +26,7 @@ Classifier root: `packages/bbb_models`
   - `classifier/` — `train.py`, `predict.py`, `evaluate.py`, `cv.py`, `sweep.py`
   - `geo/` — structural EGNN train/predict/probe/cv (see [structural-classifier.md](structural-classifier.md))
   - `data/prepare_data.py`
-  - `vast/` — remote training helpers ([vast-training.md](../infrastructure/vast-training.md))
+  - `vast/` — remote training helpers ([vast-training.md](../infrastructure/vast-training.md); scripts in `infra/vast/bbb_models/`)
 - `src/bbb_classifier/`
   - `data/`: dataset, collate, split logic.
   - `features/`: ESM, tabular, 3D/graph feature modules.

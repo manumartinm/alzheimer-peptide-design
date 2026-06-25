@@ -11,7 +11,7 @@
 | Classifier | `scripts/classifier/train.py` + configs + `train_metadata.json` |
 | Geo EGNN | `scripts/geo/train.py` + `exp09` + `train_geo.yaml` |
 | CV | `scripts/classifier/cv.py`, `scripts/geo/cv.py` |
-| Remote GPU | `packages/bbb_models/scripts/vast/` + `sync_artifacts.sh` |
+| Remote GPU | `infra/vast/bbb_models/` + `sync_artifacts.sh` |
 
 ### Minimal commands
 

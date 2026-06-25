@@ -113,7 +113,7 @@ Current release stats (`--variant full`): **825 rows**, 410 BBB+, 415 BBB-, all 
 
 Used by:
 - geo training via `structure_coords_path` when `struct_manifest_path` is empty;
-- Vast upload (`bbb_models/scripts/vast_launch.sh` requires local `hf_release/`).
+- Vast upload (`infra/vast/bbb_models/upload_workspace.sh` requires local `hf_release/`).
 
 Upload to Hugging Face:
 

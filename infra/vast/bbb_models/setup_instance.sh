@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
-# shellcheck source=_vast_env.sh
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_vast_env.sh"
-
+set -euo pipefail
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/_common.sh"
 
 instance_id="$(resolve_instance_id "${1:-}")"
-require_vast_cli
-ensure_vast_ssh_key
+require_vast_session
 
 vast_ssh "${instance_id}" bash -s <<'EOF'
 set -euo pipefail

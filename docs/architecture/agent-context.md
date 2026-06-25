@@ -105,6 +105,6 @@ When tasked with continuing this project, follow these rules:
 4.  **Use the unified environment:** Run commands through the root uv workspace (`uv sync`, `uv run ...`) instead of creating per-package virtual environments.
 5.  **Math reference:** Use [theoretical-framework.md](theoretical-framework.md) as the canonical formulas reference for SDE guidance, TD3B, and filtering gates.
 6.  **Geo training stability:** If you see many `skipped non-finite batches`, lower `coord_sigma_cap` / `aux_weight` in exp09 or use `train_geo.yaml`. Run `sweep_stability.py` before long Vast jobs.
-7.  **Vast workflow:** Upload `bbb_models/` + `hf_release/` only. Use `vast_launch.sh` on an existing instance; see [vast-training.md](../infrastructure/vast-training.md).
+7.  **Vast workflow:** Upload `bbb_models/` + `hf_release/` only. Use `infra/vast/bbb_models/run_train.sh` on an existing instance; see [vast-training.md](../infrastructure/vast-training.md).
 8.  **Artifact policy:** Do not commit large artifacts/checkpoints to git; keep them in ignored paths or track with DVC metadata only.
 9.  **Document Changes:** If you alter the pipeline architecture, update [agent-context.md](agent-context.md) to reflect the new reality.

@@ -1,11 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-# shellcheck source=_vast_env.sh
-source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/_vast_env.sh"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/_common.sh"
 
 instance_id="$(resolve_instance_id "${1:-}")"
-require_vast_cli
-ensure_vast_ssh_key
+require_vast_session
 
 REMOTE_ROOT="${REMOTE_ROOT}"
 LOCAL_BBB="${BBB_MODELS}"
@@ -32,4 +30,4 @@ tar -C "${DATASET}/data" -czf - hf_release \
 
 echo "Upload complete."
 echo "Next:"
-echo "  bash ${BBB_MODELS}/scripts/vast/setup_instance.sh ${instance_id}"
+echo "  bash ${VAST_DIR}/setup_instance.sh ${instance_id}"
