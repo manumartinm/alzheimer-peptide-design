@@ -1,5 +1,6 @@
-dataset_path: /workspace/alzheimer-peptide-design/packages/dataset/data/hf_release/peptides.parquet
-dataset_root: /workspace/alzheimer-peptide-design/packages/dataset/data/hf_release
+dataset_repo: manumartinm/bbb-peptides
+dataset_path: /workspace/alzheimer-peptide-design/packages/bbb_models/data/bbb-peptides/peptides.parquet
+dataset_root: /workspace/alzheimer-peptide-design/packages/bbb_models/data/bbb-peptides
 id_col: peptide_id
 label_col: bbb_label
 sequence_col: sequence
@@ -25,5 +26,17 @@ tabular_exclude:
   - is_augmented
   - parent_peptide_id
   - sample_weight
+  - sequence_hash
+  - length
+  - has_structure
+  - structure_coords_path
+  - structure_cif_path
+  - plddt
+  - ptm
+  - structure_confidence
+  - iptm
+  - complex_iplddt
+  - complex_pde
+  - complex_ipde
 three_d_columns: []
 struct_manifest_path: ""

@@ -48,7 +48,7 @@ Hook lives in `packages/boltzgen/src/boltzgen/model/modules/diffusion.py` (`_com
 
 ## Remote training & campaigns
 
-**BBB model training:** upload `bbb_models/` + `dataset/data/hf_release/` via `infra/vast/bbb_models/upload_workspace.sh`.
+**BBB model training:** upload `bbb_models/` + `bbb_models/data/bbb-peptides/` via `infra/vast/bbb_models/upload_workspace.sh`.
 
 **Guided design campaign:** `infra/vast/boltzgen_design/` — launch → setup_guided_env → run_guided_campaign → sync_results. Blackwell GPUs (sm_100): force `--use_kernels false`.
 

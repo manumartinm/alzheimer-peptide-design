@@ -8,15 +8,17 @@ Train the BBB classifier or geometric EGNN on an **existing Vast instance** (cre
 
 | Local content | Remote destination |
 |---------------|---------------------|
-| `packages/bbb_models/` (excluding `artifacts/`, `.venv`) | `/workspace/alzheimer-peptide-design/packages/bbb_models/` |
-| `packages/dataset/data/hf_release/` | `/workspace/alzheimer-peptide-design/packages/dataset/data/hf_release/` |
+| `packages/bbb_models/` (excluding `artifacts/`, `.venv`, cached data) | `/workspace/alzheimer-peptide-design/packages/bbb_models/` |
+| `packages/bbb_models/data/bbb-peptides/` | `/workspace/alzheimer-peptide-design/packages/bbb_models/data/bbb-peptides/` |
 
-The HF release is required for geo training: it contains `peptides.parquet` + `structures/<hash>/coords.npz` (825 peptides with structure). Generate it first:
+Geo training needs the HF cache: `peptides.parquet` + `structures/<hash>/coords.npz` (825 peptides). Download locally first:
 
 ```bash
-cd packages/dataset
-uv run tfg-bbb-export-hf --variant full
+cd packages/bbb_models
+uv run python scripts/data/download.py
 ```
+
+Source: [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides).
 
 ## Main launcher
 
@@ -91,9 +93,9 @@ If the key was registered as a path (`/Users/.../id_ed25519.pub`), delete it and
 `configs/data.vast.yaml`:
 
 ```yaml
-dataset_path: /workspace/alzheimer-peptide-design/packages/dataset/data/hf_release/peptides.parquet
-dataset_root: /workspace/alzheimer-peptide-design/packages/dataset/data/hf_release
-struct_manifest_path: ""   # empty: geo resolves coords from hf_release
+dataset_path: /workspace/alzheimer-peptide-design/packages/bbb_models/data/bbb-peptides/peptides.parquet
+dataset_root: /workspace/alzheimer-peptide-design/packages/bbb_models/data/bbb-peptides
+struct_manifest_path: ""   # empty: geo resolves coords from structure_coords_path
 ```
 
 `build_features` uses relative `structure_coords_path` in the parquet when no manifest is set.

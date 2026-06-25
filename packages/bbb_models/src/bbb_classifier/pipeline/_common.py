@@ -7,6 +7,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
+from bbb_classifier.data.hf_peptides import load_data_config
 from bbb_classifier.data.splits import train_val_split
 from bbb_classifier.train.calibration import ProbabilityCalibrator
 from bbb_classifier.train.metrics import classification_metrics
@@ -40,7 +41,7 @@ def load_context(
     args: argparse.Namespace,
 ) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any], Path]:
     exp_cfg = read_yaml(args.exp)
-    data_cfg = read_yaml(args.data_config)
+    data_cfg = load_data_config(args.data_config, ensure=True)
     train_cfg = read_yaml(args.train_config)
     run_name = exp_cfg.get("name", exp_cfg["model_type"])
     run_dir = ensure_dir(Path(args.output_root) / "models" / run_name)
@@ -53,6 +54,8 @@ def prepare_dataframes(
     data_cfg: dict[str, Any],
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     dataset_path = args.dataset_path or data_cfg["dataset_path"]
+    if args.dataset_path:
+        dataset_path = str(Path(args.dataset_path).resolve())
     df = pd.read_parquet(dataset_path)
     label_col = data_cfg["label_col"]
     train_df, val_df = train_val_split(

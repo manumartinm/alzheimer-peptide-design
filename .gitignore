@@ -45,6 +45,7 @@ packages/dataset/data/raw/
 packages/dataset/data/interim/
 packages/dataset/data/structures/
 packages/dataset/data/hf_release/
+packages/bbb_models/data/bbb-peptides/
 **/data/raw/
 **/data/interim/
 *.h5

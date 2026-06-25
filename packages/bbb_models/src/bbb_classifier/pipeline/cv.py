@@ -12,6 +12,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from bbb_classifier.data.hf_peptides import load_data_config
 from bbb_classifier.utils.io import ensure_dir, read_yaml, write_json
 
 
@@ -30,7 +31,7 @@ def _reliability_curve(y_true: np.ndarray, y_prob: np.ndarray, n_bins: int = 10)
 
 def run(args: argparse.Namespace) -> None:
     exp_cfg = read_yaml(args.exp)
-    data_cfg = read_yaml(args.data_config)
+    data_cfg = load_data_config(args.data_config, ensure=True)
     train_cfg = read_yaml(args.train_config)
     dataset_path = args.dataset_path or data_cfg["dataset_path"]
     df = pd.read_parquet(dataset_path)

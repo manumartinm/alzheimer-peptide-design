@@ -99,7 +99,7 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
 
 - CLI entry points: `tfg-bbb-build`, `tfg-bbb-augment`, `tfg-bbb-fold`, `tfg-bbb-export-hf`
 - Pipeline modules in `src/tfg_bbb/` (sources, clean, augment, folding, splits, eda)
-- Gold dataset: `data/processed/peptides_bbb.parquet`; HF release: `data/hf_release/` (not committed)
+- Gold dataset: `packages/dataset/data/processed/peptides_bbb.parquet` (build pipeline); **training cache:** `packages/bbb_models/data/bbb-peptides/` from [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides)
 - Docs: [`docs/data/dataset-pipeline.md`](docs/data/dataset-pipeline.md)
 
 ### `packages/bbb_models` (`bbb_classifier`, `bbb_geo`)
@@ -155,7 +155,7 @@ SMOKE=1 bash infra/vast/bbb_models/run_train.sh <INSTANCE_ID>
 bash infra/vast/bbb_models/sync_artifacts.sh <INSTANCE_ID>
 ```
 
-Upload: `bbb_models/` + `dataset/data/hf_release/` only. Docs: [`docs/infrastructure/vast-training.md`](docs/infrastructure/vast-training.md).
+Upload: `bbb_models/` + `bbb_models/data/bbb-peptides/` only. Docs: [`docs/infrastructure/vast-training.md`](docs/infrastructure/vast-training.md).
 
 ### Guided BoltzGen campaign (GSK3β)
 

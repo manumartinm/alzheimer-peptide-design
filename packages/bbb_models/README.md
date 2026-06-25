@@ -15,10 +15,9 @@ Logic lives in `src/*/pipeline/`; scripts are thin entry points:
 
 ```text
 scripts/
+  data/           download HF dataset (scripts/data/download.py)
   classifier/     train, predict, evaluate, cv, sweep
   geo/            train, predict, probe, cv, sweep
-  data/           prepare
-  vast/           GPU launch helpers (wrappers → infra/vast/bbb_models/)
 ```
 
 ## Supported experiments
@@ -30,7 +29,11 @@ scripts/
 
 ```bash
 uv sync
+cd packages/bbb_models
+uv run python scripts/data/download.py   # cache HF dataset locally
 ```
+
+Training data: [`manumartinm/bbb-peptides`](https://huggingface.co/datasets/manumartinm/bbb-peptides) → `data/bbb-peptides/` (see [`data/README.md`](data/README.md)).
 
 ## Train
 

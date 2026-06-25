@@ -1,6 +1,6 @@
-dataset_path: ../dataset/data/processed/peptides_bbb_with_augmentation.parquet
-# Sequence augmentation is built in TFG/dataset (tfg-bbb-augment / tfg-bbb-build).
-# Use peptides_bbb.parquet for gold-only experiments.
+dataset_repo: manumartinm/bbb-peptides
+dataset_path: data/bbb-peptides/peptides.parquet
+dataset_root: data/bbb-peptides
 id_col: peptide_id
 label_col: bbb_label
 sequence_col: sequence
@@ -26,8 +26,19 @@ tabular_exclude:
   - is_augmented
   - parent_peptide_id
   - sample_weight
+  - sequence_hash
+  - length
+  - has_structure
+  - structure_coords_path
+  - structure_cif_path
+  - plddt
+  - ptm
+  - structure_confidence
+  - iptm
+  - complex_iplddt
+  - complex_pde
+  - complex_ipde
 three_d_columns: []
-struct_manifest_path: ../dataset/data/processed/peptides_struct_manifest.parquet
-# Offline dev fallback (no Boltz API): build with
-#   cd dataset && uv run python scripts/build_synthetic_struct_manifest.py
-# then point manifest_path to peptides_struct_manifest_synthetic.parquet
+struct_manifest_path: ""
+# Geo models resolve coords from structure_coords_path relative to dataset_root.
+# Download once: uv run python scripts/data/download.py
