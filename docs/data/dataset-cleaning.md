@@ -1,6 +1,6 @@
 # Dataset Cleaning and Anti-Leakage Splits
 
-> Status: IMPLEMENTED. Describes the cleaning, deduplication, and split logic in `TFG/dataset/src/tfg_bbb`. Companion to [DATASET_PIPELINE.md](DATASET_PIPELINE.md).
+> Status: IMPLEMENTED. Describes the cleaning, deduplication, and split logic in `packages/dataset/src/tfg_bbb`. Companion to [dataset-pipeline.md](dataset-pipeline.md).
 
 The cleaning stage turns the raw, multi-source peptide tables (B3Pred D1, optional B3Pdb, Brainpeps) into a single curated table with trustworthy labels and leakage-safe cross-validation folds. It is orchestrated by `pipeline._clean_and_featurize` and lives mainly in [`clean.py`](../dataset/src/tfg_bbb/clean.py) and [`splits.py`](../dataset/src/tfg_bbb/splits.py).
 
@@ -20,7 +20,7 @@ flowchart TD
 
 ## 1. Sequence filtering (`filter_sequences`)
 
-```13:35:TFG/dataset/src/tfg_bbb/clean.py
+```13:35:packages/dataset/src/tfg_bbb/clean.py
 def filter_sequences(
     df: pd.DataFrame,
     sequence_col: str = "sequence",
@@ -39,7 +39,7 @@ def filter_sequences(
 
 A sequence that appears with **both** BBB+ and BBB- labels across sources is untrustworthy. Rather than guessing, the function **removes every sequence with more than one distinct label**:
 
-```43:50:TFG/dataset/src/tfg_bbb/clean.py
+```43:50:packages/dataset/src/tfg_bbb/clean.py
     conflict_mask = (
         df.groupby(sequence_col)[label_col]
         .nunique()
@@ -63,7 +63,7 @@ Two-step deduplication that prevents near-duplicate sequences from inflating the
    - else fall back to a pure-Python greedy clusterer `_cluster_python` using ungapped identity over the overlap with a length penalty.
 3. **Representative selection**: within each cluster keep one row, preferring the BBB+ label (`sort_values([label_col], ascending=False)` then drop duplicates by `cluster_id`).
 
-```200:204:TFG/dataset/src/tfg_bbb/clean.py
+```200:204:packages/dataset/src/tfg_bbb/clean.py
     out = (
         out.sort_values([label_col], ascending=False)
         .drop_duplicates(subset=["cluster_id"], keep="first")

@@ -1,0 +1,55 @@
+---
+description: Scientific and architectural constraints for BBB peptide design
+alwaysApply: true
+---
+
+# Protein Design Constraints
+
+## Non-differentiability (critical)
+
+The sequence BBB oracle (`exp03_esm_tab_mlp`) uses ESM-2 embeddings and tabular descriptors (pI, GRAVY, etc.). These are **not differentiable w.r.t. 3D coordinates**.
+
+- **SDE gradient guidance:** hotspot potentials, ATP repulsion, geometry-only EGNN (`exp09_struct_egnn_geo`), membrane potential.
+- **Sequence BBB signal:** TD3B reward (WDCE + KL anchor), filtering gates, Pareto ranking — never backprop through ESM/tabular features into diffusion coordinates.
+
+## BBB models
+
+| Model | Package | Use |
+|-------|---------|-----|
+| `exp03_esm_tab_mlp` | `bbb_classifier` | Oracle, gating, TD3B reward (`p_bbb_calibrated`) |
+| `exp09_struct_egnn_geo` | `bbb_geo` | Differentiable structural guidance in BoltzGen |
+
+Geo training writes `guidance_gate.json` — run `scripts/geo/probe.py` before enabling diffusion guidance.
+
+## Filtering cascade (5 gates)
+
+Implemented in `packages/boltzgen_design/filtering/gates.py`:
+
+1. G1: hotspot engagement ≥ 70%
+2. G2: ATP repulsion below threshold
+3. G3: BBB probability ≥ 0.6
+4. G4: ipTM, pLDDT, cyclic closure RMSD
+5. G5: sequence liabilities
+
+## GSK3β target
+
+Hotspots: R96, R180, K205. Avoid ATP-binding cleft. Bounding box ~8–12 Å around substrate-recognition groove.
+
+## Guidance in BoltzGen (Phase 2)
+
+During reverse SDE, inject geometric potentials plus optional structural BBB:
+
+- Hotspot reward $U_h$ (≤ 5 Å from R96, R180, K205)
+- ATP repulsion $U_a$ (Lennard-Jones style)
+- `p_geo` from `exp09_struct_egnn_geo` via `guidance.bbb_ckpt` + `guidance.feats_json`
+- Sequence BBB (`exp03`) → TD3B reward only, not SDE gradients
+
+Hook lives in `packages/boltzgen/src/boltzgen/model/modules/diffusion.py` (`_compute_geometric_guidance`).
+
+## Remote training & campaigns
+
+**BBB model training:** upload `bbb_models/` + `dataset/data/hf_release/` via `bbb_models/scripts/vast/`.
+
+**Guided design campaign:** `boltzgen_design/scripts/vast/` — launch → setup_guided_env → run_guided_campaign → sync_results. Blackwell GPUs (sm_100): force `--use_kernels false`.
+
+Shared SSH helpers: `infra/_common.sh` (canonical repo) or per-package `_common.sh` (TFG).

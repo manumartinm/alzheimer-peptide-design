@@ -1,6 +1,6 @@
 # BBB Classifier Documentation
 
-This document describes the implemented BBB classification system in `TFG/bbb_models`, including architecture, experiment matrix, reproducibility flow, and practical usage for agents.
+This document describes the implemented BBB classification system in `packages/bbb_models`, including architecture, experiment matrix, reproducibility flow, and practical usage for agents.
 
 ## Scope
 
@@ -16,7 +16,7 @@ It is used both as:
 
 ## Project Layout
 
-Classifier root: `TFG/bbb_models`
+Classifier root: `packages/bbb_models`
 
 - `configs/`
   - `data.yaml`: data schema and exclusions.
@@ -24,9 +24,9 @@ Classifier root: `TFG/bbb_models`
   - `experiments/*.yaml`: experiment variants.
 - `scripts/`
   - `classifier/` — `train.py`, `predict.py`, `evaluate.py`, `cv.py`, `sweep.py`
-  - `geo/` — structural EGNN train/predict/probe/cv (see [STRUCTURAL_CLASSIFIER.md](../docs/STRUCTURAL_CLASSIFIER.md))
+  - `geo/` — structural EGNN train/predict/probe/cv (see [structural-classifier.md](structural-classifier.md))
   - `data/prepare_data.py`
-  - `vast/` — remote training helpers ([VAST_TRAINING.md](../docs/VAST_TRAINING.md))
+  - `vast/` — remote training helpers ([vast-training.md](../infrastructure/vast-training.md))
 - `src/bbb_classifier/`
   - `data/`: dataset, collate, split logic.
   - `features/`: ESM, tabular, 3D/graph feature modules.
@@ -184,8 +184,8 @@ Implemented and operational:
 - Geo CV: `scripts/geo/cv.py` (adds `metrics_multisigma.json`, `guidance_gate.json` per fold).
 - Augmentation experiment:
   - `configs/experiments/exp06_esm_tab_mlp_aug.yaml`
-  - pre-built sequence augmentation in `TFG/dataset` + feature-space mixup.
-- Dataset for geo (structures): `TFG/dataset/data/hf_release/` or `peptides_struct_manifest.parquet`.
+  - pre-built sequence augmentation in `packages/dataset` + feature-space mixup.
+- Dataset for geo (structures): `packages/dataset/data/hf_release/` or `peptides_struct_manifest.parquet`.
 
 ### Calibration policy for downstream reward
 

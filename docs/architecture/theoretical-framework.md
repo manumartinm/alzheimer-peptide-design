@@ -1,6 +1,6 @@
 # Theoretical Framework
 
-This document translates the OxML poster (`TFG/entregas/oxml_bio/main.tex`) into a structured technical reference.
+This document translates the OxML poster (`entregas/oxml_bio/main.tex`) into a structured technical reference.
 
 It explains:
 - why the project is designed this way;
@@ -91,7 +91,7 @@ Therefore (sequence-only classifier):
 - **do not inject BBB term in reverse-SDE guidance**;
 - inject BBB only via TD3B reward fine-tuning.
 
-**Planned extension (structural classifier):** a geometry-only model `p_geo(BBB | x, sigma)` plus an analytic amphipathicity potential can provide a coordinate-differentiable energy term at low noise levels. The fusion oracle (`p_full`) remains sequence+structure for reward/G3. See [STRUCTURAL_BBB_GUIDANCE.md](STRUCTURAL_BBB_GUIDANCE.md).
+**Planned extension (structural classifier):** a geometry-only model `p_geo(BBB | x, sigma)` plus an analytic amphipathicity potential can provide a coordinate-differentiable energy term at low noise levels. The fusion oracle (`p_full`) remains sequence+structure for reward/G3. See [structural-bbb-guidance.md](../models/structural-bbb-guidance.md).
 
 This is the most important implementation guardrail for agents.
 

@@ -312,7 +312,7 @@ Termini reports 92.5% hit rate vs ~1–2% random baseline. Define analogous metr
 
 ## 7. Three-paper synthesis for your thesis
 
-Your `TFG/entregas/papers/` folder now covers three complementary paradigms:
+Your `docs/references/papers/` folder now covers three complementary paradigms:
 
 | Paper | Paradigm | Role in your pipeline |
 |-------|----------|----------------------|
@@ -356,9 +356,9 @@ Combined:
 ## 9. Resources
 
 - Preprint: https://doi.org/10.64898/2026.04.09.717597
-- Your BBB classifier: `TFG/bbb_classifier/`
-- Your feature pipeline: `TFG/dataset/src/tfg_bbb/features.py`
-- Your poster: `TFG/entregas/oxml_bio/main.tex`
+- Your BBB classifier: `packages/bbb_models/src/bbb_classifier/`
+- Your feature pipeline: `packages/dataset/src/tfg_bbb/features.py`
+- Your poster: `entregas/oxml_bio/main.tex`
 - Related summaries:
-  - `TFG/entregas/papers/s12987-024-00545-5 (2).md` (Cavaco — BBB determinants)
-  - `TFG/entregas/papers/12999_Scaling_Atomistic_Protei.md` (Complexa — 3D generative + test-time compute)
+  - `docs/references/papers/bbb-transport-meta-analysis-2024.md` (Cavaco — BBB determinants)
+  - `docs/references/papers/proteina-complexa-iclr-2026.md` (Complexa — 3D generative + test-time compute)

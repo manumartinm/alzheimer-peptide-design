@@ -1,0 +1,37 @@
+---
+description: Core monorepo context for alzheimer-peptide-design
+alwaysApply: true
+---
+
+# Project Core
+
+Monorepo for *in silico* design of BBB-compatible cyclic phosphomimetic peptides that modulate GSK3β (Alzheimer's target). Bachelor's thesis (TFG) project; GitHub name `gsk3b-peptide-design`, canonical checkout `alzheimer-peptide-design/`.
+
+Sibling workspace `../TFG/` uses a flat layout with the same packages — see `tfg-workspace.mdc`.
+
+## Packages
+
+| Package | Path | Role |
+|---------|------|------|
+| `tfg-bbb-dataset` | `packages/dataset/` | BBB dataset curation (`tfg-bbb-build`) |
+| `bbb-models` | `packages/bbb_models/` | Sequence + structural BBB classifiers |
+| `boltzgen-design` | `packages/boltzgen_design/` | GSK3β design orchestration |
+| `boltzgen` | `packages/boltzgen/` | Diffusion engine (git submodule fork) |
+
+## Environment
+
+- Python 3.11–3.12, managed with **uv** workspace at repo root.
+- Always run from root: `uv sync`, `uv run ...`, `make lint|format|typecheck|test`.
+- Do not create per-package virtualenvs.
+- Clone with submodules: `git clone --recurse-submodules`.
+
+## Documentation (read first)
+
+- Architecture: `docs/architecture/overview.md`
+- Agent SOPs: `docs/architecture/agent-context.md`
+- Formulas: `docs/architecture/theoretical-framework.md`
+- Vast GPU: `docs/infrastructure/vast-training.md`
+
+## Artifacts
+
+Never commit large data, checkpoints, or workbench outputs. They are gitignored (`artifacts/`, `checkpoints/`, `packages/dataset/data/raw/`, `hf_release/`, `workbench/`). Regenerate via CLI or track with DVC when stages exist.

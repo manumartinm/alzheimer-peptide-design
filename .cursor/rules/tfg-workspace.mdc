@@ -1,0 +1,52 @@
+---
+description: TFG sibling workspace — legacy flat layout and path mapping
+alwaysApply: true
+---
+
+# TFG Workspace (Sibling Repo)
+
+A parallel checkout lives at `../TFG/` (same parent: `ProteinDesign/`). Same scientific project; different directory layout and local state.
+
+## Which repo am I in?
+
+| | `alzheimer-peptide-design/` | `TFG/` |
+|--|------------------------------|--------|
+| Layout | `packages/{dataset,bbb_models,...}` | Flat `{dataset,bbb_models,...}` |
+| Git name | `alzheimer-peptide-design` | `gsk3b-peptide-design` |
+| CI / pre-commit | Yes (`Makefile`, `.github/workflows/ci.yml`) | Minimal dev deps |
+| Docs | `docs/architecture/`, `docs/models/` | Flat `docs/*.md` |
+| Local artifacts | Usually absent (gitignored) | Often present (`bbb_models/artifacts/`, trained exp09) |
+| Thesis deliverables | — | `entregas/` (local only, not committed) |
+
+**Prefer `alzheimer-peptide-design/` for new code, CI, and GitHub.** Use `TFG/` when you need local trained checkpoints, active Vast instance state, or thesis outputs.
+
+## Path mapping
+
+| TFG | alzheimer-peptide-design |
+|-----|--------------------------|
+| `TFG/bbb_models/` | `packages/bbb_models/` |
+| `TFG/dataset/` | `packages/dataset/` |
+| `TFG/boltzgen_design/` | `packages/boltzgen_design/` |
+| `TFG/boltzgen/` | `packages/boltzgen/` |
+| `TFG/docs/AGENT_CONTEXT.md` | `docs/architecture/agent-context.md` |
+| `TFG/docs/VAST_TRAINING.md` | `docs/infrastructure/vast-training.md` |
+| `TFG/docs/STRUCTURAL_BBB_GUIDANCE.md` | `docs/models/structural-bbb-guidance.md` |
+
+When docs or scripts still say `TFG/`, translate to `packages/` (or repo root) in the canonical repo.
+
+## Vast.ai differences
+
+**TFG** — `boltzgen_design/scripts/vast/_common.sh` uses hardcoded `VAST_SSH_HOST`/`PORT`; remote root `/workspace/TFG`.
+
+**Canonical repo** — shared helpers in `infra/_common.sh`; dynamic SSH via `vastai show instance`; remote root `/workspace/alzheimer-peptide-design`.
+
+Guided campaign flow (both repos, paths adjusted):
+
+```bash
+bash boltzgen_design/scripts/vast/launch.sh              # upload gsk3b.cif + design yaml
+bash boltzgen_design/scripts/vast/setup_guided_env.sh    # upload boltzgen + bbb_models editable
+SMOKE=1 bash boltzgen_design/scripts/vast/run_guided_campaign.sh
+bash boltzgen_design/scripts/vast/sync_results.sh
+```
+
+GSK3β target files: `boltzgen_design/targets/gsk3b/` (`gsk3b.cif`, `gsk3b_peptide_design.yaml`, `guidance_feats.json`).

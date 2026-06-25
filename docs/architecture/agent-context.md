@@ -19,34 +19,34 @@ Unlike traditional inhibitors that target the highly conserved ATP cleft (causin
 
 ## 2. Repository Structure
 
-*   `TFG/pyproject.toml`: Root uv workspace configuration for a single shared environment.
-*   `TFG/bbb_models/`: BBB models workspace — `bbb_classifier` (tabular/ESM) + `bbb_geo` (EGNN guidance).
-*   `TFG/boltzgen/`: Git submodule (`manumartinm/boltzgen`, branch `add-bbb-head-and-md`) with the diffusion engine and MD utilities.
-*   `TFG/boltzgen_design/`: Orchestration layer for GSK3β design (target prep, geometric guidance, TD3B utilities, filtering scripts).
-*   `TFG/dataset/`: Dataset curation package + `tfg-bbb-build` CLI pipeline.
-*   `TFG/docs/`: Project documentation and agent guidelines (this folder).
+*   `pyproject.toml`: Root uv workspace configuration for a single shared environment.
+*   `packages/bbb_models/`: BBB models workspace — `bbb_classifier` (tabular/ESM) + `bbb_geo` (EGNN guidance).
+*   `packages/boltzgen/`: Git submodule (`manumartinm/boltzgen`, branch `add-bbb-head-and-md`) with the diffusion engine and MD utilities.
+*   `packages/boltzgen_design/`: Orchestration layer for GSK3β design (target prep, geometric guidance, TD3B utilities, filtering scripts).
+*   `packages/dataset/`: Dataset curation package + `tfg-bbb-build` CLI pipeline.
+*   `docs/`: Project documentation and agent guidelines (this folder).
 
 ---
 
 ## 3. Phase 1: BBB Classifier (Completed)
-**Location:** `TFG/bbb_models/` (`src/bbb_classifier`, `src/bbb_geo`)
+**Location:** `packages/bbb_models/` (`src/bbb_classifier`, `src/bbb_geo`)
 
 This phase acts as the "delivery oracle" for the generative pipeline. It predicts whether a given peptide sequence will cross the BBB.
 
 *   **Data Pipeline:** Curated from B3Pred D1 with optional B3Pdb/Brainpeps expansion. Filtered for canonical amino acids, length 6-30 by default (configurable), and deduplicated at 90% sequence identity with cluster-aware folds to reduce leakage.
-*   **HF release:** `TFG/dataset/data/hf_release/` — 825 peptides with Boltz structures (`tfg-bbb-export-hf --variant full`). Used for geo training and Vast upload.
+*   **HF release:** `packages/dataset/data/hf_release/` — 825 peptides with Boltz structures (`tfg-bbb-export-hf --variant full`). Used for geo training and Vast upload.
 *   **Features:**
     *   ESM-2 language model embeddings ($d=128$).
     *   24 tabular physicochemical descriptors (charge, pI, GRAVY, instability, etc.).
 *   **Architecture (oracle):** `exp03_esm_tab_mlp` — MLP fusing ESM-2 and tabular branches. Heavily regularized (dropout $p=0.3$, weight decay $\lambda=10^{-3}$).
-*   **Architecture (guidance):** `exp09_struct_egnn_geo` — geometry-only EGNN with EDM noise conditioning. See [STRUCTURAL_CLASSIFIER.md](STRUCTURAL_CLASSIFIER.md).
+*   **Architecture (guidance):** `exp09_struct_egnn_geo` — geometry-only EGNN with EDM noise conditioning. See [structural-classifier.md](../models/structural-classifier.md).
 *   **Calibration:** Isotonic regression on validation probs. Use `p_bbb_calibrated` for gating/reward.
-*   **Agent Execution:** Prefer `uv run python scripts/classifier/train.py` or `scripts/geo/train.py`. DVC stages exist but geo/Vast workflows are often run directly. Remote training: [VAST_TRAINING.md](VAST_TRAINING.md).
+*   **Agent Execution:** Prefer `uv run python scripts/classifier/train.py` or `scripts/geo/train.py`. DVC stages exist but geo/Vast workflows are often run directly. Remote training: [vast-training.md](../infrastructure/vast-training.md).
 
 ---
 
 ## 4. Phase 2: Generative Pipeline with BoltzGen (In Progress)
-**Location:** `TFG/boltzgen_design/` + guidance hooks in `TFG/boltzgen/src/boltzgen/model/modules/diffusion.py`
+**Location:** `packages/boltzgen_design/` + guidance hooks in `packages/boltzgen/src/boltzgen/model/modules/diffusion.py`
 
 This is the core generative phase using **BoltzGen** (an all-atom diffusion model).
 
@@ -66,7 +66,7 @@ During inference, the reverse diffusion SDE is guided by differentiable spatial 
 > **🚨 CRITICAL ARCHITECTURAL CONSTRAINT:**
 > The BBB classifier requires discrete sequences (for ESM-2) and tabular features (like pI, GRAVY). **These are non-differentiable with respect to 3D Cartesian coordinates.** Therefore, BBB guidance CANNOT be applied as a standard gradient during the reverse SDE.
 
-> **🧪 STRUCTURAL BBB GUIDANCE (implemented, wiring in progress):** A geometry-only classifier `p_geo(BBB | x, sigma)` over coordinates makes the BBB energy differentiable wrt coordinates and can be injected into the reverse SDE alongside geometric potentials. The global tabular/ESM oracle (`exp03`) stays in reward/G3, out of the guidance gradient. Training: `exp09_struct_egnn_noise` + post-hoc `guidance_gate.json`. See [STRUCTURAL_BBB_GUIDANCE.md](STRUCTURAL_BBB_GUIDANCE.md), [STRUCTURAL_CLASSIFIER.md](STRUCTURAL_CLASSIFIER.md), [BOLTZ_FOLDING.md](BOLTZ_FOLDING.md), [VAST_TRAINING.md](VAST_TRAINING.md).
+> **🧪 STRUCTURAL BBB GUIDANCE (implemented, wiring in progress):** A geometry-only classifier `p_geo(BBB | x, sigma)` over coordinates makes the BBB energy differentiable wrt coordinates and can be injected into the reverse SDE alongside geometric potentials. The global tabular/ESM oracle (`exp03`) stays in reward/G3, out of the guidance gradient. Training: `exp09_struct_egnn_noise` + post-hoc `guidance_gate.json`. See [structural-bbb-guidance.md](../models/structural-bbb-guidance.md), [structural-classifier.md](../models/structural-classifier.md), [boltz-folding.md](../data/boltz-folding.md), [vast-training.md](../infrastructure/vast-training.md).
 
 *   **Solution (current):** We use the **TD3B framework** (Transition-Directed Discrete Diffusion).
 *   **Mechanism:** BBB permeability is injected as a **gated reward signal** during an amortized fine-tuning phase.
@@ -103,8 +103,8 @@ When tasked with continuing this project, follow these rules:
 2.  **Respect DVC:** For the BBB classifier, do not run python scripts manually if a `dvc.yaml` stage exists. Use `dvc repro`.
 3.  **Acknowledge Non-Differentiability:** Never attempt to backpropagate 3D coordinates through ESM-2 or tabular descriptors. Always use RL/TD3B for sequence-based constraints.
 4.  **Use the unified environment:** Run commands through the root uv workspace (`uv sync`, `uv run ...`) instead of creating per-package virtual environments.
-5.  **Math reference:** Use `TFG/docs/THEORETICAL_FRAMEWORK.md` as the canonical formulas reference for SDE guidance, TD3B, and filtering gates.
+5.  **Math reference:** Use [theoretical-framework.md](theoretical-framework.md) as the canonical formulas reference for SDE guidance, TD3B, and filtering gates.
 6.  **Geo training stability:** If you see many `skipped non-finite batches`, lower `coord_sigma_cap` / `aux_weight` in exp09 or use `train_geo.yaml`. Run `sweep_stability.py` before long Vast jobs.
-7.  **Vast workflow:** Upload `bbb_models/` + `hf_release/` only. Use `vast_launch.sh` on an existing instance; see [VAST_TRAINING.md](VAST_TRAINING.md).
+7.  **Vast workflow:** Upload `bbb_models/` + `hf_release/` only. Use `vast_launch.sh` on an existing instance; see [vast-training.md](../infrastructure/vast-training.md).
 8.  **Artifact policy:** Do not commit large artifacts/checkpoints to git; keep them in ignored paths or track with DVC metadata only.
-9.  **Document Changes:** If you alter the pipeline architecture, update this `AGENT_CONTEXT.md` file to reflect the new reality.
+9.  **Document Changes:** If you alter the pipeline architecture, update [agent-context.md](agent-context.md) to reflect the new reality.

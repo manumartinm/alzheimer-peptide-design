@@ -33,8 +33,8 @@ See [`packages/dataset/data/README.md`](packages/dataset/data/README.md) and the
 
 ## Documentation
 
-Full architecture and pipelines: [`docs/architecture.md`](docs/architecture.md).
+Full architecture and pipelines: [`docs/architecture/overview.md`](docs/architecture/overview.md).
 
 ## Remote GPU (Vast.ai)
 
-Shared helpers live in `infra/vast/_common.sh`. See [`docs/VAST_TRAINING.md`](docs/VAST_TRAINING.md).
+Shared helpers live in `infra/vast/_common.sh`. See [`docs/infrastructure/vast-training.md`](docs/infrastructure/vast-training.md).

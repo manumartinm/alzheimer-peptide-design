@@ -1,10 +1,10 @@
 # Dataset Pipeline Documentation
 
-This document explains the current `TFG/dataset` pipeline end-to-end.
+This document explains the current `packages/dataset` pipeline end-to-end.
 
 ## Scope and Purpose
 
-The dataset pipeline creates a curated BBB peptide dataset for downstream modeling in `TFG/bbb_models`.
+The dataset pipeline creates a curated BBB peptide dataset for downstream modeling in `packages/bbb_models`.
 
 Primary goals:
 - build a clean peptide table with BBB labels (`BBB+` / `BBB-`);
@@ -13,7 +13,7 @@ Primary goals:
 
 ## Project Layout
 
-Dataset project root: `TFG/dataset`
+Dataset project root: `packages/dataset`
 
 - `data/raw`: original downloaded sources.
 - `data/interim`: temporary outputs per pipeline step.
@@ -68,12 +68,12 @@ This produces the tabular descriptors consumed by classifier experiments.
 
 ## Environment and Dependencies
 
-Defined in `TFG/dataset/pyproject.toml` (Python `>=3.11,<3.13`).
+Defined in `packages/dataset/pyproject.toml` (Python `>=3.11,<3.13`).
 
 Recommended setup:
 
 ```bash
-cd /Users/manumartinm/Documents/ProteinDesign/TFG/dataset
+cd packages/dataset
 uv sync --group dev
 uv run pytest --cov=tfg_bbb --cov-report=term-missing --cov-fail-under=85
 ```
@@ -87,14 +87,14 @@ Expected final handoff artifacts:
 - `data/processed/peptides_struct_manifest.parquet` (Boltz folds + metrics)
 - `data/processed/DATA_CARD.md`
 
-These tables are consumed by `TFG/bbb_models` through configs (`configs/data.yaml`) and DVC stages.
+These tables are consumed by `packages/bbb_models` through configs (`configs/data.yaml`) and DVC stages.
 
 ### Hugging Face release (`hf_release`)
 
 CLI: `uv run tfg-bbb-export-hf` (module `tfg_bbb.export_hf`, entry `tfg-bbb-export-hf`).
 
 ```bash
-cd TFG/dataset
+cd packages/dataset
 uv run tfg-bbb-export-hf --variant gold    # gold only
 uv run tfg-bbb-export-hf --variant full    # gold + augmented (825 rows, all with structure)
 ```

@@ -197,7 +197,7 @@ Complexa outperforms RFdiffusion2 on **38/41 tasks**, with self-generated sequen
 
 ## 5. Comparison with your thesis (OxML Bio)
 
-Your pipeline (`TFG/entregas/oxml_bio/main.tex`):
+Your pipeline (`entregas/oxml_bio/main.tex`):
 
 ```
 BBB dataset (523 peptides)
@@ -350,5 +350,5 @@ If BoltzGen does not expose search during the SDE:
 - OpenReview: https://openreview.net/forum?id=qmCpJtFZra
 - GitHub: https://github.com/NVIDIA-BioNeMo/Proteina-Complexa
 - HuggingFace model: `nvidia/NV-Proteina-Complexa-Protein-Target-160M-v1`
-- Your poster: `TFG/entregas/oxml_bio/main.tex`
-- Your BBB classifier: `TFG/bbb_classifier/`
+- Your poster: `entregas/oxml_bio/main.tex`
+- Your BBB classifier: `packages/bbb_models/src/bbb_classifier/`

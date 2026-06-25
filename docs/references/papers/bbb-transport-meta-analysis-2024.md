@@ -172,7 +172,7 @@ Reference standard: **PepH3** (well-characterized BBBpS).
 
 ## 5. Comparison with your thesis (OxML Bio)
 
-Your BBB classifier (`TFG/bbb_classifier/`) uses a **learned** approach; this paper uses a **rule-based meta-analysis**. They are complementary.
+Your BBB classifier (`packages/bbb_models/src/bbb_classifier/`) uses a **learned** approach; this paper uses a **rule-based meta-analysis**. They are complementary.
 
 ### 5.1 Feature overlap
 
@@ -189,7 +189,7 @@ Your BBB classifier (`TFG/bbb_classifier/`) uses a **learned** approach; this pa
 | Hydrophilic ratio | `hydrophilic_ratio` | Yes |
 | — | `gravy`, `instability_index`, `aromaticity`, `boman_index`, `charge_density`, etc. | Extra (not in Cavaco) |
 
-Your feature pipeline in `TFG/dataset/src/tfg_bbb/features.py` **already computes all nine Cavaco parameters** plus additional descriptors. This paper validates your choice of physicochemical features for BBB prediction.
+Your feature pipeline in `packages/dataset/src/tfg_bbb/features.py` **already computes all nine Cavaco parameters** plus additional descriptors. This paper validates your choice of physicochemical features for BBB prediction.
 
 ### 5.2 Approach comparison
 
@@ -336,7 +336,7 @@ These could serve as **positive controls** if you run experimental BBB assays in
 - Paper: https://link.springer.com/article/10.1186/s12987-024-00545-5
 - DOI: https://doi.org/10.1186/s12987-024-00545-5
 - Supplementary (Table S4 cutoffs, full databases): included with paper
-- Your feature pipeline: `TFG/dataset/src/tfg_bbb/features.py`
-- Your BBB classifier: `TFG/bbb_classifier/`
-- Your poster: `TFG/entregas/oxml_bio/main.tex`
-- Related paper summary: `TFG/entregas/papers/12999_Scaling_Atomistic_Protei.md`
+- Your feature pipeline: `packages/dataset/src/tfg_bbb/features.py`
+- Your BBB classifier: `packages/bbb_models/src/bbb_classifier/`
+- Your poster: `entregas/oxml_bio/main.tex`
+- Related paper summary: `docs/references/papers/proteina-complexa-iclr-2026.md`

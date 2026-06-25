@@ -4,14 +4,14 @@
 
 Related docs:
 
-- [BOLTZ_FOLDING.md](BOLTZ_FOLDING.md) - how the training structures are produced via the Boltz API.
-- [STRUCTURAL_CLASSIFIER.md](STRUCTURAL_CLASSIFIER.md) - `struct_egnn_geo` (exp09), amphipathicity potential, noise-aware training, stability, post-training gates.
-- [BBB_CLASSIFIER.md](BBB_CLASSIFIER.md) - sequence/tabular oracle (`exp03`) for reward and G3.
-- [VAST_TRAINING.md](VAST_TRAINING.md) - remote geo training on Vast.ai.
+- [boltz-folding.md](../data/boltz-folding.md) - how the training structures are produced via the Boltz API.
+- [structural-classifier.md](structural-classifier.md) - `struct_egnn_geo` (exp09), amphipathicity potential, noise-aware training, stability, post-training gates.
+- [bbb-classifier.md](bbb-classifier.md) - sequence/tabular oracle (`exp03`) for reward and G3.
+- [vast-training.md](../infrastructure/vast-training.md) - remote geo training on Vast.ai.
 
 ## 1. Motivation
 
-The current BBB classifier (`bbb_classifier`, `exp03_esm_tab_mlp`) consumes a **discrete sequence** (ESM-2 embeddings) plus **tabular physicochemical descriptors**. Both are non-differentiable with respect to 3D Cartesian coordinates. As documented in [AGENT_CONTEXT.md](AGENT_CONTEXT.md) and [THEORETICAL_FRAMEWORK.md](THEORETICAL_FRAMEWORK.md), this is why BBB can only enter BoltzGen as:
+The current BBB classifier (`bbb_classifier`, `exp03_esm_tab_mlp`) consumes a **discrete sequence** (ESM-2 embeddings) plus **tabular physicochemical descriptors**. Both are non-differentiable with respect to 3D Cartesian coordinates. As documented in [agent-context.md](../architecture/agent-context.md) and [theoretical-framework.md](../architecture/theoretical-framework.md), this is why BBB can only enter BoltzGen as:
 
 - a hard filter (gate G3, `bbb_probability >= 0.60`), and
 - a multiplicative reward factor in TD3B fine-tuning,
@@ -26,7 +26,7 @@ The reverse SDE evolves continuous atom coordinates `x_t`. If the BBB energy `E(
 
 The integration point already exists in BoltzGen's sampler:
 
-```701:710:TFG/boltzgen/src/boltzgen/model/modules/diffusion.py
+```701:710:packages/boltzgen/src/boltzgen/model/modules/diffusion.py
             guidance = self._compute_geometric_guidance(
                 atom_coords=atom_coords_noisy,
                 feats=feats,
@@ -87,7 +87,7 @@ flowchart TD
 Training labels are sequence-level (every folded conformation of a BBB+ peptide is labeled 1). A classifier that can read composition can reach high accuracy while **ignoring geometry**, making `grad_x log p ~ 0` and the guidance a no-op. Mitigations, all built into the design:
 
 1. **Geometry-only guidance model** `p_geo` with no tabular/ESM branch (nothing global to shortcut to).
-2. **Hybrid energy**: add an analytic amphipathicity / 3D hydrophobic-moment potential that is guaranteed to depend on coordinates (see [STRUCTURAL_CLASSIFIER.md](STRUCTURAL_CLASSIFIER.md)).
+2. **Hybrid energy**: add an analytic amphipathicity / 3D hydrophobic-moment potential that is guaranteed to depend on coordinates (see [structural-classifier.md](structural-classifier.md)).
 3. **Multi-task + node-chemistry dropout** during training to force the latent to encode geometry.
 4. **Geometry-sensitivity validation gate** (automatic in training): `guidance_gate.json` measures `||grad_x log p_geo||` and correlation with amphipathicity under perturbations. Manual probe: `scripts/geo/probe.py`. If gate fails, ship amphipathicity-only gradient and keep `p_geo` as reward-side signal.
 
@@ -101,7 +101,7 @@ BBB guidance is applied only at **low sigma** (second half of the schedule), whe
 
 ## 8. Implementation phases
 
-1. Fold the dataset via the Boltz API -> structural manifest. See [BOLTZ_FOLDING.md](BOLTZ_FOLDING.md). HF export: `tfg-bbb-export-hf`.
+1. Fold the dataset via the Boltz API -> structural manifest. See [boltz-folding.md](../data/boltz-folding.md). HF export: `tfg-bbb-export-hf`.
 2. Structural graph featurizer (`bbb_geo/features/struct_graph.py`). **Done.**
 3. EGNN model `struct_egnn_geo` (`bbb_geo/models/struct_egnn.py`). **Done.** (`struct_egnn_full` removed.)
 4. Differentiable amphipathicity potential (`features/membrane_potential.py`). **Done.**
@@ -109,7 +109,7 @@ BBB guidance is applied only at **low sigma** (second half of the schedule), whe
 6. Geometry-sensitivity gate (`metrics_multisigma.json`, `guidance_gate.json`, `scripts/geo/probe.py`). **Done.**
 7. Differentiable guidance hook in [`diffusion.py`](../boltzgen/src/boltzgen/model/modules/diffusion.py) (`_compute_bbb_guidance`, low-sigma gate, hybrid energy). **In progress.**
 8. Reward/filter reuse with `exp03` oracle + fix the `p_bbb_calibrated` column bug in [`run_filter_cascade.py`](../boltzgen_design/scripts/run_filter_cascade.py).
-9. Validation, tests, docs. **Ongoing** — see [VAST_TRAINING.md](VAST_TRAINING.md) for remote training.
+9. Validation, tests, docs. **Ongoing** — see [vast-training.md](../infrastructure/vast-training.md) for remote training.
 
 ## 9. Integration plumbing
 

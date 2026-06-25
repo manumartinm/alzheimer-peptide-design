@@ -35,7 +35,7 @@ uv sync
 ## Train
 
 ```bash
-cd TFG/bbb_models
+cd packages/bbb_models
 
 # Tabular / ESM classifier
 uv run python scripts/classifier/train.py \
@@ -47,7 +47,7 @@ uv run python scripts/geo/train.py \
   --train-config configs/train_geo.yaml
 ```
 
-Documentación completa: [`../docs/`](../docs/README.md) — [STRUCTURAL_CLASSIFIER.md](../docs/STRUCTURAL_CLASSIFIER.md), [VAST_TRAINING.md](../docs/VAST_TRAINING.md).
+Full documentation: [`../../docs/`](../../docs/README.md) — [structural-classifier.md](../../docs/models/structural-classifier.md), [vast-training.md](../../docs/infrastructure/vast-training.md).
 
 Geo training now also writes:
 

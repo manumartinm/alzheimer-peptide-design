@@ -1,47 +1,50 @@
-# Documentación
+# Documentation
 
-Índice de la documentación del proyecto. Para una visión rápida, empieza por [architecture.md](architecture.md).
+Project documentation for *in silico* design of BBB-compatible cyclic phosphomimetic GSK3β modulators.
 
-## Arquitectura y contexto
+**Start here:** [architecture/overview.md](architecture/overview.md)
+**For AI agents:** [architecture/agent-context.md](architecture/agent-context.md)
 
-| Documento | Contenido |
-|-----------|-----------|
-| [architecture.md](architecture.md) | Objetivo del TFG, fases del pipeline, restricciones de diseño (ESM no diferenciable, TD3B) |
-| [AGENT_CONTEXT.md](AGENT_CONTEXT.md) | Contexto completo para agentes/continuadores del proyecto (inglés) |
-| [THEORETICAL_FRAMEWORK.md](THEORETICAL_FRAMEWORK.md) | Fórmulas: SDE guidance, TD3B, gates de filtrado |
-| [RL_MD_STRATEGY.md](RL_MD_STRATEGY.md) | Estrategia operativa para cerrar el loop TD3B + Molecular Dynamics |
+## Architecture and context
 
-## Pipeline de datos
+| Document | Contents |
+|----------|----------|
+| [architecture/overview.md](architecture/overview.md) | Project goal, pipeline phases, design constraints (non-differentiable ESM, TD3B) |
+| [architecture/agent-context.md](architecture/agent-context.md) | Full project context for agents and contributors |
+| [architecture/theoretical-framework.md](architecture/theoretical-framework.md) | Formulas: SDE guidance, TD3B, filtering gates |
+| [architecture/reproducibility.md](architecture/reproducibility.md) | Reproducibility roadmap (v1 current, v2 planned) |
+| [design/rl-md-strategy.md](design/rl-md-strategy.md) | Operational plan for closing the TD3B + MD loop |
 
-| Documento | Contenido |
-|-----------|-----------|
-| [DATASET_PIPELINE.md](DATASET_PIPELINE.md) | Pipeline `tfg-bbb-build` + export Hugging Face (`hf_release`) |
-| [DATASET_CLEANING.md](DATASET_CLEANING.md) | Limpieza, deduplicación, splits cluster-aware |
-| [DATA_AUGMENTATION.md](DATA_AUGMENTATION.md) | Augmentación de secuencias |
-| [BOLTZ_FOLDING.md](BOLTZ_FOLDING.md) | Folding offline con Boltz API |
+## Data pipeline
 
-## Modelos BBB
+| Document | Contents |
+|----------|----------|
+| [data/dataset-pipeline.md](data/dataset-pipeline.md) | `tfg-bbb-build` pipeline + Hugging Face export (`hf_release`) |
+| [data/dataset-cleaning.md](data/dataset-cleaning.md) | Cleaning, deduplication, cluster-aware splits |
+| [data/data-augmentation.md](data/data-augmentation.md) | Sequence augmentation, mixup, weak labels |
+| [data/boltz-folding.md](data/boltz-folding.md) | Offline peptide folding via Boltz API |
 
-| Documento | Contenido |
-|-----------|-----------|
-| [BBB_CLASSIFIER.md](BBB_CLASSIFIER.md) | Clasificador tabular/ESM, experimentos exp01–exp06 |
-| [STRUCTURAL_CLASSIFIER.md](STRUCTURAL_CLASSIFIER.md) | EGNN geométrico `struct_egnn_geo` (exp09), estabilidad, salidas |
-| [STRUCTURAL_BBB_GUIDANCE.md](STRUCTURAL_BBB_GUIDANCE.md) | Guidance BBB diferenciable en difusión |
+## BBB models
 
-## Infraestructura
+| Document | Contents |
+|----------|----------|
+| [models/bbb-classifier.md](models/bbb-classifier.md) | Tabular/ESM classifier, experiments exp01–exp06 |
+| [models/structural-classifier.md](models/structural-classifier.md) | Geometric EGNN `struct_egnn_geo` (exp09), stability, outputs |
+| [models/structural-bbb-guidance.md](models/structural-bbb-guidance.md) | Differentiable BBB guidance in diffusion |
 
-| Documento | Contenido |
-|-----------|-----------|
-| [VAST_TRAINING.md](VAST_TRAINING.md) | Workflow remoto bbb_models (upload, train, sync) |
-| [reproducibility.md](reproducibility.md) | Roadmap de reproducibilidad (v2) |
+## Infrastructure
 
-## Diseño y escritura
+| Document | Contents |
+|----------|----------|
+| [infrastructure/vast-training.md](infrastructure/vast-training.md) | Remote `bbb_models` training on Vast.ai (upload, train, sync) |
 
-| Documento | Contenido |
-|-----------|-----------|
-| [PAPER_WRITING_GUIDE.md](PAPER_WRITING_GUIDE.md) | Guía para redactar el paper/TFG |
-| [EXPERIMENTAL_VALIDATION.tex](EXPERIMENTAL_VALIDATION.tex) | Borrador LaTeX de validación experimental |
+## Writing
 
-## Referencias
+| Document | Contents |
+|----------|----------|
+| [writing/paper-writing-guide.md](writing/paper-writing-guide.md) | Guide for drafting the thesis/paper |
+| [writing/experimental-validation.tex](writing/experimental-validation.tex) | LaTeX draft for experimental validation |
 
-Resúmenes de papers en `papers/` (PDFs excluidos de git).
+## References
+
+Paper summaries in [references/papers/](references/papers/) (PDFs excluded from git).

@@ -1,0 +1,40 @@
+---
+description: Python coding standards for this monorepo
+globs: packages/**/*.py
+alwaysApply: false
+---
+
+# Python Standards
+
+## Layout
+
+- Business logic in `src/` (`bbb_classifier`, `bbb_geo`, `tfg_bbb`, `boltzgen_design`).
+- Scripts under `scripts/` are thin entry points that delegate to `src/*/pipeline/`.
+- Configs live in `configs/` (YAML). Do not hardcode experiment hyperparameters in Python.
+
+## Style (enforced by CI)
+
+- Ruff: line length 100, target py311. Run `make lint` / `make format`.
+- Use `from __future__ import annotations` in new modules.
+- Prefer `@dataclass` for config/threshold structs; type hints on public APIs.
+- First-party imports: `bbb_classifier`, `bbb_geo`, `boltzgen_design`, `tfg_bbb`.
+
+## Type checking
+
+- Mypy runs on `packages/boltzgen_design`, `packages/dataset/src`, `packages/bbb_models/src`.
+- `packages/boltzgen/` is excluded (upstream submodule). Do not lint/format boltzgen unless explicitly asked.
+
+## Tests
+
+- Pytest paths: `packages/bbb_models/tests`, `packages/dataset/tests`, `packages/boltzgen_design/tests`.
+- Dataset package requires ≥85% coverage. Run `make test` or `uv run pytest -q`.
+
+## Example script pattern
+
+```python
+#!/usr/bin/env python3
+from bbb_classifier.pipeline.train import main
+
+if __name__ == "__main__":
+    main()
+```

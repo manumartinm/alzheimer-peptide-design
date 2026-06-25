@@ -4,7 +4,7 @@
 
 ## 1. Goal
 
-Fold every unique peptide sequence in the gold dataset (`TFG/dataset/data/processed/peptides_bbb.parquet`) into a 3D structure, once, offline, and store coordinates + confidence in a structural manifest. These structures are static training data; folding is not done at BoltzGen inference time (BoltzGen already produces coordinates there).
+Fold every unique peptide sequence in the gold dataset (`packages/dataset/data/processed/peptides_bbb.parquet`) into a 3D structure, once, offline, and store coordinates + confidence in a structural manifest. These structures are static training data; folding is not done at BoltzGen inference time (BoltzGen already produces coordinates there).
 
 ## 2. Why the hosted Boltz API
 
@@ -53,12 +53,12 @@ Metrics are read from `run.json` → `output.best_sample.metrics` (or the first 
 
 ## 5. CLI: `tfg-bbb-fold`
 
-Location: `TFG/dataset/src/tfg_bbb/cli/fold.py` (folding belongs to dataset construction).
+Location: `packages/dataset/src/tfg_bbb/cli/fold.py` (folding belongs to dataset construction).
 
 Run from the dataset root:
 
 ```bash
-cd TFG/dataset
+cd packages/dataset
 uv run tfg-bbb-fold
 ```
 

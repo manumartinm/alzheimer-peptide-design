@@ -1,6 +1,6 @@
 # Data Augmentation for the BBB Classifier
 
-> Status: IMPLEMENTED. Describes the augmentation, mixup, and weak-labeling features in `TFG/bbb_classifier`. Companion to [BBB_CLASSIFIER.md](BBB_CLASSIFIER.md).
+> Status: IMPLEMENTED. Describes the augmentation, mixup, and weak-labeling features in `packages/bbb_models`. Companion to [bbb-classifier.md](../models/bbb-classifier.md).
 
 The gold dataset is small (~hundreds of peptides, ~418 training samples per fold). To get a more robust, better-calibrated classifier without changing the architecture, three cheap augmentation strategies are available and composable, all opt-in via the experiment YAML:
 
@@ -29,7 +29,7 @@ Configured by `AugmentConfig` and applied by `augment_train_dataframe`. It creat
 
 Each residue can be swapped for a chemically similar one using a fixed BLOSUM-like map (`CONSERVATIVE_MAP`), e.g. `L -> {I,V,M,F}`, `K -> {R,H,E,Q}`. The number of changes is small (1 for sequences shorter than 12, else 2), so the physicochemistry and BBB label are preserved while adding realistic variation.
 
-```43:60:TFG/bbb_classifier/src/bbb_classifier/data/augment.py
+```43:60:packages/bbb_models/src/bbb_classifier/src/bbb_classifier/data/augment.py
 def mutate_conservative(seq: str, n_changes: int = 1, rng: random.Random | None = None) -> str:
     rng = rng or random
     if not seq:
@@ -64,7 +64,7 @@ Config keys: `enabled`, `seq_substitution_prob`, `seq_truncation_prob`, `n_augme
 
 Mixup interpolates pairs of examples in feature space and interpolates their labels, which regularizes the decision boundary and improves calibration.
 
-```9:28:TFG/bbb_classifier/src/bbb_classifier/train/mixup.py
+```9:28:packages/bbb_models/src/bbb_classifier/src/bbb_classifier/train/mixup.py
 def apply_mixup(
     batch: dict[str, Any],
     alpha: float = 0.2,
@@ -97,7 +97,7 @@ Notes:
 
 Uses an existing model's predictions on unlabeled peptides as low-confidence ("weak") additional training data.
 
-```119:131:TFG/bbb_classifier/src/bbb_classifier/data/augment.py
+```119:131:packages/bbb_models/src/bbb_classifier/src/bbb_classifier/data/augment.py
     high = float(cfg.get("high_threshold", 0.8))
     low = float(cfg.get("low_threshold", 0.2))
     weak_weight = float(cfg.get("sample_weight", 0.35))
