@@ -62,9 +62,9 @@ def normalize_candidate_frame(df: pd.DataFrame, input_dir: Path) -> pd.DataFrame
             raise ValueError("Could not infer structure_path column for candidates")
 
     out["structure_path"] = out["structure_path"].map(
-        lambda p: str(Path(p).resolve())
-        if Path(p).is_absolute()
-        else str((input_dir / p).resolve())
+        lambda p: (
+            str(Path(p).resolve()) if Path(p).is_absolute() else str((input_dir / p).resolve())
+        )
     )
 
     if "sequence" not in out.columns:
