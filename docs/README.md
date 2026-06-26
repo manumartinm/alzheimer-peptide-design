@@ -30,7 +30,8 @@ Project documentation for *in silico* design of BBB-compatible cyclic phosphomim
 |----------|----------|
 | [models/bbb-classifier.md](models/bbb-classifier.md) | Tabular/ESM classifier, experiments exp01–exp06 |
 | [models/structural-classifier.md](models/structural-classifier.md) | Geometric EGNN `struct_egnn_geo` (exp09), stability, outputs |
-| [models/structural-bbb-guidance.md](models/structural-bbb-guidance.md) | Differentiable BBB guidance in diffusion |
+| [models/post-filtering-five-gates.md](../models/post-filtering-five-gates.md) | Shortlist G2+G3+G6, metodología |
+| [models/resultados-filtrado-gsk3b-guided.md](../models/resultados-filtrado-gsk3b-guided.md) | **Conclusiones y métricas** campaña guided |
 
 ## Infrastructure
 

@@ -111,8 +111,8 @@ Run scripts from the package directory when configs use relative paths (e.g. `cd
 
 ### `packages/boltzgen_design`
 
-- Target prep, geometric guidance helpers, BBB oracle wrapper, TD3B utilities, 5-gate filtering, Pareto selection
-- Filtering gates: `filtering/gates.py`
+- Target prep, BBB oracle, **shortlist filtering G2+G3+G6**, isoform selectivity (G6)
+- Docs: [`docs/models/post-filtering-five-gates.md`](docs/models/post-filtering-five-gates.md)
 - Vast campaign scripts: `infra/vast/boltzgen_design/`
 - Docs: [`docs/design/rl-md-strategy.md`](docs/design/rl-md-strategy.md)
 

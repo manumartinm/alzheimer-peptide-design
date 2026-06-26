@@ -1,0 +1,1581 @@
+{
+  "beta_pdb": "1Q4L",
+  "alpha_pdb": "1Q5K",
+  "beta_reference_cif": "targets/gsk3b/gsk3b.cif",
+  "alpha_reference_cif": "targets/gsk3a/gsk3a.cif",
+  "domain_label_seq_id_range": [
+    46,
+    220
+  ],
+  "superposition_anchors": [
+    67,
+    89,
+    96,
+    133,
+    134,
+    135,
+    180,
+    200,
+    201,
+    202
+  ],
+  "beta_to_alpha": {
+    "39": 29,
+    "40": 30,
+    "41": 31,
+    "42": 32,
+    "43": 33,
+    "44": 34,
+    "45": 35,
+    "46": 36,
+    "47": 37,
+    "48": 38,
+    "49": 39,
+    "50": 40,
+    "51": 41,
+    "52": 42,
+    "53": 43,
+    "54": 44,
+    "55": 45,
+    "56": 46,
+    "57": 47,
+    "58": 48,
+    "59": 49,
+    "60": 50,
+    "61": 51,
+    "62": 52,
+    "63": 53,
+    "64": 54,
+    "65": 55,
+    "66": 56,
+    "67": 57,
+    "68": 58,
+    "69": 59,
+    "70": 60,
+    "71": 61,
+    "72": 62,
+    "73": 63,
+    "74": 64,
+    "75": 65,
+    "76": 66,
+    "77": 67,
+    "78": 68,
+    "79": 69,
+    "80": 70,
+    "81": 71,
+    "82": 72,
+    "83": 73,
+    "84": 74,
+    "85": 75,
+    "86": 76,
+    "87": 77,
+    "88": 78,
+    "89": 79,
+    "90": 80,
+    "91": 81,
+    "92": 82,
+    "93": 83,
+    "94": 84,
+    "95": 85,
+    "96": 86,
+    "97": 87,
+    "98": 88,
+    "99": 89,
+    "100": 90,
+    "101": 91,
+    "102": 92,
+    "103": 93,
+    "104": 94,
+    "105": 95,
+    "106": 96,
+    "107": 97,
+    "108": 98,
+    "109": 99,
+    "110": 100,
+    "111": 101,
+    "112": 102,
+    "113": 103,
+    "114": 104,
+    "115": 105,
+    "116": 106,
+    "117": 107,
+    "118": 108,
+    "119": 109,
+    "120": 110,
+    "121": 111,
+    "122": 112,
+    "123": 113,
+    "124": 116,
+    "128": 118,
+    "129": 119,
+    "130": 120,
+    "131": 121,
+    "132": 122,
+    "133": 123,
+    "134": 124,
+    "135": 125,
+    "136": 126,
+    "137": 127,
+    "138": 128,
+    "139": 129,
+    "140": 130,
+    "141": 131,
+    "142": 132,
+    "143": 133,
+    "144": 134,
+    "145": 135,
+    "146": 136,
+    "147": 137,
+    "148": 138,
+    "149": 139,
+    "150": 140,
+    "151": 141,
+    "152": 142,
+    "153": 143,
+    "154": 144,
+    "155": 145,
+    "156": 146,
+    "157": 147,
+    "158": 148,
+    "159": 149,
+    "160": 150,
+    "161": 151,
+    "162": 152,
+    "163": 153,
+    "164": 154,
+    "165": 155,
+    "166": 156,
+    "167": 157,
+    "168": 158,
+    "169": 159,
+    "170": 160,
+    "171": 161,
+    "172": 162,
+    "173": 163,
+    "174": 164,
+    "175": 165,
+    "176": 166,
+    "177": 167,
+    "178": 168,
+    "179": 169,
+    "180": 170,
+    "181": 171,
+    "182": 172,
+    "183": 173,
+    "184": 174,
+    "185": 175,
+    "186": 176,
+    "187": 177,
+    "188": 178,
+    "189": 179,
+    "190": 180,
+    "191": 181,
+    "192": 182,
+    "193": 183,
+    "194": 184,
+    "195": 185,
+    "196": 186,
+    "197": 187,
+    "198": 188,
+    "199": 189,
+    "200": 190,
+    "201": 191,
+    "202": 192,
+    "203": 193,
+    "204": 194,
+    "205": 195,
+    "206": 196,
+    "207": 197,
+    "208": 198,
+    "209": 199,
+    "210": 200,
+    "211": 201,
+    "212": 202,
+    "213": 203,
+    "214": 204,
+    "215": 205,
+    "216": 206,
+    "217": 207,
+    "218": 208,
+    "219": 209,
+    "220": 210,
+    "221": 211,
+    "222": 212,
+    "223": 213,
+    "224": 214,
+    "225": 215,
+    "226": 216,
+    "227": 217,
+    "228": 218,
+    "229": 219,
+    "230": 220,
+    "231": 221,
+    "232": 222,
+    "233": 223,
+    "234": 224,
+    "235": 225,
+    "236": 226,
+    "237": 227,
+    "238": 228,
+    "239": 229,
+    "240": 230,
+    "241": 231,
+    "242": 232,
+    "243": 233,
+    "244": 234,
+    "245": 235,
+    "246": 236,
+    "247": 237,
+    "248": 238,
+    "249": 239,
+    "250": 240,
+    "251": 241,
+    "252": 242,
+    "253": 243,
+    "254": 244,
+    "255": 245,
+    "256": 246,
+    "257": 247,
+    "258": 248,
+    "259": 249,
+    "260": 250,
+    "261": 251,
+    "262": 252,
+    "263": 253,
+    "264": 254,
+    "265": 255,
+    "266": 256,
+    "267": 257,
+    "268": 258,
+    "269": 259,
+    "270": 260,
+    "271": 261,
+    "272": 262,
+    "273": 263,
+    "274": 264,
+    "275": 265,
+    "276": 266,
+    "277": 267,
+    "278": 268,
+    "279": 269,
+    "280": 270,
+    "281": 271,
+    "282": 272,
+    "283": 273,
+    "284": 274,
+    "285": 275,
+    "286": 276,
+    "287": 277,
+    "288": 278,
+    "289": 279,
+    "297": 285,
+    "298": 288,
+    "299": 289,
+    "300": 290,
+    "301": 291,
+    "302": 292,
+    "303": 293,
+    "304": 294,
+    "305": 295,
+    "306": 296,
+    "307": 297,
+    "308": 298,
+    "309": 299,
+    "310": 300,
+    "311": 301,
+    "312": 302,
+    "313": 303,
+    "314": 304,
+    "315": 305,
+    "316": 306,
+    "317": 307,
+    "318": 308,
+    "319": 309,
+    "320": 310,
+    "321": 311,
+    "322": 312,
+    "323": 313,
+    "324": 314,
+    "325": 315,
+    "326": 316,
+    "327": 317,
+    "328": 318,
+    "329": 319,
+    "330": 320,
+    "331": 321,
+    "332": 322,
+    "333": 323,
+    "334": 324,
+    "335": 325,
+    "336": 326,
+    "337": 327,
+    "338": 328,
+    "339": 329,
+    "340": 330,
+    "341": 331,
+    "342": 332,
+    "343": 333,
+    "344": 334,
+    "345": 335,
+    "346": 336,
+    "347": 337,
+    "348": 338,
+    "349": 339,
+    "350": 340,
+    "351": 341,
+    "352": 342,
+    "353": 343,
+    "354": 344,
+    "355": 345,
+    "356": 346,
+    "357": 347,
+    "358": 348,
+    "359": 349,
+    "360": 350,
+    "361": 351,
+    "362": 352,
+    "363": 353,
+    "364": 354,
+    "365": 355,
+    "366": 356,
+    "367": 357,
+    "368": 358,
+    "369": 359,
+    "370": 360,
+    "371": 361,
+    "372": 362,
+    "373": 363,
+    "374": 364,
+    "375": 365,
+    "376": 366,
+    "377": 367,
+    "378": 368,
+    "379": 369,
+    "380": 370,
+    "381": 371,
+    "382": 372,
+    "383": 373,
+    "384": 374,
+    "385": 375,
+    "386": 376,
+    "387": 377,
+    "388": 378
+  },
+  "position_map": [
+    {
+      "beta_label_seq_id": 46,
+      "alpha_label_seq_id": 36,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 47,
+      "alpha_label_seq_id": 37,
+      "beta_aa": "THR",
+      "alpha_aa": "THR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 48,
+      "alpha_label_seq_id": 38,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 49,
+      "alpha_label_seq_id": 39,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 50,
+      "alpha_label_seq_id": 40,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 51,
+      "alpha_label_seq_id": 41,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 52,
+      "alpha_label_seq_id": 42,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 53,
+      "alpha_label_seq_id": 43,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 54,
+      "alpha_label_seq_id": 44,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 55,
+      "alpha_label_seq_id": 45,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 56,
+      "alpha_label_seq_id": 46,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 57,
+      "alpha_label_seq_id": 47,
+      "beta_aa": "GLU",
+      "alpha_aa": "GLU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 58,
+      "alpha_label_seq_id": 48,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 59,
+      "alpha_label_seq_id": 49,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 60,
+      "alpha_label_seq_id": 50,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 61,
+      "alpha_label_seq_id": 51,
+      "beta_aa": "THR",
+      "alpha_aa": "THR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 62,
+      "alpha_label_seq_id": 52,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 63,
+      "alpha_label_seq_id": 53,
+      "beta_aa": "THR",
+      "alpha_aa": "THR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 64,
+      "alpha_label_seq_id": 54,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 65,
+      "alpha_label_seq_id": 55,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 66,
+      "alpha_label_seq_id": 56,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 67,
+      "alpha_label_seq_id": 57,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 68,
+      "alpha_label_seq_id": 58,
+      "beta_aa": "ASN",
+      "alpha_aa": "ASN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 69,
+      "alpha_label_seq_id": 59,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 70,
+      "alpha_label_seq_id": 60,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 71,
+      "alpha_label_seq_id": 61,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 72,
+      "alpha_label_seq_id": 62,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 73,
+      "alpha_label_seq_id": 63,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 74,
+      "alpha_label_seq_id": 64,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 75,
+      "alpha_label_seq_id": 65,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 76,
+      "alpha_label_seq_id": 66,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 77,
+      "alpha_label_seq_id": 67,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 78,
+      "alpha_label_seq_id": 68,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 79,
+      "alpha_label_seq_id": 69,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 80,
+      "alpha_label_seq_id": 70,
+      "beta_aa": "CYS",
+      "alpha_aa": "CYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 81,
+      "alpha_label_seq_id": 71,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 82,
+      "alpha_label_seq_id": 72,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 83,
+      "alpha_label_seq_id": 73,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 84,
+      "alpha_label_seq_id": 74,
+      "beta_aa": "GLU",
+      "alpha_aa": "GLU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 85,
+      "alpha_label_seq_id": 75,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 86,
+      "alpha_label_seq_id": 76,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 87,
+      "alpha_label_seq_id": 77,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 88,
+      "alpha_label_seq_id": 78,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 89,
+      "alpha_label_seq_id": 79,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 90,
+      "alpha_label_seq_id": 80,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 91,
+      "alpha_label_seq_id": 81,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 92,
+      "alpha_label_seq_id": 82,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 93,
+      "alpha_label_seq_id": 83,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 94,
+      "alpha_label_seq_id": 84,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 95,
+      "alpha_label_seq_id": 85,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 96,
+      "alpha_label_seq_id": 86,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 97,
+      "alpha_label_seq_id": 87,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 98,
+      "alpha_label_seq_id": 88,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 99,
+      "alpha_label_seq_id": 89,
+      "beta_aa": "ASN",
+      "alpha_aa": "ASN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 100,
+      "alpha_label_seq_id": 90,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 101,
+      "alpha_label_seq_id": 91,
+      "beta_aa": "GLU",
+      "alpha_aa": "GLU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 102,
+      "alpha_label_seq_id": 92,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 103,
+      "alpha_label_seq_id": 93,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 104,
+      "alpha_label_seq_id": 94,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 105,
+      "alpha_label_seq_id": 95,
+      "beta_aa": "MET",
+      "alpha_aa": "MET",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 106,
+      "alpha_label_seq_id": 96,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 107,
+      "alpha_label_seq_id": 97,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 108,
+      "alpha_label_seq_id": 98,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 109,
+      "alpha_label_seq_id": 99,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 110,
+      "alpha_label_seq_id": 100,
+      "beta_aa": "HIS",
+      "alpha_aa": "HIS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 111,
+      "alpha_label_seq_id": 101,
+      "beta_aa": "CYS",
+      "alpha_aa": "CYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 112,
+      "alpha_label_seq_id": 102,
+      "beta_aa": "ASN",
+      "alpha_aa": "ASN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 113,
+      "alpha_label_seq_id": 103,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 114,
+      "alpha_label_seq_id": 104,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 115,
+      "alpha_label_seq_id": 105,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 116,
+      "alpha_label_seq_id": 106,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 117,
+      "alpha_label_seq_id": 107,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 118,
+      "alpha_label_seq_id": 108,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 119,
+      "alpha_label_seq_id": 109,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 120,
+      "alpha_label_seq_id": 110,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 121,
+      "alpha_label_seq_id": 111,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 122,
+      "alpha_label_seq_id": 112,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 123,
+      "alpha_label_seq_id": 113,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 124,
+      "alpha_label_seq_id": 116,
+      "beta_aa": "GLY",
+      "alpha_aa": "LYS",
+      "is_differential": true
+    },
+    {
+      "beta_label_seq_id": 128,
+      "alpha_label_seq_id": 118,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 129,
+      "alpha_label_seq_id": 119,
+      "beta_aa": "GLU",
+      "alpha_aa": "GLU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 130,
+      "alpha_label_seq_id": 120,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 131,
+      "alpha_label_seq_id": 121,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 132,
+      "alpha_label_seq_id": 122,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 133,
+      "alpha_label_seq_id": 123,
+      "beta_aa": "ASN",
+      "alpha_aa": "ASN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 134,
+      "alpha_label_seq_id": 124,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 135,
+      "alpha_label_seq_id": 125,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 136,
+      "alpha_label_seq_id": 126,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 137,
+      "alpha_label_seq_id": 127,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 138,
+      "alpha_label_seq_id": 128,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 139,
+      "alpha_label_seq_id": 129,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 140,
+      "alpha_label_seq_id": 130,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 141,
+      "alpha_label_seq_id": 131,
+      "beta_aa": "GLU",
+      "alpha_aa": "GLU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 142,
+      "alpha_label_seq_id": 132,
+      "beta_aa": "THR",
+      "alpha_aa": "THR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 143,
+      "alpha_label_seq_id": 133,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 144,
+      "alpha_label_seq_id": 134,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 145,
+      "alpha_label_seq_id": 135,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 146,
+      "alpha_label_seq_id": 136,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 147,
+      "alpha_label_seq_id": 137,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 148,
+      "alpha_label_seq_id": 138,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 149,
+      "alpha_label_seq_id": 139,
+      "beta_aa": "HIS",
+      "alpha_aa": "HIS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 150,
+      "alpha_label_seq_id": 140,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 151,
+      "alpha_label_seq_id": 141,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 152,
+      "alpha_label_seq_id": 142,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 153,
+      "alpha_label_seq_id": 143,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 154,
+      "alpha_label_seq_id": 144,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 155,
+      "alpha_label_seq_id": 145,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 156,
+      "alpha_label_seq_id": 146,
+      "beta_aa": "THR",
+      "alpha_aa": "THR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 157,
+      "alpha_label_seq_id": 147,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 158,
+      "alpha_label_seq_id": 148,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 159,
+      "alpha_label_seq_id": 149,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 160,
+      "alpha_label_seq_id": 150,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 161,
+      "alpha_label_seq_id": 151,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 162,
+      "alpha_label_seq_id": 152,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 163,
+      "alpha_label_seq_id": 153,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 164,
+      "alpha_label_seq_id": 154,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 165,
+      "alpha_label_seq_id": 155,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 166,
+      "alpha_label_seq_id": 156,
+      "beta_aa": "MET",
+      "alpha_aa": "MET",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 167,
+      "alpha_label_seq_id": 157,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 168,
+      "alpha_label_seq_id": 158,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 169,
+      "alpha_label_seq_id": 159,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 170,
+      "alpha_label_seq_id": 160,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 171,
+      "alpha_label_seq_id": 161,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 172,
+      "alpha_label_seq_id": 162,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 173,
+      "alpha_label_seq_id": 163,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 174,
+      "alpha_label_seq_id": 164,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 175,
+      "alpha_label_seq_id": 165,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 176,
+      "alpha_label_seq_id": 166,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 177,
+      "alpha_label_seq_id": 167,
+      "beta_aa": "HIS",
+      "alpha_aa": "HIS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 178,
+      "alpha_label_seq_id": 168,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 179,
+      "alpha_label_seq_id": 169,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 180,
+      "alpha_label_seq_id": 170,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 181,
+      "alpha_label_seq_id": 171,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 182,
+      "alpha_label_seq_id": 172,
+      "beta_aa": "CYS",
+      "alpha_aa": "CYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 183,
+      "alpha_label_seq_id": 173,
+      "beta_aa": "HIS",
+      "alpha_aa": "HIS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 184,
+      "alpha_label_seq_id": 174,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 185,
+      "alpha_label_seq_id": 175,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 186,
+      "alpha_label_seq_id": 176,
+      "beta_aa": "ILE",
+      "alpha_aa": "ILE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 187,
+      "alpha_label_seq_id": 177,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 188,
+      "alpha_label_seq_id": 178,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 189,
+      "alpha_label_seq_id": 179,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 190,
+      "alpha_label_seq_id": 180,
+      "beta_aa": "ASN",
+      "alpha_aa": "ASN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 191,
+      "alpha_label_seq_id": 181,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 192,
+      "alpha_label_seq_id": 182,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 193,
+      "alpha_label_seq_id": 183,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 194,
+      "alpha_label_seq_id": 184,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 195,
+      "alpha_label_seq_id": 185,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 196,
+      "alpha_label_seq_id": 186,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 197,
+      "alpha_label_seq_id": 187,
+      "beta_aa": "THR",
+      "alpha_aa": "THR",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 198,
+      "alpha_label_seq_id": 188,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 199,
+      "alpha_label_seq_id": 189,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 200,
+      "alpha_label_seq_id": 190,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 201,
+      "alpha_label_seq_id": 191,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 202,
+      "alpha_label_seq_id": 192,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 203,
+      "alpha_label_seq_id": 193,
+      "beta_aa": "CYS",
+      "alpha_aa": "CYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 204,
+      "alpha_label_seq_id": 194,
+      "beta_aa": "ASP",
+      "alpha_aa": "ASP",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 205,
+      "alpha_label_seq_id": 195,
+      "beta_aa": "PHE",
+      "alpha_aa": "PHE",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 206,
+      "alpha_label_seq_id": 196,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 207,
+      "alpha_label_seq_id": 197,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 208,
+      "alpha_label_seq_id": 198,
+      "beta_aa": "ALA",
+      "alpha_aa": "ALA",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 209,
+      "alpha_label_seq_id": 199,
+      "beta_aa": "LYS",
+      "alpha_aa": "LYS",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 210,
+      "alpha_label_seq_id": 200,
+      "beta_aa": "GLN",
+      "alpha_aa": "GLN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 211,
+      "alpha_label_seq_id": 201,
+      "beta_aa": "LEU",
+      "alpha_aa": "LEU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 212,
+      "alpha_label_seq_id": 202,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 213,
+      "alpha_label_seq_id": 203,
+      "beta_aa": "ARG",
+      "alpha_aa": "ARG",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 214,
+      "alpha_label_seq_id": 204,
+      "beta_aa": "GLY",
+      "alpha_aa": "GLY",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 215,
+      "alpha_label_seq_id": 205,
+      "beta_aa": "GLU",
+      "alpha_aa": "GLU",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 216,
+      "alpha_label_seq_id": 206,
+      "beta_aa": "PRO",
+      "alpha_aa": "PRO",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 217,
+      "alpha_label_seq_id": 207,
+      "beta_aa": "ASN",
+      "alpha_aa": "ASN",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 218,
+      "alpha_label_seq_id": 208,
+      "beta_aa": "VAL",
+      "alpha_aa": "VAL",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 219,
+      "alpha_label_seq_id": 209,
+      "beta_aa": "SER",
+      "alpha_aa": "SER",
+      "is_differential": false
+    },
+    {
+      "beta_label_seq_id": 220,
+      "alpha_label_seq_id": 210,
+      "beta_aa": "TYR",
+      "alpha_aa": "TYR",
+      "is_differential": false
+    }
+  ],
+  "differential_positions": [
+    {
+      "beta_label_seq_id": 124,
+      "alpha_label_seq_id": 116,
+      "beta_aa": "GLY",
+      "alpha_aa": "LYS"
+    }
+  ],
+  "n_differential": 1,
+  "n_superposition_anchors": 10,
+  "n_mapped_domain_positions": 172
+}

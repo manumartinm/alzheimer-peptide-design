@@ -1,0 +1,33 @@
+target:
+  name: gsk3a
+  pdb_id: 1Q5K
+  chain_id: A
+  cif_path: ../targets/gsk3a/gsk3a.cif
+  rationale: "GSK3\u03B1 off-target for selectivity gate G6. Same kinase-domain slice\
+    \ as GSK3\u03B2 (label_seq_id 46\u2013220) for geometric isoform comparison."
+regions:
+  hotspots_primary:
+  - 85
+  - 133
+  - 134
+  - 135
+  - 180
+  - 205
+  hotspots_secondary:
+  - 67
+  - 89
+  - 95
+  - 96
+  atp_cleft:
+  - 50
+  - 85
+  - 133
+  - 134
+  - 135
+  - 200
+  - 201
+  - 202
+  - 203
+  - 204
+  - 205
+  - 206

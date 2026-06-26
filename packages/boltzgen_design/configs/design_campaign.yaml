@@ -31,3 +31,5 @@ thresholds:
   gate_g4_iptm_min: 0.78
   gate_g4_plddt_min: 85.0
   gate_g4_closure_rmsd_max: 1.5
+  gate_g6_selectivity_margin_min: 0.30
+  gate_g6_alpha_contact_max: 0.35

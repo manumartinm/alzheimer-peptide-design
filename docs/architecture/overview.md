@@ -58,13 +58,17 @@ The `struct_egnn_geo` model (exp09) trained on folded structures enables differe
 
 ## Phase 3: Filtering and MD (in progress)
 
-### Five-gate cascade
+### Post-filtering shortlist (G2 + G3 + G6)
 
-1. **G1:** >70% hotspots engaged ≤ 5 Å.
-2. **G2:** ATP repulsion score below threshold.
-3. **G3:** p_BBB ≥ 0.6 + solubility.
-4. **G4:** ipTM ≥ 0.75, pLDDT ≥ 85, cyclic closure RMSD ≤ 1.2 Å.
-5. **G5:** sequence liabilities (polybasic, deamidation, Met/Cys, aggregation).
+Operational filter on the 30 final guided designs:
+
+1. **G2:** ATP cleft repulsion below threshold (avoid Wnt off-target).
+2. **G3:** BBB probability ≥ 0.60 (sequence oracle).
+3. **G6:** GSK3β vs GSK3α isoform selectivity (geometric proxy).
+
+Survivors are ranked by **iPTM** (`--rank-by iptm`). Campaign result: **6/30** pass all three gates.
+
+See [post-filtering-five-gates.md](../models/post-filtering-five-gates.md) for definitions and `gsk3b_guided` results.
 
 ### MD validation
 
